@@ -1517,4 +1517,19 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get byMeal => 'Por Comida';
+
+  @override
+  String get workoutSubtitle => 'Planes y Rutinas';
+
+  @override
+  String get toolsSubtitle => 'Calculadoras y Registros';
+
+  @override
+  String get greetingMorning => 'Buenos días';
+
+  @override
+  String get greetingAfternoon => 'Buenas tardes';
+
+  @override
+  String get greetingEvening => 'Buenas noches';
 }

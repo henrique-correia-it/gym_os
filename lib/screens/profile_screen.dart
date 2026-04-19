@@ -364,6 +364,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
 
   PreferredSizeWidget _buildPremiumAppBar(AppLocalizations l10n) {
     final colorScheme = Theme.of(context).colorScheme;
+    final userName = _nameController.text.trim();
     return AppBar(
       toolbarHeight: 80,
       backgroundColor: Colors.transparent,
@@ -382,12 +383,24 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                 color: Color(0xFF00E676), size: 24),
           ),
           const SizedBox(width: 12),
-          Text(l10n.navProfile,
-              style: TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
-                color: colorScheme.onSurface,
-              )),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(l10n.navProfile,
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                    color: colorScheme.onSurface,
+                  )),
+              if (userName.isNotEmpty)
+                Text(userName,
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w500,
+                      color: colorScheme.onSurface.withValues(alpha: 0.45),
+                    )),
+            ],
+          ),
         ],
       ),
       actions: [

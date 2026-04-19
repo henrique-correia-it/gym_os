@@ -34,12 +34,23 @@ class ToolsScreen extends StatelessWidget {
                   color: Color(0xFF00E676), size: 24),
             ),
             const SizedBox(width: 12),
-            Text(l10n.tools,
-                style: TextStyle(
-                  fontSize: 22,
-                  fontWeight: FontWeight.bold,
-                  color: colorScheme.onSurface,
-                )),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(l10n.tools,
+                    style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                      color: colorScheme.onSurface,
+                    )),
+                Text(l10n.toolsSubtitle,
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w500,
+                      color: colorScheme.onSurface.withValues(alpha: 0.45),
+                    )),
+              ],
+            ),
           ],
         ),
       ),

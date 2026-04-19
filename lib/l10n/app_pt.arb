@@ -1826,5 +1826,16 @@
   "nutritionSummary": "Resumo Nutricional",
   "@nutritionSummary": { "description": "Nutrition detail screen title" },
   "byMeal": "Por Refeição",
-  "@byMeal": { "description": "By meal section header in nutrition detail" }
+  "@byMeal": { "description": "By meal section header in nutrition detail" },
+
+  "workoutSubtitle": "Planos & Rotinas",
+  "@workoutSubtitle": { "description": "Workout screen header subtitle" },
+  "toolsSubtitle": "Calculadoras & Registos",
+  "@toolsSubtitle": { "description": "Tools screen header subtitle" },
+  "greetingMorning": "Bom dia",
+  "@greetingMorning": { "description": "Morning greeting" },
+  "greetingAfternoon": "Boa tarde",
+  "@greetingAfternoon": { "description": "Afternoon greeting" },
+  "greetingEvening": "Boa noite",
+  "@greetingEvening": { "description": "Evening greeting" }
 }

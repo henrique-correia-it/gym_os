@@ -1823,5 +1823,16 @@
   "nutritionSummary": "Nutrition Summary",
   "@nutritionSummary": { "description": "Nutrition detail screen title" },
   "byMeal": "By Meal",
-  "@byMeal": { "description": "By meal section header in nutrition detail" }
+  "@byMeal": { "description": "By meal section header in nutrition detail" },
+
+  "workoutSubtitle": "Plans & Routines",
+  "@workoutSubtitle": { "description": "Workout screen header subtitle" },
+  "toolsSubtitle": "Calculators & Records",
+  "@toolsSubtitle": { "description": "Tools screen header subtitle" },
+  "greetingMorning": "Good morning",
+  "@greetingMorning": { "description": "Morning greeting" },
+  "greetingAfternoon": "Good afternoon",
+  "@greetingAfternoon": { "description": "Afternoon greeting" },
+  "greetingEvening": "Good evening",
+  "@greetingEvening": { "description": "Evening greeting" }
 }

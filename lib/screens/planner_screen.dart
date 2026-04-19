@@ -661,8 +661,16 @@ class _PlannerScreenState extends ConsumerState<PlannerScreen> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     ref.watch(selectedDateProvider);
+    final dailyLog = ref.watch(dailyLogProvider).valueOrNull;
+    final colorScheme = Theme.of(context).colorScheme;
 
     final combinedResults = [..._localResults, ..._apiResults];
+
+    final consumed = dailyLog?.consumedKcal ?? 0;
+    final target = dailyLog?.targetKcal ?? 0;
+    final kcalSubtitle = dailyLog != null
+        ? '${consumed.toInt()} / ${target.toInt()} kcal'
+        : null;
 
     return Scaffold(
       extendBody: true,
@@ -684,12 +692,24 @@ class _PlannerScreenState extends ConsumerState<PlannerScreen> {
                   color: Color(0xFF00E676), size: 24),
             ),
             const SizedBox(width: 12),
-            Text(l10n.navDiet,
-                style: TextStyle(
-                  fontSize: 22,
-                  fontWeight: FontWeight.bold,
-                  color: Theme.of(context).colorScheme.onSurface,
-                )),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(l10n.navDiet,
+                    style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                      color: colorScheme.onSurface,
+                    )),
+                if (kcalSubtitle != null)
+                  Text(kcalSubtitle,
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500,
+                        color: colorScheme.onSurface.withValues(alpha: 0.45),
+                      )),
+              ],
+            ),
           ],
         ),
       ),

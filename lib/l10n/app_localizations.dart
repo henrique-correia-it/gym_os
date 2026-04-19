@@ -2883,6 +2883,36 @@ abstract class AppLocalizations {
   /// In pt, this message translates to:
   /// **'Por Refeição'**
   String get byMeal;
+
+  /// Workout screen header subtitle
+  ///
+  /// In pt, this message translates to:
+  /// **'Planos & Rotinas'**
+  String get workoutSubtitle;
+
+  /// Tools screen header subtitle
+  ///
+  /// In pt, this message translates to:
+  /// **'Calculadoras & Registos'**
+  String get toolsSubtitle;
+
+  /// Morning greeting
+  ///
+  /// In pt, this message translates to:
+  /// **'Bom dia'**
+  String get greetingMorning;
+
+  /// Afternoon greeting
+  ///
+  /// In pt, this message translates to:
+  /// **'Boa tarde'**
+  String get greetingAfternoon;
+
+  /// Evening greeting
+  ///
+  /// In pt, this message translates to:
+  /// **'Boa noite'**
+  String get greetingEvening;
 }
 
 class _AppLocalizationsDelegate

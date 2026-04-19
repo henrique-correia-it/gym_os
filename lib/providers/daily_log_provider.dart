@@ -39,6 +39,30 @@ class DailyLogNotifier extends AsyncNotifier<DayLog?> {
         ..targetFat = (tKcal * user.macroFat) / 9.0;
     } else {
       await dayLog.meals.load();
+      
+      // Recalcula consumedKcal com base nas refeições carregadas
+      double totalKcal = 0;
+      for (var m in dayLog.meals) {
+        totalKcal += m.kcal;
+      }
+      dayLog.consumedKcal = totalKcal;
+      
+      // Corrige targetKcal se estiver 0 (dados legados ou não inicializados)
+      if (dayLog.targetKcal <= 0) {
+        double finalTarget =
+            NutritionUtils.calculateTargetKcal(user, user.weight);
+        double tKcal = finalTarget > 0 ? finalTarget : 2000;
+        
+        dayLog.targetKcal = tKcal;
+        dayLog.targetProtein = (tKcal * user.macroProtein) / 4.0;
+        dayLog.targetCarbs = (tKcal * user.macroCarbs) / 4.0;
+        dayLog.targetFat = (tKcal * user.macroFat) / 9.0;
+        
+        // Persiste a correção
+        await ref.read(databaseProvider).isar.writeTxn(() async {
+          await ref.read(databaseProvider).isar.dayLogs.put(dayLog!);
+        });
+      }
     }
 
     return dayLog;

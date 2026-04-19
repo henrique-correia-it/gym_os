@@ -487,8 +487,10 @@ class _ActiveWorkoutScreenState extends ConsumerState<ActiveWorkoutScreen> {
               IconButton(
                 icon: const Icon(Icons.close_rounded),
                 onPressed: () async {
+                  if (!context.mounted) return;
+                  final nav = Navigator.of(context);
                   final should = await _onWillPop();
-                  if (should && context.mounted) Navigator.of(context).pop();
+                  if (should && context.mounted) nav.pop();
                 },
                 style: IconButton.styleFrom(
                   backgroundColor: cs.surfaceContainerHighest.withValues(alpha: 0.5),

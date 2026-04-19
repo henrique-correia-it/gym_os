@@ -36,6 +36,7 @@ class DashboardScreen extends ConsumerWidget {
 
     final selectedDate = ref.watch(selectedDateProvider);
 
+
     final dateString =
         DateFormat('EEEE, d MMM').format(selectedDate).toUpperCase();
 
