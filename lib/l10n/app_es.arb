@@ -1,0 +1,1830 @@
+{
+  "@@locale": "es",
+  "dashboardTitle": "Panel",
+  "@dashboardTitle": {
+    "description": "Main screen title"
+  },
+  "meals": "Comidas",
+  "@meals": {
+    "description": "Meals section header"
+  },
+  "tools": "Herramientas",
+  "@tools": {
+    "description": "Tools screen title"
+  },
+  "utilities": "Utilidades",
+  "@utilities": {
+    "description": "Tools screen subtitle"
+  },
+  "weight": "Peso",
+  "@weight": {
+    "description": "Body weight label"
+  },
+  "history": "Ver historial",
+  "@history": {
+    "description": "Button to view history"
+  },
+  "imc": "IMC",
+  "@imc": {
+    "description": "Body Mass Index"
+  },
+  "addFood": "Añadir Alimento",
+  "@addFood": {
+    "description": "Button to add food"
+  },
+  "viewDiary": "Ver Diario",
+  "@viewDiary": {
+    "description": "Button to view daily log"
+  },
+  "readOnly": "Solo Lectura",
+  "@readOnly": {
+    "description": "Warning when day is not editable"
+  },
+  "toolsWeightHistory": "Historial de Peso",
+  "@toolsWeightHistory": {
+    "description": "Weight tool title"
+  },
+  "toolsWeightHistorySub": "Registra y sigue tu evolución corporal",
+  "@toolsWeightHistorySub": {
+    "description": "Weight tool description"
+  },
+  "toolsBatchCalc": "Calculadora de Lotes",
+  "@toolsBatchCalc": {
+    "description": "Batch cooking tool title"
+  },
+  "toolsBatchCalcSub": "Calcula macros de comida cocinada",
+  "@toolsBatchCalcSub": {
+    "description": "Batch cooking tool description"
+  },
+  "toolsCereal": "Calculadora de Papillas",
+  "@toolsCereal": {
+    "description": "Cereal tool title"
+  },
+  "toolsCerealSub": "Mezcla perfecta de Cereales y Líquidos",
+  "@toolsCerealSub": {
+    "description": "Cereal tool description"
+  },
+  "toolsWorkout": "Plan de Entrenamiento",
+  "@toolsWorkout": {
+    "description": "Workout tool title"
+  },
+  "toolsWorkoutSub": "Gestiona tus rutinas y exporta a PDF",
+  "@toolsWorkoutSub": {
+    "description": "Workout tool description"
+  },
+  "navHome": "Inicio",
+  "@navHome": {
+    "description": "Navigation label for home screen"
+  },
+  "navDiet": "Dieta",
+  "@navDiet": {
+    "description": "Navigation label for diet screen"
+  },
+  "navWorkout": "Entreno",
+  "@navWorkout": { "description": "Navigation label for workout screen" },
+  "navTools": "Herr.",
+  "@navTools": {
+    "description": "Navigation label for tools"
+  },
+  "navProfile": "Perfil",
+  "@navProfile": {
+    "description": "Navigation label for profile"
+  },
+  "error": "Error",
+  "@error": {
+    "description": "Generic error label"
+  },
+  "cancel": "CANCELAR",
+  "@cancel": {
+    "description": "Cancel button in caps"
+  },
+  "save": "GUARDAR",
+  "@save": {
+    "description": "Save button in caps"
+  },
+  "delete": "BORRAR",
+  "@delete": {
+    "description": "Delete button in caps"
+  },
+  "confirm": "CONFIRMAR",
+  "@confirm": {
+    "description": "Confirm button"
+  },
+  "required": "Obligatorio",
+  "@required": {
+    "description": "Required field validation message"
+  },
+  "remaining": "restan",
+  "@remaining": {
+    "description": "Remaining calories"
+  },
+  "exceeded": "excedido",
+  "@exceeded": {
+    "description": "Exceeded calories"
+  },
+  "goal": "Meta",
+  "@goal": {
+    "description": "Caloric goal"
+  },
+  "consumed": "Consumido",
+  "@consumed": {
+    "description": "Consumed calories"
+  },
+  "protein": "Proteína",
+  "@protein": {
+    "description": "Protein macronutrient"
+  },
+  "carbs": "Carbohidratos",
+  "@carbs": {
+    "description": "Carbohydrate macronutrient"
+  },
+  "fat": "Grasas",
+  "@fat": {
+    "description": "Fat macronutrient"
+  },
+  "proteinShort": "P",
+  "@proteinShort": {
+    "description": "Short label for Protein"
+  },
+  "carbsShort": "C",
+  "@carbsShort": {
+    "description": "Short label for Carbs"
+  },
+  "fatShort": "G",
+  "@fatShort": {
+    "description": "Short label for Fat"
+  },
+  "noMealsRegistered": "Sin comidas registradas",
+  "@noMealsRegistered": {
+    "description": "Placeholder when no meals"
+  },
+  "deleteMealTitle": "¿Borrar Comida?",
+  "@deleteMealTitle": {
+    "description": "Confirmation dialog title"
+  },
+  "deleteMealMessage": "Vas a eliminar '{name}' de este día.",
+  "@deleteMealMessage": {
+    "description": "Confirmation message",
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "mealRemoved": "Comida eliminada",
+  "@mealRemoved": {
+    "description": "Success toast for removing meal"
+  },
+  "errorRemoving": "Error al eliminar",
+  "@errorRemoving": {
+    "description": "Error toast for removing"
+  },
+  "edit": "Editar {name}",
+  "@edit": {
+    "description": "Edit title",
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "quantity": "Cantidad ({unit})",
+  "@quantity": {
+    "description": "Quantity label",
+    "placeholders": {
+      "unit": {}
+    }
+  },
+  "updated": "¡Actualizado!",
+  "@updated": {
+    "description": "Success toast for update"
+  },
+  "mealBreakfast": "Desayuno",
+  "@mealBreakfast": {
+    "description": "Meal type"
+  },
+  "mealLunch": "Almuerzo",
+  "@mealLunch": {
+    "description": "Meal type"
+  },
+  "mealSnack": "Merienda",
+  "@mealSnack": {
+    "description": "Meal type"
+  },
+  "mealDinner": "Cena",
+  "@mealDinner": {
+    "description": "Meal type"
+  },
+  "mealOthers": "Otros",
+  "@mealOthers": {
+    "description": "Others meal category"
+  },
+  "imcUnderweight": "Bajo Peso",
+  "@imcUnderweight": {
+    "description": "IMC Status"
+  },
+  "imcNormal": "Normal",
+  "@imcNormal": {
+    "description": "IMC Status"
+  },
+  "imcOverweight": "Sobrepeso",
+  "@imcOverweight": {
+    "description": "IMC Status"
+  },
+  "imcObese": "Obesidad",
+  "@imcObese": {
+    "description": "IMC Status"
+  },
+  "defaultUserNameAthlete": "Atleta",
+  "@defaultUserNameAthlete": {
+    "description": "Default user name if not set"
+  },
+  "defaultUserName": "Usuario",
+  "@defaultUserName": {
+    "description": "Default generic user name"
+  },
+  "searchPlaceholder": "¿Qué vas a comer hoy?",
+  "@searchPlaceholder": {
+    "description": "Search bar placeholder"
+  },
+  "searchEmptyTitle": "Busca alimentos online o\nen tu base de datos.",
+  "@searchEmptyTitle": {
+    "description": "Message when no results"
+  },
+  "createFood": "Crear '{name}'",
+  "@createFood": {
+    "description": "Create food button",
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "onlineLabel": "Online",
+  "@onlineLabel": {
+    "description": "API food badge"
+  },
+  "myFoodsLabel": "Mis Alimentos",
+  "@myFoodsLabel": {
+    "description": "Local food badge"
+  },
+  "importAndEdit": "IMPORTAR Y EDITAR",
+  "@importAndEdit": {
+    "description": "Swipe action for API foods"
+  },
+  "editAction": "EDITAR",
+  "@editAction": {
+    "description": "Swipe action for local foods"
+  },
+  "addToDiary": "AÑADIR AL DIARIO",
+  "@addToDiary": {
+    "description": "Button to add meal"
+  },
+  "foodAdded": "¡{name} añadido!",
+  "@foodAdded": {
+    "description": "Success toast",
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "foodDeleted": "{name} borrado.",
+  "@foodDeleted": {
+    "description": "Toast for deleting food",
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "imported": "¡Importado! Abriendo editor...",
+  "@imported": {
+    "description": "Toast for API import"
+  },
+  "errorConnection": "Error de conexión: Verifica tu internet.",
+  "@errorConnection": {
+    "description": "API connection error"
+  },
+  "diary": "Diario",
+  "@diary": {
+    "description": "Planner screen subtitle"
+  },
+  "feeding": "Alimentación",
+  "@feeding": {
+    "description": "Planner screen title"
+  },
+  "createFoodTitle": "Crear Alimento",
+  "@createFoodTitle": {
+    "description": "Title when creating"
+  },
+  "editFoodTitle": "Editar Alimento",
+  "@editFoodTitle": {
+    "description": "Title when editing"
+  },
+  "foodName": "Nombre del Alimento",
+  "@foodName": {
+    "description": "Name field"
+  },
+  "unit100g": "100g",
+  "@unit100g": {
+    "description": "Unit of measure"
+  },
+  "unit1Unit": "1 Unidad",
+  "@unit1Unit": {
+    "description": "Unit of measure"
+  },
+  "macrosHint": "Macros (Puedes usar comas)",
+  "@macrosHint": {
+    "description": "Hint above macro fields"
+  },
+  "kcal": "Kcal",
+  "@kcal": {
+    "description": "Calories label"
+  },
+  "saveChanges": "GUARDAR CAMBIOS",
+  "@saveChanges": {
+    "description": "Save edit button"
+  },
+  "createFoodAction": "CREAR ALIMENTO",
+  "@createFoodAction": {
+    "description": "Create button"
+  },
+  "duplicateFoodTitle": "Alimento Repetido",
+  "@duplicateFoodTitle": {
+    "description": "Duplicate dialog title"
+  },
+  "duplicateFoodMessage": "Ya existe un registro llamado '{name}'.\n¿Deseas reemplazar los valores antiguos por los nuevos?",
+  "@duplicateFoodMessage": {
+    "description": "Dialog message",
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "replace": "REEMPLAZAR",
+  "@replace": {
+    "description": "Replace button"
+  },
+  "foodSaved": "¡Alimento guardado!",
+  "@foodSaved": {
+    "description": "Success toast"
+  },
+  "configuration": "Configuración",
+  "@configuration": {
+    "description": "Configuration subtitle"
+  },
+  "profileAndGoals": "Perfil y Metas",
+  "@profileAndGoals": {
+    "description": "Profile screen title"
+  },
+  "dailyGoal": "META DIARIA",
+  "@dailyGoal": {
+    "description": "Daily goal label"
+  },
+  "bmr": "Basal (TMB)",
+  "@bmr": {
+    "description": "Basal metabolic rate"
+  },
+  "tdee": "Gasto Total (TDEE)",
+  "@tdee": {
+    "description": "Total daily energy expenditure"
+  },
+  "fieldName": "Nombre (Apodo)",
+  "@fieldName": {
+    "description": "Name field"
+  },
+  "fieldHeight": "Altura (cm)",
+  "@fieldHeight": {
+    "description": "Height field"
+  },
+  "currentWeight": "Peso Actual (kg)",
+  "@currentWeight": {
+    "description": "Weight field"
+  },
+  "birthDate": "Fecha de Nacimiento",
+  "@birthDate": {
+    "description": "Birth date field"
+  },
+  "birthDateRequired": "¡Fecha de nacimiento obligatoria!",
+  "@birthDateRequired": {
+    "description": "Validation error"
+  },
+  "years": "{count} años",
+  "@years": {
+    "description": "Age in years",
+    "placeholders": {
+      "count": {}
+    }
+  },
+  "activityLevel": "Nivel de Actividad",
+  "@activityLevel": {
+    "description": "Activity field"
+  },
+  "activitySedentary": "Sedentario",
+  "@activitySedentary": {
+    "description": "Activity option"
+  },
+  "activityLight": "Ligero (1-3x/sem)",
+  "@activityLight": {
+    "description": "Activity option"
+  },
+  "activityModerate": "Moderado (3-5x/sem)",
+  "@activityModerate": {
+    "description": "Activity option"
+  },
+  "activityIntense": "Intenso (6-7x/sem)",
+  "@activityIntense": {
+    "description": "Activity option"
+  },
+  "activityAthlete": "Atleta (Doble sesión)",
+  "@activityAthlete": {
+    "description": "Activity option"
+  },
+  "caloricAdjustment": "Ajuste Calórico",
+  "@caloricAdjustment": {
+    "description": "Adjustment field"
+  },
+  "adjustmentHint": "Ej: -300 (Déficit), +200 (Volumen)",
+  "@adjustmentHint": {
+    "description": "Caloric adjustment hint"
+  },
+  "macroSettings": "Metas de Macronutrientes",
+  "@macroSettings": {
+    "description": "Macro settings button"
+  },
+  "macroSettingsHint": "Ajustar % de Prot / Carb / Gras",
+  "@macroSettingsHint": {
+    "description": "Macro button hint"
+  },
+  "saveProfile": "GUARDAR PERFIL",
+  "@saveProfile": {
+    "description": "Save profile button"
+  },
+  "profileSaved": "¡Perfil guardado y meta actualizada!",
+  "@profileSaved": {
+    "description": "Success toast"
+  },
+  "male": "Masc.",
+  "@male": {
+    "description": "Male gender"
+  },
+  "female": "Fem.",
+  "@female": {
+    "description": "Female gender"
+  },
+  "macroDistribution": "División de Macros",
+  "@macroDistribution": {
+    "description": "Macro screen title"
+  },
+  "totalDistribution": "Total de la Distribución",
+  "@totalDistribution": {
+    "description": "Total label"
+  },
+  "mustBe100": "La suma debe ser exactamente 100%",
+  "@mustBe100": {
+    "description": "Validation error"
+  },
+  "saveSettings": "GUARDAR AJUSTES",
+  "@saveSettings": {
+    "description": "Save button"
+  },
+  "goalsUpdated": "¡Metas actualizadas!",
+  "@goalsUpdated": {
+    "description": "Success toast"
+  },
+  "preferences": "Preferencias",
+  "@preferences": {
+    "description": "Settings subtitle"
+  },
+  "settings": "Ajustes",
+  "@settings": {
+    "description": "Settings title"
+  },
+  "general": "General",
+  "@general": {
+    "description": "General section"
+  },
+  "language": "Idioma",
+  "@language": {
+    "description": "Language label"
+  },
+  "languageSubtitle": "Language / Idioma",
+  "@languageSubtitle": {
+    "description": "Multilingual subtitle"
+  },
+  "appearance": "Apariencia",
+  "@appearance": {
+    "description": "Appearance section"
+  },
+  "themeLight": "Claro",
+  "@themeLight": {
+    "description": "Light theme"
+  },
+  "themeDark": "Oscuro",
+  "@themeDark": {
+    "description": "Dark theme"
+  },
+  "themeAmoled": "Negro",
+  "@themeAmoled": {
+    "description": "Black theme"
+  },
+  "dataBackup": "Datos y Copia de Seguridad",
+  "@dataBackup": {
+    "description": "Data section"
+  },
+  "exportData": "Exportar Datos",
+  "@exportData": {
+    "description": "Export title"
+  },
+  "exportDataSub": "Guardar copia en un archivo",
+  "@exportDataSub": {
+    "description": "Export subtitle"
+  },
+  "importData": "Importar Datos",
+  "@importData": {
+    "description": "Import title"
+  },
+  "importDataSub": "Restaurar copia (Borra actual)",
+  "@importDataSub": {
+    "description": "Import subtitle"
+  },
+  "about": "Acerca de",
+  "@about": {
+    "description": "About section"
+  },
+  "version": "Versión",
+  "@version": {
+    "description": "Version label"
+  },
+  "importWarningTitle": "¡Atención!",
+  "@importWarningTitle": {
+    "description": "Import warning title"
+  },
+  "importWarningMessage": "Esto BORRARÁ todos los datos actuales y los reemplazará con la copia.\n¿Estás seguro?",
+  "@importWarningMessage": {
+    "description": "Warning message"
+  },
+  "yesRestore": "Sí, Restaurar",
+  "@yesRestore": {
+    "description": "Confirm restore"
+  },
+  "dataRestored": "¡Datos restaurados!\nReiniciando...",
+  "@dataRestored": {
+    "description": "Success toast"
+  },
+  "corruptFile": "El archivo está corrupto o es inválido.",
+  "@corruptFile": {
+    "description": "File error"
+  },
+  "toolsBatchManager": "Ajustar Lotes",
+  "@toolsBatchManager": {
+    "description": "Tool title"
+  },
+  "toolsBatchManagerSub": "Edita los ingredientes de lotes ya creados",
+  "@toolsBatchManagerSub": {
+    "description": "Tool description"
+  },
+  "toolsOneRepMax": "Cálculo 1RM (Fuerza)",
+  "@toolsOneRepMax": {
+    "description": "Tool title"
+  },
+  "toolsOneRepMaxSub": "Estima tu carga máxima y porcentajes",
+  "@toolsOneRepMaxSub": {
+    "description": "Tool description"
+  },
+  "toolsLoadTracker": "Progresión de Cargas",
+  "@toolsLoadTracker": {
+    "description": "Tool title"
+  },
+  "toolsLoadTrackerSub": "Monitoriza tu aumento de fuerza por ejercicio",
+  "@toolsLoadTrackerSub": {
+    "description": "Tool description"
+  },
+  "toolsRealWeight": "Calculadora de Peso Real",
+  "@toolsRealWeight": {
+    "description": "Tool title"
+  },
+  "toolsRealWeightSub": "Calibra el peso de tu báscula basado en el peso real",
+  "@toolsRealWeightSub": {
+    "description": "Tool description"
+  },
+  "newRecord": "Nuevo Registro",
+  "@newRecord": {
+    "description": "New weight record title"
+  },
+  "confirmWeight": "CONFIRMAR PESO",
+  "@confirmWeight": {
+    "description": "Confirm weight button"
+  },
+  "evolution": "Evolución",
+  "@evolution": {
+    "description": "Subtitle"
+  },
+  "weightAnalysis": "Análisis de Peso",
+  "@weightAnalysis": {
+    "description": "Title"
+  },
+  "register": "REGISTRAR",
+  "@register": {
+    "description": "Register button"
+  },
+  "noWeightRecords": "Sin registros de peso.",
+  "@noWeightRecords": {
+    "description": "Empty placeholder"
+  },
+  "recentHistory": "HISTORIAL RECIENTE",
+  "@recentHistory": {
+    "description": "History title"
+  },
+  "myWorkouts": "Mis Entrenamientos",
+  "@myWorkouts": {
+    "description": "Workouts screen title"
+  },
+  "newWorkout": "NUEVO ENTRENAMIENTO",
+  "@newWorkout": {
+    "description": "New workout button"
+  },
+  "createFirstRoutine": "Crea tu primera rutina de entrenamiento",
+  "@createFirstRoutine": {
+    "description": "Empty placeholder"
+  },
+  "workoutEmptyTitle": "¿Listo para entrenar?",
+  "@workoutEmptyTitle": {
+    "description": "Workout empty state title"
+  },
+  "workoutEmptySubtitle": "Crea tu primer plan personalizado o empieza rápido con uno de nuestros templates.",
+  "@workoutEmptySubtitle": {
+    "description": "Workout empty state subtitle"
+  },
+  "workoutEmptyCreateOwn": "Crear desde cero",
+  "@workoutEmptyCreateOwn": {
+    "description": "Create workout from scratch button"
+  },
+  "workoutEmptyUseTemplate": "Usar un template",
+  "@workoutEmptyUseTemplate": {
+    "description": "Use template button"
+  },
+  "tapToEdit": "Toca para editar o exportar PDF",
+  "@tapToEdit": {
+    "description": "List subtitle"
+  },
+  "deletePlanTitle": "Borrar Plan",
+  "@deletePlanTitle": {
+    "description": "Confirmation title"
+  },
+  "deletePlanMessage": "¿Realmente quieres eliminar '{name}'?",
+  "@deletePlanMessage": {
+    "description": "Confirmation message",
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "renameSession": "Renombrar Sesión",
+  "@renameSession": {
+    "description": "Rename title"
+  },
+  "addExercise": "Añadir Ejercicio",
+  "@addExercise": {
+    "description": "Add exercise title"
+  },
+  "add": "AÑADIR",
+  "@add": {
+    "description": "Add button"
+  },
+  "session": "SESIÓN",
+  "@session": {
+    "description": "Session label"
+  },
+  "noExercises": "Sin ejercicios",
+  "@noExercises": {
+    "description": "Empty placeholder"
+  },
+  "addFirst": "Añadir Primero",
+  "@addFirst": {
+    "description": "Button to add first exercise"
+  },
+  "addExerciseAction": "AÑADIR EJERCICIO",
+  "@addExerciseAction": {
+    "description": "Add exercise button"
+  },
+  "loads": "Cargas",
+  "@loads": {
+    "description": "Load tracker title"
+  },
+  "selectExercise": "Selecciona el ejercicio",
+  "@selectExercise": {
+    "description": "Dropdown hint"
+  },
+  "newSet": "NUEVA SERIE",
+  "@newSet": {
+    "description": "New set label"
+  },
+  "recordProgress": "REGISTRAR PROGRESO",
+  "@recordProgress": {
+    "description": "Record button"
+  },
+  "loadEvolution": "EVOLUCIÓN DE CARGA",
+  "@loadEvolution": {
+    "description": "Chart title"
+  },
+  "realWeight": "Peso Real",
+  "@realWeight": {
+    "description": "Screen title"
+  },
+  "oneRepMaxCalc": "Cálculo 1RM",
+  "@oneRepMaxCalc": {
+    "description": "Screen title"
+  },
+  "testPerformed": "TEST REALIZADO",
+  "@testPerformed": {
+    "description": "Test label"
+  },
+  "intensity": "Intensidad",
+  "@intensity": {
+    "description": "Intensity column"
+  },
+  "loadAndReps": "Carga y Reps",
+  "@loadAndReps": {
+    "description": "Load and reps column"
+  },
+  "finalAdjustment": "Ajuste Final y Confirmar",
+  "@finalAdjustment": {
+    "description": "Final adjustment title in cereal calculator"
+  },
+  "batchCalcTitle": "Calculadora",
+  "@batchCalcTitle": {
+    "description": "Batch cooking tool title"
+  },
+  "batchCalcAdjust": "Ajustar",
+  "@batchCalcAdjust": {
+    "description": "Batch cooking adjust mode"
+  },
+  "batchCalcMarmita": "Lote",
+  "@batchCalcMarmita": {
+    "description": "Batch cooking normal mode"
+  },
+  "batchCalcNameHint": "Nombre de la Receta",
+  "@batchCalcNameHint": {
+    "description": "Hint for recipe name"
+  },
+  "batchCalcYield": "RINDE",
+  "@batchCalcYield": {
+    "description": "Label for portions"
+  },
+  "batchCalcDoses": "DOSIS",
+  "@batchCalcDoses": {
+    "description": "Label for doses"
+  },
+  "batchCalcPerDose": "POR DOSIS",
+  "@batchCalcPerDose": {
+    "description": "Label for per dose macros"
+  },
+  "batchCalcIngredients": "Ingredientes",
+  "@batchCalcIngredients": {
+    "description": "Header for ingredients"
+  },
+  "batchCalcItems": "{count} ítems",
+  "@batchCalcItems": {
+    "description": "Count of ingredients",
+    "placeholders": {
+      "count": {}
+    }
+  },
+  "batchCalcAdd": "AÑADIR",
+  "@batchCalcAdd": {
+    "description": "Add button"
+  },
+  "batchCalcSaveAdjustments": "GUARDAR AJUSTES",
+  "@batchCalcSaveAdjustments": {
+    "description": "Save button"
+  },
+  "batchCalcSearchIngredient": "Buscar Ingrediente",
+  "@batchCalcSearchIngredient": {
+    "description": "Search hint"
+  },
+  "batchCalcEditIngredient": "Editar {name}",
+  "@batchCalcEditIngredient": {
+    "description": "Modal title",
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "batchCalcNoIngredients": "¡Añade ingredientes primero!",
+  "@batchCalcNoIngredients": {
+    "description": "Error message"
+  },
+  "batchCalcNameRequired": "¡Dale un nombre al lote!",
+  "@batchCalcNameRequired": {
+    "description": "Error message"
+  },
+  "batchCalcDosesError": "¡El número de dosis debe ser mayor que 0!",
+  "@batchCalcDosesError": {
+    "description": "Error message"
+  },
+  "cerealCalcCalorieGoal": "META DE CALORÍAS",
+  "@cerealCalcCalorieGoal": {
+    "description": "Label for goal"
+  },
+  "cerealCalcCereal": "Cereal",
+  "@cerealCalcCereal": {
+    "description": "Label for cereal input"
+  },
+  "cerealCalcLiquid": "Líquido",
+  "@cerealCalcLiquid": {
+    "description": "Label for liquid input"
+  },
+  "cerealCalcWater": "Agua",
+  "@cerealCalcWater": {
+    "description": "Label for water"
+  },
+  "cerealCalcSelect": "Seleccionar",
+  "@cerealCalcSelect": {
+    "description": "Placeholder"
+  },
+  "cerealCalcAdjustVolume": "¿Ajustar Volumen Líquido?",
+  "@cerealCalcAdjustVolume": {
+    "description": "Switch label"
+  },
+  "cerealCalcAdjustVolumeSub": "Define la cantidad total del bol",
+  "@cerealCalcAdjustVolumeSub": {
+    "description": "Switch subtitle"
+  },
+  "cerealCalcTotalVolume": "Volumen Total",
+  "@cerealCalcTotalVolume": {
+    "description": "Input label"
+  },
+  "cerealCalcCalculatedRecipe": "RECETA CALCULADA",
+  "@cerealCalcCalculatedRecipe": {
+    "description": "Section header"
+  },
+  "cerealCalcEstimate": "Estimación: {kcal} kcal",
+  "@cerealCalcEstimate": {
+    "description": "Calorie estimate",
+    "placeholders": {
+      "kcal": {}
+    }
+  },
+  "cerealCalcConfigureFirst": "¡Configura la receta primero!",
+  "@cerealCalcConfigureFirst": {
+    "description": "Error message"
+  },
+  "cerealCalcAddAsDose": "AÑADIR COMO 1 DOSIS",
+  "@cerealCalcAddAsDose": {
+    "description": "Button label"
+  },
+  "cerealCalcAdded": "¡Receta añadida (1 un)!",
+  "@cerealCalcAdded": {
+    "description": "Success toast"
+  },
+  "cerealCalcChooseLiquid": "Elegir Líquido",
+  "@cerealCalcChooseLiquid": {
+    "description": "Modal title"
+  },
+  "cerealCalcChooseCereal": "Elegir Cereal",
+  "@cerealCalcChooseCereal": {
+    "description": "Modal title"
+  },
+  "exerciseName": "Nombre del Ejercicio",
+  "@exerciseName": {
+    "description": "Label for exercise name input"
+  },
+  "sets": "Series",
+  "@sets": {
+    "description": "Label for sets count"
+  },
+  "reps": "Reps",
+  "@reps": {
+    "description": "Label for repetitions count"
+  },
+  "restSeconds": "Descanso (s)",
+  "@restSeconds": {
+    "description": "Label for rest time in seconds"
+  },
+  "weightKg": "Carga (kg)",
+  "@weightKg": {
+    "description": "Label for weight in kg"
+  },
+  "notes": "Notas",
+  "@notes": {
+    "description": "Label for notes field"
+  },
+  "addSet": "Añadir Serie",
+  "@addSet": {
+    "description": "Button label to add a set"
+  },
+  "yearsOld": "{age} años",
+  "@yearsOld": {
+    "description": "Idade em anos",
+    "placeholders": {
+      "age": {}
+    }
+  },
+  "birthDateLabel": "Fecha de Nacimiento",
+  "@birthDateLabel": {
+    "description": "Label do input de data"
+  },
+  "currentWeightLabel": "Peso Actual (kg)",
+  "@currentWeightLabel": {
+    "description": "Label do input de peso"
+  },
+  "macroSettingsTitle": "Metas de Macronutrientes",
+  "@macroSettingsTitle": {
+    "description": "Título do botão de macros"
+  },
+  "macroSettingsSubtitle": "Ajustar % de Prot / Carb / Gras",
+  "@macroSettingsSubtitle": {
+    "description": "Subtítulo do botão de macros"
+  },
+  "duplicateFoodMsg": "Ya existe un registro llamado '{name}'. ¿Deseas reemplazar los valores antiguos por los nuevos?",
+  "@duplicateFoodMsg": {
+    "description": "Mensagem de duplicado",
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "sourceMarmita": "Calc. Lotes",
+  "@sourceMarmita": {
+    "description": "Origem da comida calculada"
+  },
+  "ingredientType": "Ingrediente",
+  "@ingredientType": {
+    "description": "Tipo de refeição para ingredientes"
+  },
+  "others": "Otros",
+  "@others": {
+    "description": "Categoria genérica"
+  },
+  "unitKcal": "kcal",
+  "@unitKcal": {
+    "description": "Unidade de quilocalorias"
+  },
+  "unitG": "g",
+  "@unitG": {
+    "description": "Unidade de gramas"
+  },
+  "unitUn": "un",
+  "@unitUn": {
+    "description": "Unidade"
+  },
+  "weightHistoryTitle": "Historial de Peso",
+  "@weightHistoryTitle": {
+    "description": "Título do ecrã de histórico de peso"
+  },
+  "weightHistoryNoData": "Sin datos suficientes para el gráfico.",
+  "@weightHistoryNoData": {
+    "description": "Mensagem de estado vazio para gráfico de peso"
+  },
+  "batchManagerTitle": "Gestionar Lotes",
+  "@batchManagerTitle": {
+    "description": "Título da ferramenta de gestão de marmitas"
+  },
+  "batchManagerIngredients": "Ingredientes",
+  "@batchManagerIngredients": {
+    "description": "Cabeçalho da secção de ingredientes"
+  },
+  "loadTrackerTitle": "Evolución de Cargas",
+  "@loadTrackerTitle": {
+    "description": "Título do ecrã de evolução de cargas"
+  },
+  "loadTrackerExercise": "Ejercicio",
+  "@loadTrackerExercise": {
+    "description": "Label de exercício"
+  },
+  "loadTrackerWeight": "Carga (kg)",
+  "@loadTrackerWeight": {
+    "description": "Label de peso/carga"
+  },
+  "loadTrackerReps": "Repeticiones",
+  "@loadTrackerReps": {
+    "description": "Label de repetições"
+  },
+  "loadTrackerChart": "Gráfico de Evolución",
+  "@loadTrackerChart": {
+    "description": "Título do gráfico de progresso"
+  },
+  "oneRmTitle": "Calculadora 1RM",
+  "@oneRmTitle": {
+    "description": "Título do ecrã de calculadora 1RM"
+  },
+  "oneRmCalculate": "CALCULAR 1RM",
+  "@oneRmCalculate": {
+    "description": "Botão de calcular 1RM"
+  },
+  "oneRmResult": "Tu 1RM Estimado",
+  "@oneRmResult": {
+    "description": "Label do resultado 1RM"
+  },
+  "oneRmInstructions": "Introduce una carga y cuántas repeticiones puedes hacer con ella.",
+  "@oneRmInstructions": {
+    "description": "Instruções da calculadora 1RM"
+  },
+  "realWeightTitle": "Peso Real vs Báscula",
+  "@realWeightTitle": {
+    "description": "Título da calculadora de peso real"
+  },
+  "realWeightExplanation": "Usa esto para calibrar la diferencia entre pesajes en ayunas y pesajes durante el día.",
+  "@realWeightExplanation": {
+    "description": "Texto explicativo do peso real"
+  },
+  "realWeightScale": "Peso en Báscula",
+  "@realWeightScale": {
+    "description": "Label de peso na balança"
+  },
+  "realWeightTrue": "Peso Real Estimado",
+  "@realWeightTrue": {
+    "description": "Label de peso real estimado"
+  },
+  "dietTitle": "Dieta",
+  "@dietTitle": {
+    "description": "Título da secção de dieta"
+  },
+  "dietNutrition": "Nutrición",
+  "@dietNutrition": {
+    "description": "Label de alimentação"
+  },
+  "mealPreWorkout": "Pre-Entreno",
+  "@mealPreWorkout": {
+    "description": "Tipo de refeição pré-treino"
+  },
+  "mealPostWorkout": "Post-Entreno",
+  "@mealPostWorkout": {
+    "description": "Tipo de refeição pós-treino"
+  },
+  "workoutNewPlan": "Nuevo Plan",
+  "@workoutNewPlan": {
+    "description": "Default new plan name"
+  },
+  "workoutSessionDefault": "Sesión",
+  "@workoutSessionDefault": {
+    "description": "Default session name prefix"
+  },
+  "workoutRename": "Renombrar Sesión",
+  "@workoutRename": {
+    "description": "Rename dialog title"
+  },
+  "workoutNameHint": "Nombre (ej: Empuje, Pierna)",
+  "@workoutNameHint": {
+    "description": "Rename dialog hint"
+  },
+  "workoutAddExerciseTitle": "Añadir Ejercicio",
+  "@workoutAddExerciseTitle": {
+    "description": "Dialog title"
+  },
+  "workoutExerciseName": "Nombre del Ejercicio",
+  "@workoutExerciseName": {
+    "description": "Input hint"
+  },
+  "workoutPdfFooter": "Generado por GymOS • ¡Mantente fuerte!",
+  "@workoutPdfFooter": {
+    "description": "Footer text in PDF"
+  },
+  "workoutSaveSuccess": "¡Plan guardado con éxito!",
+  "@workoutSaveSuccess": {
+    "description": "Toast message"
+  },
+  "workoutSaveError": "Error al guardar",
+  "@workoutSaveError": {
+    "description": "Error message"
+  },
+  "workoutPlanNameHint": "Nombre del Plan",
+  "@workoutPlanNameHint": {
+    "description": "Plan name input hint"
+  },
+  "workoutExportPdf": "Exportar PDF",
+  "@workoutExportPdf": {
+    "description": "Button tooltip"
+  },
+  "workoutNewSession": "Nueva Sesión",
+  "@workoutNewSession": {
+    "description": "Button tooltip"
+  },
+  "workoutDeleteSession": "Borrar Sesión",
+  "@workoutDeleteSession": {
+    "description": "Button tooltip"
+  },
+  "workoutAddFirst": "Añadir Primero",
+  "@workoutAddFirst": {
+    "description": "Button text"
+  },
+  "workoutMinDays": "El plan debe tener al menos 1 día.",
+  "@workoutMinDays": {
+    "description": "Validation error"
+  },
+  "workoutNameRequired": "¡Ponle nombre al plan!",
+  "@workoutNameRequired": {
+    "description": "Validation error"
+  },
+  "rwCalibration": "1. CALIBRACIÓN (BÁSCULA VS REAL)",
+  "@rwCalibration": {
+    "description": "Section 1 Title"
+  },
+  "rwRealWeightShop": "Peso Real (Referencia)",
+  "@rwRealWeightShop": {
+    "description": "Input label"
+  },
+  "rwScaleWeight": "En Tu Báscula",
+  "@rwScaleWeight": {
+    "description": "Input label"
+  },
+  "rwGoal": "2. TU OBJETIVO",
+  "@rwGoal": {
+    "description": "Section 2 Title"
+  },
+  "rwGoalWeight": "Peso Real deseado al final",
+  "@rwGoalWeight": {
+    "description": "Input label"
+  },
+  "rwInstructions": "INSTRUCCIONES DE PESAJES",
+  "@rwInstructions": {
+    "description": "Card Title"
+  },
+  "rwScaleTarget": "Cuando la báscula marque",
+  "@rwScaleTarget": {
+    "description": "Card Label"
+  },
+  "rwScaleRemove": "Total a restar en báscula",
+  "@rwScaleRemove": {
+    "description": "Card Label"
+  },
+  "rwVerification": "3. VERIFICACIÓN FINAL",
+  "@rwVerification": {
+    "description": "Section 3 Title"
+  },
+  "rwScaleRemovedActual": "¿Cuánto has restado?",
+  "@rwScaleRemovedActual": {
+    "description": "Input label"
+  },
+  "rwResultReal": "RESULTADO REAL OBTENIDO",
+  "@rwResultReal": {
+    "description": "Card Title"
+  },
+  "rwFinalWeight": "Peso real final",
+  "@rwFinalWeight": {
+    "description": "Card Label"
+  },
+  "rwRemovedReal": "Peso real perdido",
+  "@rwRemovedReal": {
+    "description": "Card Label"
+  },
+  "ormPureStrength": "Fuerza Pura",
+  "@ormPureStrength": {
+    "description": "ORM Table Label"
+  },
+  "ormHypertrophy": "Hipertrofia",
+  "@ormHypertrophy": {
+    "description": "ORM Table Label"
+  },
+  "ormEndurance": "Resistencia",
+  "@ormEndurance": {
+    "description": "ORM Table Label"
+  },
+  "ormExplosion": "Cardio/Explosión",
+  "@ormExplosion": {
+    "description": "ORM Table Label"
+  },
+  "ormFillData": "Rellena los datos de arriba\npara generar la tabla.",
+  "@ormFillData": {
+    "description": "Empty State"
+  },
+  "backupShareText": "Copia de seguridad GymOS",
+  "@backupShareText": {
+    "description": "Text when sharing file"
+  },
+  "setSaved": "¡Serie registrada!",
+  "@setSaved": {
+    "description": "Success message when set is saved"
+  },
+  "recordDeleted": "Registro borrado",
+  "@recordDeleted": {
+    "description": "Message when a record is deleted"
+  },
+  "startBySelecting": "Empieza seleccionando un ejercicio\npara ver tu progreso.",
+  "@startBySelecting": {
+    "description": "Empty state instruction"
+  },
+  "batchEmpty": "No se encontraron lotes",
+  "@batchEmpty": {
+    "description": "Empty state for batch list"
+  },
+  "batchDeleteTitle": "Borrar Lote",
+  "@batchDeleteTitle": {
+    "description": "Title for delete confirmation dialog"
+  },
+  "batchDeleteConfirm": "¿Estás seguro de que quieres eliminar la receta '{name}'?",
+  "@batchDeleteConfirm": {
+    "placeholders": {
+      "name": {}
+    },
+    "description": "Confirmation message for deleting a batch"
+  },
+  "cerealCalcEditIngredients": "Ingredientes (Editar)",
+  "@cerealCalcEditIngredients": {
+    "description": "Buton de editar ingredientes"
+  },
+  "mealSupper": "Recena",
+  "@mealSupper": {
+    "description": "Meal type: Supper/Late Snack"
+  },
+  "copyMealsToTomorrow": "Copiar comidas para mañana",
+  "@copyMealsToTomorrow": {
+    "description": "Menu option to copy meals"
+  },
+  "clearDay": "Limpiar día",
+  "@clearDay": {
+    "description": "Menu option to clear day"
+  },
+  "clearDayTitle": "¿Limpiar día?",
+  "@clearDayTitle": {
+    "description": "Dialog title"
+  },
+  "clearDayMessage": "Esto borrará todas las comidas de este día. Esta acción no se puede deshacer.",
+  "@clearDayMessage": {
+    "description": "Dialog message"
+  },
+  "deleteAll": "Borrar Todo",
+  "@deleteAll": {
+    "description": "Delete all button"
+  },
+  "dayClearedSuccess": "¡Día limpiado con éxito!",
+  "@dayClearedSuccess": {
+    "description": "Success toast"
+  },
+  "errorClearingDay": "Error al limpiar día: {error}",
+  "@errorClearingDay": {
+    "description": "Error toast",
+    "placeholders": {
+      "error": {}
+    }
+  },
+  "tomorrowHasRecords": "Mañana ya tiene registros",
+  "@tomorrowHasRecords": {
+    "description": "Dialog title"
+  },
+  "tomorrowHasRecordsMessage": "El día de mañana ya contiene comidas. ¿Deseas añadir las comidas de hoy a la lista existente?",
+  "@tomorrowHasRecordsMessage": {
+    "description": "Dialog message"
+  },
+  "mealsCopiedSuccess": "¡Comidas de hoy copiadas para mañana con éxito!",
+  "@mealsCopiedSuccess": {
+    "description": "Success toast"
+  },
+  "errorCopying": "Error al copiar: {error}",
+  "@errorCopying": {
+    "description": "Error toast",
+    "placeholders": {
+      "error": {}
+    }
+  },
+  "selectMealError": "Por favor selecciona una comida",
+  "@selectMealError": {
+    "description": "Validation error"
+  },
+  "exportError": "Error al exportar: {error}",
+  "@exportError": {
+    "description": "Error toast",
+    "placeholders": {
+      "error": {}
+    }
+  },
+  "openFileError": "Error al abrir archivo: {error}",
+  "@openFileError": {
+    "description": "Error toast",
+    "placeholders": {
+      "error": {}
+    }
+  },
+  "searchWord": "Buscar...",
+  "@searchWord": {
+    "description": "Search input hint"
+  },
+  "maxStrength": "FUERZA MÁXIMA",
+  "@maxStrength": {
+    "description": "1RM max strength label"
+  },
+  "liquidAdjustMode": "Modo Ajuste Líquido",
+  "@liquidAdjustMode": {
+    "description": "Mode title"
+  },
+  "porridgeOf": "Papilla de {name}",
+  "@porridgeOf": {
+    "description": "Porridge title",
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "workoutDeleted": "Entrenamiento eliminado",
+  "@workoutDeleted": {
+    "description": "Toast message when a workout is deleted"
+  },
+  "criticalDbError": "ERROR CRÍTICO AL INICIAR BD: {error}",
+  "@criticalDbError": {
+    "description": "Mensaje de error crítico al iniciar BD",
+    "placeholders": {
+      "error": {}
+    }
+  },
+  "myFavorites": "Mis Favoritos",
+  "@myFavorites": {
+    "description": "Categoría de alimentos favoritos"
+  },
+  "importDataError": "Error al importar datos: {error}",
+  "@importDataError": {
+    "description": "Error al importar datos",
+    "placeholders": {
+      "error": {}
+    }
+  },
+  "backupRestoredSuccess": "¡Copia de seguridad restaurada con éxito!",
+  "@backupRestoredSuccess": {
+    "description": "Mensaje de éxito al restaurar copia"
+  },
+  "fatalRestoreError": "Error fatal al restaurar copia: {error}",
+  "@fatalRestoreError": {
+    "description": "Error fatal al restaurar copia",
+    "placeholders": {
+      "error": {}
+    }
+  },
+  "versionAlpha": "v1.0.0 Alfa",
+  "@versionAlpha": {
+    "description": "Versión de la app"
+  },
+  "madeWithLove": "Hecho con ❤️ para ti",
+  "@madeWithLove": {
+    "description": "Mensaje de pie de página en ajustes"
+  },
+  "batchCalcShort": "Calc. Lotes",
+  "@batchCalcShort": {
+    "description": "Nombre corto de calculadora de lotes"
+  },
+  "serverError": "Error en el servidor: {code}",
+  "@serverError": {
+    "description": "Error de servidor de API",
+    "placeholders": {
+      "code": {}
+    }
+  },
+  "apiError": "Error de GymOS API: {error}",
+  "@apiError": {
+    "description": "Error genérico de API",
+    "placeholders": {
+      "error": {}
+    }
+  },
+  "breakfastShort": "Desayuno",
+  "@breakfastShort": {
+    "description": "Nombre corto para desayuno"
+  },
+  "loginStatusPreparing": "Preparando tu gimnasio...",
+  "@loginStatusPreparing": {
+    "description": "Description for loginStatusPreparing"
+  },
+  "loginStatusConnecting": "Conectando a Google...",
+  "@loginStatusConnecting": {
+    "description": "Description for loginStatusConnecting"
+  },
+  "loginErrorCancelled": "Sesión cancelada o fallida.",
+  "@loginErrorCancelled": {
+    "description": "Description for loginErrorCancelled"
+  },
+  "loginStatusDownloading": "Descargando tu progreso...",
+  "@loginStatusDownloading": {
+    "description": "Description for loginStatusDownloading"
+  },
+  "loginStatusCreatingProfile": "Creando tu perfil GymOS...",
+  "@loginStatusCreatingProfile": {
+    "description": "Description for loginStatusCreatingProfile"
+  },
+  "loginErrorSync": "Error de sincronización. Verifica tu conexión e intenta nuevamente.",
+  "@loginErrorSync": {
+    "description": "Description for loginErrorSync"
+  },
+  "loginSubtitle": "THE ULTIMATE FITNESS OS",
+  "@loginSubtitle": {
+    "description": "Description for loginSubtitle"
+  },
+  "loginContinueWithGoogle": "CONTINUAR CON GOOGLE",
+  "@loginContinueWithGoogle": {
+    "description": "Description for loginContinueWithGoogle"
+  },
+  "copyMealsTo": "Copiar Comidas",
+  "@copyMealsTo": {
+    "description": "Description for copyMealsTo"
+  },
+  "chooseDestinationDay": "Elige el día de destino para los registros.",
+  "@chooseDestinationDay": {
+    "description": "Description for chooseDestinationDay"
+  },
+  "forToday": "Para Hoy",
+  "@forToday": {
+    "description": "Description for forToday"
+  },
+  "forTomorrow": "Para Mañana",
+  "@forTomorrow": {
+    "description": "Description for forTomorrow"
+  },
+  "targetHasRecordsMessage": "El día de {targetName} ya contiene comidas. ¿Quieres añadir las nuevas a las existentes?",
+  "@targetHasRecordsMessage": {
+    "placeholders": {
+      "targetName": {}
+    },
+    "description": "Description for targetHasRecordsMessage"
+  },
+  "recordsInTarget": "Registros en {targetName}",
+  "@recordsInTarget": {
+    "placeholders": {
+      "targetName": {}
+    },
+    "description": "Description for recordsInTarget"
+  },
+  "mealsCopiedTargetSuccess": "¡Comidas copiadas a {targetName} con éxito!",
+  "@mealsCopiedTargetSuccess": {
+    "placeholders": {
+      "targetName": {}
+    },
+    "description": "Description for mealsCopiedTargetSuccess"
+  },
+  "today": "Hoy",
+  "@today": {
+    "description": "Description for today"
+  },
+  "tomorrow": "Mañana",
+  "@tomorrow": {
+    "description": "Description for tomorrow"
+  },
+  "cancelAction": "Cancelar",
+  "@cancelAction": {
+    "description": "Description for cancelAction"
+  },
+  "macroSmartPresetsTitle": "ESTRATEGIAS RÁPIDAS (PRESETS INTELIGENTES)",
+  "@macroSmartPresetsTitle": {
+    "description": "Description for macroSmartPresetsTitle"
+  },
+  "macroDistributionSection": "DISTRIBUCIÓN DE MACRONUTRIENTES",
+  "@macroDistributionSection": {
+    "description": "Description for macroDistributionSection"
+  },
+  "macroCalculationBase": "Calculado en base a tu meta diaria de {kcal} kcal.",
+  "@macroCalculationBase": {
+    "placeholders": {
+      "kcal": {}
+    },
+    "description": "Description for macroCalculationBase"
+  },
+  "macroStatusPerfect": "DISTRIBUCIÓN PERFECTA",
+  "@macroStatusPerfect": {
+    "description": "Description for macroStatusPerfect"
+  },
+  "macroStatusExcess": "EXCESO DE {percent}%",
+  "@macroStatusExcess": {
+    "placeholders": {
+      "percent": {}
+    },
+    "description": "Description for macroStatusExcess"
+  },
+  "macroStatusMissing": "FALTAN {percent}%",
+  "@macroStatusMissing": {
+    "placeholders": {
+      "percent": {}
+    },
+    "description": "Description for macroStatusMissing"
+  },
+  "macroPresetBalanced": "Equilibrado",
+  "@macroPresetBalanced": {
+    "description": "Description for macroPresetBalanced"
+  },
+  "macroPresetHypertrophy": "Hipertrofia",
+  "@macroPresetHypertrophy": {
+    "description": "Description for macroPresetHypertrophy"
+  },
+  "macroPresetLowCarb": "Bajo en Carbohidratos",
+  "@macroPresetLowCarb": {
+    "description": "Description for macroPresetLowCarb"
+  },
+  "profileSectionPersonal": "DATOS PERSONALES",
+  "@profileSectionPersonal": {
+    "description": "Description for profileSectionPersonal"
+  },
+  "profileSectionBody": "CUERPO Y ESTILO DE VIDA",
+  "@profileSectionBody": {
+    "description": "Description for profileSectionBody"
+  },
+  "profileSectionStrategy": "ESTRATEGIA NUTRICIONAL",
+  "@profileSectionStrategy": {
+    "description": "Description for profileSectionStrategy"
+  },
+  "profileDone": "Hecho",
+  "@profileDone": {
+    "description": "Description for profileDone"
+  },
+  "profileSelect": "Seleccionar",
+  "@profileSelect": {
+    "description": "Description for profileSelect"
+  },
+  "activitySedentaryDesc": "Poco o ningún ejercicio",
+  "@activitySedentaryDesc": {
+    "description": "Description for activitySedentaryDesc"
+  },
+  "activityLightDesc": "Ejercicio ligero 1-3 días/semana",
+  "@activityLightDesc": {
+    "description": "Description for activityLightDesc"
+  },
+  "activityModerateDesc": "Ejercicio moderado 3-5 días/semana",
+  "@activityModerateDesc": {
+    "description": "Description for activityModerateDesc"
+  },
+  "activityIntenseDesc": "Ejercicio intenso 6-7 días/semana",
+  "@activityIntenseDesc": {
+    "description": "Description for activityIntenseDesc"
+  },
+  "activityAthleteDesc": "Atleta o trabajo físico muy pesado",
+  "@activityAthleteDesc": {
+    "description": "Description for activityAthleteDesc"
+  },
+  "settingsBackupInProgress": "Guardando tus datos en la nube...",
+  "@settingsBackupInProgress": {
+    "description": "Description for settingsBackupInProgress"
+  },
+  "settingsBackupSuccess": "¡Copia de seguridad completada con éxito!",
+  "@settingsBackupSuccess": {
+    "description": "Description for settingsBackupSuccess"
+  },
+  "settingsBackupError": "Error al guardar en la nube: {error}",
+  "@settingsBackupError": {
+    "placeholders": {
+      "error": {}
+    },
+    "description": "Description for settingsBackupError"
+  },
+  "settingsRestoreWarningMsg": "Esto reemplazará tus datos actuales con los datos guardados en tu cuenta de Google. ¿Quieres continuar?",
+  "@settingsRestoreWarningMsg": {
+    "description": "Description for settingsRestoreWarningMsg"
+  },
+  "settingsRestoreInProgress": "Restaurando tus datos desde la nube...",
+  "@settingsRestoreInProgress": {
+    "description": "Description for settingsRestoreInProgress"
+  },
+  "settingsRestoreError": "Error al restaurar: {error}",
+  "@settingsRestoreError": {
+    "placeholders": {
+      "error": {}
+    },
+    "description": "Description for settingsRestoreError"
+  },
+  "settingsLogoutTitle": "Cerrar Sesión",
+  "@settingsLogoutTitle": {
+    "description": "Description for settingsLogoutTitle"
+  },
+  "settingsLogoutMessage": "¿Estás seguro de que deseas cerrar sesión? Esto eliminará tus datos locales de este dispositivo (tus datos en la nube están seguros).",
+  "@settingsLogoutMessage": {
+    "description": "Description for settingsLogoutMessage"
+  },
+  "settingsLogoutError": "Error al cerrar sesión: {error}",
+  "@settingsLogoutError": {
+    "placeholders": {
+      "error": {}
+    },
+    "description": "Description for settingsLogoutError"
+  },
+  "settingsAutoSyncTitle": "Sincronización Automática",
+  "@settingsAutoSyncTitle": {
+    "description": "Description for settingsAutoSyncTitle"
+  },
+  "settingsAutoSyncSubtitle": "Guardar los cambios en la nube automáticamente",
+  "@settingsAutoSyncSubtitle": {
+    "description": "Description for settingsAutoSyncSubtitle"
+  },
+  "settingsBackupDataTitle": "Hacer Copia de Seguridad",
+  "@settingsBackupDataTitle": {
+    "description": "Description for settingsBackupDataTitle"
+  },
+  "settingsBackupDataSubtitle": "Forzar sincronización de datos con Google",
+  "@settingsBackupDataSubtitle": {
+    "description": "Description for settingsBackupDataSubtitle"
+  },
+  "settingsRestoreDataTitle": "Restaurar Datos de la Nube",
+  "@settingsRestoreDataTitle": {
+    "description": "Description for settingsRestoreDataTitle"
+  },
+  "settingsRestoreDataSubtitle": "Recuperar datos guardados anteriormente",
+  "@settingsRestoreDataSubtitle": {
+    "description": "Description for settingsRestoreDataSubtitle"
+  },
+  "settingsAccountSection": "Cuenta",
+  "@settingsAccountSection": {
+    "description": "Description for settingsAccountSection"
+  },
+  "settingsLogoutItemTitle": "Cerrar Sesión",
+  "@settingsLogoutItemTitle": {
+    "description": "Description for settingsLogoutItemTitle"
+  },
+  "settingsLogoutItemSubtitle": "Cerrar sesión de tu cuenta y borrar datos locales",
+  "@settingsLogoutItemSubtitle": {
+    "description": "Description for settingsLogoutItemSubtitle"
+  },
+  "settingsLanguageMain": "Versión Principal",
+  "@settingsLanguageMain": {
+    "description": "Description for settingsLanguageMain"
+  },
+  "settingsLanguageDev": "En desarrollo",
+  "@settingsLanguageDev": {
+    "description": "Description for settingsLanguageDev"
+  },
+  "settingsLanguageDevWarning": "Aviso: Idioma aún en desarrollo. Faltarán algunas traducciones.",
+  "@settingsLanguageDevWarning": {
+    "description": "Description for settingsLanguageDevWarning"
+  },
+  "unknown": "Desconocido",
+  "@unknown": {
+    "description": "Unknown value"
+  },
+  "duplicateWeightTitle": "Peso ya registrado",
+  "@duplicateWeightTitle": {
+    "description": "Title when weight already exists for that day"
+  },
+  "duplicateWeightMessage": "Ya registraste {weight} kg este día. ¿Quieres reemplazarlo por el nuevo valor?",
+  "@duplicateWeightMessage": {
+    "description": "Message when weight already exists",
+    "placeholders": {
+      "weight": { "type": "String" }
+    }
+  },
+  "deleteWeightTitle": "¿Eliminar registro?",
+  "@deleteWeightTitle": {
+    "description": "Confirmation dialog title for deleting weight"
+  },
+  "deleteWeightMessage": "¿Estás seguro de que quieres eliminar el registro del {date}?",
+  "@deleteWeightMessage": {
+    "description": "Confirmation message for deleting weight",
+    "placeholders": {
+      "date": { "type": "String" }
+    }
+  },
+  "generalCategory": "General",
+  "@generalCategory": {
+    "description": "General category"
+  },
+  "onboardingStart": "Empezar",
+  "@onboardingStart": { "description": "Onboarding start button" },
+  "onboardingNext": "Continuar",
+  "@onboardingNext": { "description": "Onboarding next button" },
+  "onboardingFinish": "Entrar a la App",
+  "@onboardingFinish": { "description": "Onboarding finish button" },
+  "onboardingWelcomeTitle": "Bienvenido\na GymOS.",
+  "@onboardingWelcomeTitle": { "description": "Onboarding welcome title" },
+  "onboardingWelcomeSubtitle": "Tu compañero de entrenamiento y nutrición. Configuremos todo en menos de 2 minutos.",
+  "@onboardingWelcomeSubtitle": { "description": "Onboarding welcome subtitle" },
+  "onboardingFeature1": "Registra tus comidas diarias",
+  "@onboardingFeature1": { "description": "Onboarding feature 1" },
+  "onboardingFeature2": "Sigue tu peso y evolución",
+  "@onboardingFeature2": { "description": "Onboarding feature 2" },
+  "onboardingFeature3": "Gestiona tus planes de entrenamiento",
+  "@onboardingFeature3": { "description": "Onboarding feature 3" },
+  "onboardingNameTitle": "¿Cómo te llamas?",
+  "@onboardingNameTitle": { "description": "Onboarding name page title" },
+  "onboardingNameSubtitle": "Dinos tu nombre y género para personalizar tu experiencia.",
+  "@onboardingNameSubtitle": { "description": "Onboarding name page subtitle" },
+  "onboardingNameHint": "Tu nombre o apodo",
+  "@onboardingNameHint": { "description": "Onboarding name field hint" },
+  "onboardingGender": "Género",
+  "@onboardingGender": { "description": "Onboarding gender label" },
+  "onboardingBodyTitle": "Datos corporales",
+  "@onboardingBodyTitle": { "description": "Onboarding body page title" },
+  "onboardingBodySubtitle": "Usamos estos datos para calcular tu metabolismo basal y meta calórica diaria.",
+  "@onboardingBodySubtitle": { "description": "Onboarding body page subtitle" },
+  "onboardingSelectDate": "Seleccionar fecha de nacimiento",
+  "@onboardingSelectDate": { "description": "Onboarding birth date placeholder" },
+  "onboardingActivityTitle": "Nivel de actividad",
+  "@onboardingActivityTitle": { "description": "Onboarding activity page title" },
+  "onboardingActivitySubtitle": "Elige el nivel que mejor describe tu rutina semanal actual.",
+  "@onboardingActivitySubtitle": { "description": "Onboarding activity page subtitle" },
+  "onboardingThemeTitle": "Elige tu tema",
+  "@onboardingThemeTitle": { "description": "Onboarding theme page title" },
+  "onboardingThemeSubtitle": "Puedes cambiarlo en cualquier momento en los ajustes.",
+  "@onboardingThemeSubtitle": { "description": "Onboarding theme page subtitle" },
+  "copyMeal": "Copiar Comida",
+  "@copyMeal": { "description": "Button/title to copy a single meal group" },
+  "chooseMealType": "¿A qué comida?",
+  "@chooseMealType": { "description": "Prompt to select target meal type when copying" },
+
+  "startWorkout": "INICIAR",
+  "@startWorkout": { "description": "Start workout button" },
+  "chooseTrainingDay": "Elige el Día de Entrenamiento",
+  "@chooseTrainingDay": { "description": "Bottom sheet title for day selection" },
+  "chooseTrainingDaySub": "Selecciona el entrenamiento que harás hoy",
+  "@chooseTrainingDaySub": { "description": "Bottom sheet subtitle for day selection" },
+  "activeWorkoutOf": "{current} / {total}",
+  "@activeWorkoutOf": {
+    "description": "Exercise progress counter",
+    "placeholders": { "current": {}, "total": {} }
+  },
+  "planned": "Planeado",
+  "@planned": { "description": "Planned label in active workout" },
+  "lastSession": "Última sesión",
+  "@lastSession": { "description": "Last session label" },
+  "noHistoryYet": "Sin historial todavía",
+  "@noHistoryYet": { "description": "No history placeholder" },
+  "logSet": "REGISTRAR SERIE",
+  "@logSet": { "description": "Log set button" },
+  "restLabel": "Descanso",
+  "@restLabel": { "description": "Rest timer label" },
+  "skipRest": "SALTAR",
+  "@skipRest": { "description": "Skip rest button" },
+  "nextExercise": "Siguiente",
+  "@nextExercise": { "description": "Next exercise button" },
+  "prevExercise": "Anterior",
+  "@prevExercise": { "description": "Previous exercise button" },
+  "finishWorkout": "TERMINAR",
+  "@finishWorkout": { "description": "Finish workout button" },
+  "confirmFinishTitle": "¿Terminar Entrenamiento?",
+  "@confirmFinishTitle": { "description": "Confirm finish dialog title" },
+  "confirmFinishMsg": "Tus series ya fueron guardadas en tiempo real. Puedes salir sin perder nada.",
+  "@confirmFinishMsg": { "description": "Confirm finish dialog message" },
+  "sessionDoneTitle": "¡Entrenamiento Completo! 💪",
+  "@sessionDoneTitle": { "description": "Session summary title" },
+  "sessionTotalSets": "Series totales",
+  "@sessionTotalSets": { "description": "Total sets label" },
+  "sessionTotalVolume": "Volumen total",
+  "@sessionTotalVolume": { "description": "Total volume label" },
+  "sessionDuration": "Duración",
+  "@sessionDuration": { "description": "Session duration label" },
+  "sessionClose": "CERRAR",
+  "@sessionClose": { "description": "Close session summary" },
+  "newPR": "¡Nuevo Récord! 🏆",
+  "@newPR": { "description": "PR celebration title" },
+  "setsThisSession": "ESTA SESIÓN",
+  "@setsThisSession": { "description": "Sets logged this session label" },
+  "invalidSetInput": "¡Introduce peso y repeticiones válidos!",
+  "@invalidSetInput": { "description": "Validation error for set input" },
+  "restAdjust": "Ajustar descanso",
+  "@restAdjust": { "description": "Rest duration adjustment label" },
+  "yesterday": "ayer",
+  "@yesterday": { "description": "Yesterday label for workout history dates" },
+  "daysAgo": "hace {n}d",
+  "@daysAgo": {
+    "description": "N days ago label for workout history dates",
+    "placeholders": { "n": { "type": "int" } }
+  },
+
+  "exerciseLibraryTitle": "Biblioteca de Ejercicios",
+  "@exerciseLibraryTitle": { "description": "Exercise picker screen title" },
+  "exerciseSearchHint": "Buscar ejercicios...",
+  "@exerciseSearchHint": { "description": "Search bar hint in exercise picker" },
+  "allFilter": "Todos",
+  "@allFilter": { "description": "All categories filter chip" },
+  "createCustomExercise": "Crear ejercicio personalizado",
+  "@createCustomExercise": { "description": "Custom exercise tile subtitle" },
+
+  "workoutTemplatesTitle": "Plantillas de Entrenamiento",
+  "@workoutTemplatesTitle": { "description": "Workout templates picker title" },
+  "workoutTemplatesSub": "Planes listos para usar",
+  "@workoutTemplatesSub": { "description": "Workout templates picker subtitle" },
+  "useThisTemplate": "USAR ESTA PLANTILLA",
+  "@useThisTemplate": { "description": "Use template button" },
+
+  "settingsPersonalization": "Personalización",
+  "@settingsPersonalization": { "description": "Settings personalization section header" },
+  "settingsMealsSub": "Editar, añadir y reordenar comidas",
+  "@settingsMealsSub": { "description": "Meals settings tile subtitle" },
+  "settingsVersionLabel": "Versión {v}",
+  "@settingsVersionLabel": {
+    "description": "Version label with version number",
+    "placeholders": { "v": { "type": "String" } }
+  },
+
+  "errorNetwork": "Fallo de red. Verifica tu internet.",
+  "@errorNetwork": { "description": "Network error message" },
+  "errorRateLimit": "Demasiadas búsquedas seguidas. Espera 1 minuto.",
+  "@errorRateLimit": { "description": "Rate limit error message" },
+  "errorServerDown": "La base de datos global está en mantenimiento.",
+  "@errorServerDown": { "description": "Server down error message" },
+  "errorServerSlow": "Los servidores están muy lentos. Inténtalo de nuevo.",
+  "@errorServerSlow": { "description": "Server slow error message" },
+
+  "mealSettingsReset": "Restablecer",
+  "@mealSettingsReset": { "description": "Reset meals to default button" },
+  "mealSettingsAdd": "Añadir",
+  "@mealSettingsAdd": { "description": "Add meal FAB label" },
+  "mealSettingsInfo": "Arrastra para reordenar. Los registros pasados no se ven afectados al editar o eliminar.",
+  "@mealSettingsInfo": { "description": "Meals settings info banner" },
+  "mealNew": "Nueva comida",
+  "@mealNew": { "description": "New meal dialog title" },
+  "mealEditTitle": "Editar comida",
+  "@mealEditTitle": { "description": "Edit meal dialog title" },
+  "mealDeleteTitle": "¿Eliminar comida?",
+  "@mealDeleteTitle": { "description": "Delete meal dialog title" },
+  "mealDeleteMsg": "La comida \"{name}\" será eliminada de la lista.\n\nLos registros pasados no se verán afectados.",
+  "@mealDeleteMsg": {
+    "description": "Delete meal dialog message",
+    "placeholders": { "name": { "type": "String" } }
+  },
+  "mealResetTitle": "¿Restablecer lista original?",
+  "@mealResetTitle": { "description": "Reset meal list dialog title" },
+  "mealResetMsg": "La lista se restablecerá a los valores predeterminados.\n\nLos registros pasados no se verán afectados.",
+  "@mealResetMsg": { "description": "Reset meal list dialog message" },
+  "mealRestoreAction": "Restablecer",
+  "@mealRestoreAction": { "description": "Restore/reset confirm button" },
+  "mealNameHint": "Ej: Desayuno",
+  "@mealNameHint": { "description": "Meal name input hint" },
+  "saveAction": "Guardar",
+  "@saveAction": { "description": "Save button (sentence case)" },
+  "editTooltip": "Editar",
+  "@editTooltip": { "description": "Edit icon tooltip" },
+  "deleteTooltip": "Eliminar",
+  "@deleteTooltip": { "description": "Delete icon tooltip" },
+
+  "nutritionSummary": "Resumen Nutricional",
+  "@nutritionSummary": { "description": "Nutrition detail screen title" },
+  "byMeal": "Por Comida",
+  "@byMeal": { "description": "By meal section header in nutrition detail" }
+}

@@ -1,0 +1,176 @@
+{
+  "categories": [
+    {
+      "name": "Peito",
+      "color": "0xFF2196F3",
+      "exercises": [
+        "Supino Plano (Barra)",
+        "Supino Inclinado (Barra)",
+        "Supino Declinado (Barra)",
+        "Supino Plano (Halteres)",
+        "Supino Inclinado (Halteres)",
+        "Supino Declinado (Halteres)",
+        "Supino (Máquina)",
+        "Crossover",
+        "Peck Deck",
+        "Crucifixo Plano",
+        "Crucifixo Inclinado",
+        "Crucifixo Invertido (Máquina)",
+        "Flexão",
+        "Pullover"
+      ]
+    },
+    {
+      "name": "Costas",
+      "color": "0xFF9C27B0",
+      "exercises": [
+        "Puxada Frontal",
+        "Puxada na Nuca",
+        "Barra Fixa",
+        "Remada Curvada (Barra)",
+        "Remada Unilateral (Halter)",
+        "Remada com Cabo",
+        "Remada Máquina",
+        "Remada (Máquina)",
+        "Remada Cavalinho",
+        "Hiperextensão",
+        "Levantamento Terra",
+        "Levantamento Terra Romeno",
+        "Good Morning"
+      ]
+    },
+    {
+      "name": "Ombros",
+      "color": "0xFFFF9800",
+      "exercises": [
+        "Desenvolvimento (Barra)",
+        "Desenvolvimento (Máquina)",
+        "Desenvolvimento (Halteres)",
+        "Desenvolvimento Arnold",
+        "Elevação Lateral",
+        "Elevação Frontal",
+        "Remada Alta",
+        "Face Pull",
+        "Encolhimento (Barra)",
+        "Encolhimento (Halteres)",
+        "Rotação Interna",
+        "Rotação Externa"
+      ]
+    },
+    {
+      "name": "Bíceps",
+      "color": "0xFFE91E63",
+      "exercises": [
+        "Rosca Direta (Barra)",
+        "Rosca Direta (Halteres)",
+        "Rosca Alternada",
+        "Rosca Concentrada",
+        "Rosca Martelo",
+        "Rosca Scott",
+        "Rosca 21",
+        "Rosca no Cabo",
+        "Rosca Inclinada",
+        "Rosca Bíceps (Máquina)",
+        "Rosca Inversa"
+      ]
+    },
+    {
+      "name": "Tríceps",
+      "color": "0xFF00BCD4",
+      "exercises": [
+        "Tríceps Pulley (Barra)",
+        "Tríceps Pulley (Corda)",
+        "Tríceps Francês",
+        "Mergulho (Paralelas)",
+        "Tríceps Coice",
+        "Tríceps Banco",
+        "Extensão Tríceps (Haltere)",
+        "Extensão de Tríceps (Máquina)",
+        "Tríceps Testa",
+        "Tríceps Corda",
+        "Kickback"
+      ]
+    },
+    {
+      "name": "Quadríceps",
+      "color": "0xFF4CAF50",
+      "exercises": [
+        "Agachamento Livre",
+        "Agachamento Smith",
+        "Agachamento Búlgaro",
+        "Agachamento Sumô",
+        "Leg Press 45°",
+        "Leg Press Horizontal",
+        "Extensão de Pernas",
+        "Hack Squat",
+        "Afundo",
+        "Afundo com Passada",
+        "Step-Up",
+        "Pistol Squat"
+      ]
+    },
+    {
+      "name": "Posterior / Glúteo",
+      "color": "0xFFFF5722",
+      "exercises": [
+        "Stiff",
+        "Leg Curl Deitado",
+        "Leg Curl Sentado",
+        "Mesa Romana",
+        "Cadeira Abdutora",
+        "Cadeira Adutora",
+        "Hip Thrust",
+        "Glute Kickback",
+        "Elevação Pélvica",
+        "Agachamento Sumô (Glúteo)",
+        "Donkey Kick"
+      ]
+    },
+    {
+      "name": "Panturrilha",
+      "color": "0xFF795548",
+      "exercises": [
+        "Panturrilha em Pé (Máquina)",
+        "Panturrilha Sentado",
+        "Panturrilha no Leg Press",
+        "Panturrilha Unilateral",
+        "Elevação de Calcanhar (Livre)"
+      ]
+    },
+    {
+      "name": "Abdominais",
+      "color": "0xFFFFEB3B",
+      "exercises": [
+        "Crunch",
+        "Prancha",
+        "Prancha Lateral",
+        "Abdominal Reto",
+        "Abdominal Oblíquo",
+        "Elevação de Pernas",
+        "Abdominal Infra",
+        "Russian Twist",
+        "Roda Abdominal",
+        "Mountain Climbers",
+        "Hollow Body",
+        "Dragon Flag"
+      ]
+    },
+    {
+      "name": "Cardio",
+      "color": "0xFF607D8B",
+      "exercises": [
+        "Corrida (Esteira)",
+        "Corrida (Exterior)",
+        "Bicicleta (Estacionária)",
+        "Bicicleta (Exterior)",
+        "Elíptico",
+        "Remo (Máquina)",
+        "Pular Corda",
+        "Burpees",
+        "HIIT",
+        "Sprint",
+        "Box Jump"
+      ]
+    }
+  ]
+}
