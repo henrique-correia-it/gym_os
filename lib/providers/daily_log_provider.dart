@@ -133,7 +133,8 @@ class DailyLogNotifier extends AsyncNotifier<DayLog?> {
     });
     CloudSyncService(db).syncDayLog(targetLog);
 
-    ref.invalidateSelf();
+    // Força um refresh completo do provider para garantir que o header atualiza
+    ref.refresh(dailyLogProvider);
   }
 
   Future<void> deleteMeal(MealEntry meal) async {
@@ -156,7 +157,8 @@ class DailyLogNotifier extends AsyncNotifier<DayLog?> {
       await db.isar.dayLogs.put(currentLog);
     });
     CloudSyncService(db).syncDayLog(currentLog);
-    ref.invalidateSelf();
+    // Força um refresh completo do provider para garantir que o header atualiza
+    ref.refresh(dailyLogProvider);
   }
 
   Future<void> updateMeal(
@@ -188,6 +190,7 @@ class DailyLogNotifier extends AsyncNotifier<DayLog?> {
       await db.isar.dayLogs.put(currentLog);
     });
     CloudSyncService(db).syncDayLog(currentLog);
-    ref.invalidateSelf();
+    // Força um refresh completo do provider para garantir que o header atualiza
+    ref.refresh(dailyLogProvider);
   }
 }
