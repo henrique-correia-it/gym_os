@@ -1837,5 +1837,21 @@
   "greetingAfternoon": "Buenas tardes",
   "@greetingAfternoon": { "description": "Afternoon greeting" },
   "greetingEvening": "Buenas noches",
-  "@greetingEvening": { "description": "Evening greeting" }
+  "@greetingEvening": { "description": "Evening greeting" },
+  "toolsWorkoutHistory": "Historial de Entrenos",
+  "@toolsWorkoutHistory": { "description": "Workout history tool card title" },
+  "toolsWorkoutHistorySub": "Ver todos tus entrenamientos realizados",
+  "@toolsWorkoutHistorySub": { "description": "Workout history tool card subtitle" },
+  "workoutHistoryTitle": "Historial de Entrenos",
+  "@workoutHistoryTitle": { "description": "Workout history screen title" },
+  "workoutHistoryEmpty": "Sin entrenamientos registrados",
+  "@workoutHistoryEmpty": { "description": "Workout history empty state title" },
+  "workoutHistoryEmptySub": "Empieza un entrenamiento para ver tu historial aquí.",
+  "@workoutHistoryEmptySub": { "description": "Workout history empty state subtitle" },
+  "workoutHistoryExercises": "Ejercicios",
+  "@workoutHistoryExercises": { "description": "Exercises label in workout history" },
+  "workoutHistoryVolume": "Volumen",
+  "@workoutHistoryVolume": { "description": "Volume label in workout history" },
+  "editSet": "Editar Serie",
+  "@editSet": { "description": "Edit set bottom sheet title" }
 }

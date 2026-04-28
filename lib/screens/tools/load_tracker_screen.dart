@@ -64,7 +64,7 @@ class _LoadTrackerScreenState extends ConsumerState<LoadTrackerScreen> {
         .filter()
         .exerciseNameEqualTo(_selectedExercise!)
         .sortByDateDesc()
-        .limit(20)
+        .limit(50)
         .findAll();
 
     if (mounted) {
@@ -349,7 +349,19 @@ class _LoadTrackerScreenState extends ConsumerState<LoadTrackerScreen> {
   }
 
   Widget _buildChartSection(ColorScheme colorScheme, AppLocalizations l10n) {
-    final chartHistory = _history.reversed.toList();
+    // Filtrar para mostrar apenas o set mais pesado por sessão (dia) no gráfico
+    final Map<String, ExerciseSet> sessionMaxWeights = {};
+    for (var set in _history) {
+      final dateKey = DateFormat('yyyy-MM-dd').format(set.date);
+      if (!sessionMaxWeights.containsKey(dateKey) ||
+          set.weight > sessionMaxWeights[dateKey]!.weight) {
+        sessionMaxWeights[dateKey] = set;
+      }
+    }
+
+    final chartHistory = sessionMaxWeights.values.toList()
+      ..sort((a, b) => a.date.compareTo(b.date));
+
     final spots = chartHistory.asMap().entries.map((e) {
       return FlSpot(e.key.toDouble(), e.value.weight);
     }).toList();

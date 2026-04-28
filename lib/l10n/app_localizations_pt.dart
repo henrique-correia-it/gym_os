@@ -1527,4 +1527,29 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get greetingEvening => 'Boa noite';
+
+  @override
+  String get toolsWorkoutHistory => 'Histórico de Treinos';
+
+  @override
+  String get toolsWorkoutHistorySub => 'Vê todos os teus treinos realizados';
+
+  @override
+  String get workoutHistoryTitle => 'Histórico de Treinos';
+
+  @override
+  String get workoutHistoryEmpty => 'Nenhum treino registado';
+
+  @override
+  String get workoutHistoryEmptySub =>
+      'Começa um treino para ver o teu histórico aqui.';
+
+  @override
+  String get workoutHistoryExercises => 'Exercícios';
+
+  @override
+  String get workoutHistoryVolume => 'Volume';
+
+  @override
+  String get editSet => 'Editar Série';
 }

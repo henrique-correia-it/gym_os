@@ -36,4 +36,6 @@ class ExerciseSet {
   late double weight;
   late int reps;
   late DateTime date;
+  @Index()
+  String? sessionId;
 }

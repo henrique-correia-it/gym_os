@@ -9,6 +9,7 @@ import '../../utils/app_toast.dart';
 import 'workout_editor_screen.dart';
 import 'active_workout_screen.dart';
 import 'workout_templates.dart';
+import '../tools/workout_history_screen.dart';
 
 class WorkoutPlanListScreen extends ConsumerWidget {
   const WorkoutPlanListScreen({super.key});
@@ -55,6 +56,17 @@ class WorkoutPlanListScreen extends ConsumerWidget {
             ),
           ],
         ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.history_rounded),
+            tooltip: l10n.workoutHistoryTitle,
+            onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (_) => const WorkoutHistoryScreen())),
+          ),
+          const SizedBox(width: 4),
+        ],
       ),
       body: StreamBuilder<List<WorkoutPlan>>(
         stream: db.isar.workoutPlans.where().watch(fireImmediately: true),

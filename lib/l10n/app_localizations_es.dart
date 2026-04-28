@@ -1532,4 +1532,30 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get greetingEvening => 'Buenas noches';
+
+  @override
+  String get toolsWorkoutHistory => 'Historial de Entrenos';
+
+  @override
+  String get toolsWorkoutHistorySub =>
+      'Ver todos tus entrenamientos realizados';
+
+  @override
+  String get workoutHistoryTitle => 'Historial de Entrenos';
+
+  @override
+  String get workoutHistoryEmpty => 'Sin entrenamientos registrados';
+
+  @override
+  String get workoutHistoryEmptySub =>
+      'Empieza un entrenamiento para ver tu historial aquí.';
+
+  @override
+  String get workoutHistoryExercises => 'Ejercicios';
+
+  @override
+  String get workoutHistoryVolume => 'Volumen';
+
+  @override
+  String get editSet => 'Editar Serie';
 }

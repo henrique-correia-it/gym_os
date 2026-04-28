@@ -12,9 +12,10 @@ import '../../utils/app_toast.dart';
 
 // ── In-memory set logged during this session ─────────────────────────────────
 class _SessionSet {
-  final double weight;
-  final int reps;
-  _SessionSet({required this.weight, required this.reps});
+  final int id;
+  double weight;
+  int reps;
+  _SessionSet({required this.id, required this.weight, required this.reps});
 }
 
 class ActiveWorkoutScreen extends ConsumerStatefulWidget {
@@ -44,6 +45,8 @@ class _ActiveWorkoutScreenState extends ConsumerState<ActiveWorkoutScreen> {
 
   // ── Sets logged this session: exerciseId → list ──────────────────────────
   final Map<int, List<_SessionSet>> _sessionSets = {};
+  final String _sessionId =
+      DateTime.now().millisecondsSinceEpoch.toString();
 
   // ── Previous history: exerciseId → recent ExerciseSets ──────────────────
   final Map<int, List<ExerciseSet>> _history = {};
@@ -186,7 +189,8 @@ class _ActiveWorkoutScreenState extends ConsumerState<ActiveWorkoutScreen> {
       ..exerciseName = ex.name
       ..weight = weight
       ..reps = reps
-      ..date = DateTime.now();
+      ..date = DateTime.now()
+      ..sessionId = _sessionId;
 
     await db.isar.writeTxn(() async {
       await db.isar.exerciseSets.put(set);
@@ -194,7 +198,7 @@ class _ActiveWorkoutScreenState extends ConsumerState<ActiveWorkoutScreen> {
     CloudSyncService(db).syncExerciseSet(set);
 
     _sessionSets.putIfAbsent(ex.id, () => [])
-        .add(_SessionSet(weight: weight, reps: reps));
+        .add(_SessionSet(id: set.id, weight: weight, reps: reps));
 
     // Check PR
     final isPR = await _checkPR(ex.name, weight);
@@ -212,6 +216,119 @@ class _ActiveWorkoutScreenState extends ConsumerState<ActiveWorkoutScreen> {
         if (mounted) setState(() => _showPR = false);
       });
     }
+  }
+
+  Future<void> _editSessionSet(WorkoutExercise ex, _SessionSet s) async {
+    final weightCtrl = TextEditingController(text: _formatWeight(s.weight));
+    final repsCtrl = TextEditingController(text: s.reps.toString());
+    final l10n = AppLocalizations.of(context)!;
+
+    final confirmed = await showModalBottomSheet<bool>(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (ctx) => Padding(
+        padding: EdgeInsets.only(bottom: MediaQuery.of(ctx).viewInsets.bottom),
+        child: Container(
+          decoration: BoxDecoration(
+            color: Theme.of(ctx).colorScheme.surface,
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
+          ),
+          padding: const EdgeInsets.fromLTRB(24, 16, 24, 32),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                width: 36, height: 4,
+                margin: const EdgeInsets.only(bottom: 20),
+                decoration: BoxDecoration(
+                  color: Theme.of(ctx).colorScheme.onSurface.withValues(alpha: 0.15),
+                  borderRadius: BorderRadius.circular(2),
+                ),
+              ),
+              Text(l10n.editSet,
+                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              const SizedBox(height: 20),
+              Row(
+                children: [
+                  Expanded(
+                    child: TextField(
+                      controller: weightCtrl,
+                      keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                      decoration: InputDecoration(
+                        labelText: l10n.weight,
+                        suffixText: 'kg',
+                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: TextField(
+                      controller: repsCtrl,
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        labelText: l10n.reps,
+                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 20),
+              SizedBox(
+                width: double.infinity,
+                height: 52,
+                child: FilledButton(
+                  style: FilledButton.styleFrom(
+                    backgroundColor: const Color(0xFF00E676),
+                    foregroundColor: Colors.black,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+                  ),
+                  onPressed: () => Navigator.pop(ctx, true),
+                  child: Text(l10n.save,
+                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+
+    if (confirmed != true) return;
+
+    final newWeight = double.tryParse(weightCtrl.text.replaceAll(',', '.'));
+    final newReps = int.tryParse(repsCtrl.text);
+    if (newWeight == null || newReps == null || newWeight <= 0 || newReps <= 0) return;
+
+    final db = ref.read(databaseProvider);
+    final stored = await db.isar.exerciseSets.get(s.id);
+    if (stored == null) return;
+    stored.weight = newWeight;
+    stored.reps = newReps;
+    await db.isar.writeTxn(() async => db.isar.exerciseSets.put(stored));
+    CloudSyncService(db).syncExerciseSet(stored);
+
+    setState(() {
+      s.weight = newWeight;
+      s.reps = newReps;
+    });
+
+    _history.remove(ex.id);
+    await _loadHistoryFor(ex);
+  }
+
+  Future<void> _deleteSessionSet(WorkoutExercise ex, _SessionSet s) async {
+    final db = ref.read(databaseProvider);
+    await db.isar.writeTxn(() async => db.isar.exerciseSets.delete(s.id));
+
+    setState(() {
+      _sessionSets[ex.id]?.remove(s);
+    });
+
+    _history.remove(ex.id);
+    await _loadHistoryFor(ex);
   }
 
   Future<bool> _checkPR(String name, double weight) async {
@@ -765,8 +882,19 @@ class _ActiveWorkoutScreenState extends ConsumerState<ActiveWorkoutScreen> {
                           fontSize: 14, fontWeight: FontWeight.w600),
                     ),
                     const Spacer(),
-                    const Icon(Icons.check_circle_rounded,
-                        color: Color(0xFF00E676), size: 18),
+                    GestureDetector(
+                      onTap: () => _editSessionSet(ex, s),
+                      child: Icon(Icons.edit_rounded,
+                          size: 16,
+                          color: cs.onSurface.withValues(alpha: 0.35)),
+                    ),
+                    const SizedBox(width: 12),
+                    GestureDetector(
+                      onTap: () => _deleteSessionSet(ex, s),
+                      child: Icon(Icons.delete_outline_rounded,
+                          size: 16,
+                          color: Colors.redAccent.withValues(alpha: 0.7)),
+                    ),
                   ],
                 ),
               );

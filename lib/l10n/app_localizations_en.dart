@@ -1522,4 +1522,29 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get greetingEvening => 'Good evening';
+
+  @override
+  String get toolsWorkoutHistory => 'Workout History';
+
+  @override
+  String get toolsWorkoutHistorySub => 'View all your completed workouts';
+
+  @override
+  String get workoutHistoryTitle => 'Workout History';
+
+  @override
+  String get workoutHistoryEmpty => 'No workouts recorded';
+
+  @override
+  String get workoutHistoryEmptySub =>
+      'Start a workout to see your history here.';
+
+  @override
+  String get workoutHistoryExercises => 'Exercises';
+
+  @override
+  String get workoutHistoryVolume => 'Volume';
+
+  @override
+  String get editSet => 'Edit Set';
 }

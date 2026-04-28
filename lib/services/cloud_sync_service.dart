@@ -133,6 +133,7 @@ class CloudSyncService {
           'weight': s.weight,
           'reps': s.reps,
           'date': s.date.toIso8601String(),
+          'sessionId': s.sessionId,
         });
         operationCount++;
         await commitBatchIfNeeded();
@@ -273,11 +274,19 @@ class CloudSyncService {
   }
 
   Future<void> _flushUserSettings() async {
+    final user = _auth.currentUser;
     final userRef = _userDocRef();
-    if (userRef == null) return;
+    if (userRef == null || user == null) return;
     try {
       final s = await _db.isar.userSettings.where().findFirst();
       if (s == null) return;
+
+      // Garante que o documento raiz existe (necessário para o login detectar conta existente)
+      await userRef.set({
+        'lastSync': FieldValue.serverTimestamp(),
+        'email': user.email,
+      }, SetOptions(merge: true));
+
       await userRef.collection('userSettings').doc('profile').set({
         'name': s.name,
         'gender': s.gender,
@@ -449,6 +458,7 @@ class CloudSyncService {
         'weight': s.weight,
         'reps': s.reps,
         'date': s.date.toIso8601String(),
+        'sessionId': s.sessionId,
       });
       debugPrint('[Sync] exerciseSet ${s.id} OK');
     } catch (e) {
@@ -580,6 +590,7 @@ class CloudSyncService {
         if (profileDoc.exists) {
           final data = profileDoc.data()!;
           final userSettings = UserSettings()
+            ..uid = user.uid
             ..name = data['name'] ?? 'Utilizador'
             ..gender = data['gender'] ?? 'M'
             ..birthDate = data['birthDate'] != null
@@ -724,7 +735,8 @@ class CloudSyncService {
             ..exerciseName = data['exerciseName']
             ..weight = (data['weight']).toDouble()
             ..reps = data['reps']
-            ..date = DateTime.parse(data['date']);
+            ..date = DateTime.parse(data['date'])
+            ..sessionId = data['sessionId'] as String?;
           await isar.exerciseSets.put(s);
         }
 

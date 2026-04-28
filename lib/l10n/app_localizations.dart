@@ -2913,6 +2913,54 @@ abstract class AppLocalizations {
   /// In pt, this message translates to:
   /// **'Boa noite'**
   String get greetingEvening;
+
+  /// Workout history tool card title
+  ///
+  /// In pt, this message translates to:
+  /// **'Histórico de Treinos'**
+  String get toolsWorkoutHistory;
+
+  /// Workout history tool card subtitle
+  ///
+  /// In pt, this message translates to:
+  /// **'Vê todos os teus treinos realizados'**
+  String get toolsWorkoutHistorySub;
+
+  /// Workout history screen title
+  ///
+  /// In pt, this message translates to:
+  /// **'Histórico de Treinos'**
+  String get workoutHistoryTitle;
+
+  /// Workout history empty state title
+  ///
+  /// In pt, this message translates to:
+  /// **'Nenhum treino registado'**
+  String get workoutHistoryEmpty;
+
+  /// Workout history empty state subtitle
+  ///
+  /// In pt, this message translates to:
+  /// **'Começa um treino para ver o teu histórico aqui.'**
+  String get workoutHistoryEmptySub;
+
+  /// Exercises label in workout history
+  ///
+  /// In pt, this message translates to:
+  /// **'Exercícios'**
+  String get workoutHistoryExercises;
+
+  /// Volume label in workout history
+  ///
+  /// In pt, this message translates to:
+  /// **'Volume'**
+  String get workoutHistoryVolume;
+
+  /// Edit set bottom sheet title
+  ///
+  /// In pt, this message translates to:
+  /// **'Editar Série'**
+  String get editSet;
 }
 
 class _AppLocalizationsDelegate

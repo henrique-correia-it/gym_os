@@ -343,7 +343,6 @@ class _WorkoutEditorScreenState extends ConsumerState<WorkoutEditorScreen>
 
       if (mounted) {
         AppToast.show(context, l10n.workoutSaveSuccess);
-        Navigator.pop(context);
       }
     } catch (e) {
       if (mounted) {
