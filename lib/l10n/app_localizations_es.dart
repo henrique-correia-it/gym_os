@@ -801,7 +801,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get workoutSessionDefault => 'Sesión';
 
   @override
-  String get workoutRename => 'Renombrar Sesión';
+  String get workoutRename => 'Renombrar Plan';
 
   @override
   String get workoutNameHint => 'Nombre (ej: Empuje, Pierna)';

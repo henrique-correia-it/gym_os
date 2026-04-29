@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gym_os/l10n/app_localizations.dart';
 import 'package:gym_os/providers/daily_log_provider.dart';
 import 'package:isar/isar.dart';
-
 import '../data/models/user.dart';
 import '../providers/app_providers.dart';
 import '../utils/app_toast.dart';
@@ -154,6 +153,7 @@ class SettingsScreen extends ConsumerWidget {
       }
     }
   }
+
   // ===========================================================================
   // INTERFACE VISUAL (MODERNIZADA)
   // ===========================================================================
@@ -472,6 +472,8 @@ class SettingsScreen extends ConsumerWidget {
 
           const SizedBox(height: 30),
 
+          const SizedBox(height: 30),
+
           // --- 5. SECÇÃO SOBRE (MODERNIZADA) ---
           const SizedBox(height: 10),
           Container(
@@ -549,7 +551,8 @@ class SettingsScreen extends ConsumerWidget {
                       ),
                       const SizedBox(width: 6),
                       Text(
-                        l10n.settingsVersionLabel(l10n.versionAlpha.toUpperCase()),
+                        l10n.settingsVersionLabel(
+                            l10n.versionAlpha.toUpperCase()),
                         style: TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w800,

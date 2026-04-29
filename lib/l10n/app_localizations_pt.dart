@@ -802,7 +802,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get workoutSessionDefault => 'Treino';
 
   @override
-  String get workoutRename => 'Renomear Sessão';
+  String get workoutRename => 'Renomear Treino';
 
   @override
   String get workoutNameHint => 'Nome (ex: Puxar, Pernas)';

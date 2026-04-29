@@ -243,20 +243,17 @@ class _WorkoutEditorScreenState extends ConsumerState<WorkoutEditorScreen>
                   0: pw.Alignment.centerLeft,
                   1: pw.Alignment.center,
                   2: pw.Alignment.center,
-                  3: pw.Alignment.center,
                 },
                 data: <List<String>>[
                   <String>[
                     l10n.exerciseName,
                     l10n.sets,
                     l10n.reps,
-                    l10n.weightKg,
                   ],
                   ...session.exercises.map((e) => [
                         e.name,
                         e.sets.toString(),
                         e.reps,
-                        e.weight > 0 ? '${e.weight}kg' : '-',
                       ]),
                 ],
               ),
@@ -355,8 +352,7 @@ class _WorkoutEditorScreenState extends ConsumerState<WorkoutEditorScreen>
   Widget build(BuildContext context) {
     if (_isLoading || _tabController == null) {
       return const Scaffold(
-        body:
-            Center(child: CircularProgressIndicator(color: Color(0xFF00E676))),
+        body: Center(child: CircularProgressIndicator(color: Color(0xFF00E676))),
       );
     }
 
@@ -365,64 +361,138 @@ class _WorkoutEditorScreenState extends ConsumerState<WorkoutEditorScreen>
 
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 80,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new_rounded),
-          onPressed: () => Navigator.pop(context),
-        ),
-        title: TextField(
-          controller: _planNameController,
-          style: TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-            color: colorScheme.onSurface,
-          ),
-          decoration: InputDecoration(
-            hintText: l10n.workoutPlanNameHint,
-            border: InputBorder.none,
-            hintStyle: TextStyle(color: Colors.grey.withValues(alpha: 0.5)),
-          ),
-        ),
-        actions: [
-          IconButton(
-            onPressed: () => _exportToPdf(l10n),
-            tooltip: l10n.workoutExportPdf,
-            icon: const Icon(Icons.print_rounded),
-            style:
-                IconButton.styleFrom(foregroundColor: colorScheme.onSurface),
-          ),
-          const SizedBox(width: 8),
-          Padding(
-            padding: const EdgeInsets.only(right: 16),
-            child: ElevatedButton.icon(
-              icon: const Icon(Icons.save_rounded, size: 20),
-              label: Text(l10n.save.toUpperCase()),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF00E676),
-                foregroundColor: Colors.black,
-                elevation: 0,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20)),
+        toolbarHeight: 0,
+        automaticallyImplyLeading: false,
+        elevation: 0,
+        scrolledUnderElevation: 0,
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(135),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(16, 10, 16, 8),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+
+                    Row(
+                      children: [
+                        Container(
+                          width: 4,
+                          height: 24,
+                          decoration: BoxDecoration(
+                            color: const Color(0xFF00E676),
+                            borderRadius: BorderRadius.circular(2),
+                          ),
+                        ),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: Text(
+                            _planNameController.text,
+                            style: TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.w900,
+                              color: colorScheme.onSurface,
+                              letterSpacing: -1.0,
+                            ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        IconButton(
+                          onPressed: () => _exportToPdf(l10n),
+                          tooltip: l10n.workoutExportPdf,
+                          icon: const Icon(Icons.picture_as_pdf_rounded,
+                              size: 22),
+                          style: IconButton.styleFrom(
+                            foregroundColor:
+                                colorScheme.onSurface.withValues(alpha: 0.4),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 2),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              gradient: const LinearGradient(
+                                colors: [Color(0xFF00E676), Color(0xFF00C853)],
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                              ),
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: ElevatedButton(
+                              onPressed: () => _save(l10n),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.transparent,
+                                foregroundColor: Colors.black87,
+                                shadowColor: Colors.transparent,
+                                elevation: 0,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12)),
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 14),
+                                minimumSize: const Size(0, 36),
+                                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  const Icon(Icons.check_rounded, size: 16),
+                                  const SizedBox(width: 4),
+                                  Text(l10n.save,
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.w900,
+                                          fontSize: 12)),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
-              onPressed: () => _save(l10n),
-            ),
-          )
-        ],
-        bottom: TabBar(
-          controller: _tabController,
-          isScrollable: true,
-          labelColor: const Color(0xFF00E676),
-          unselectedLabelColor: Colors.grey,
-          indicatorColor: const Color(0xFF00E676),
-          indicatorWeight: 3,
-          labelStyle:
-              const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-          dividerColor: Colors.transparent,
-          tabs: _sessions.map((s) => Tab(text: s.day.name)).toList(),
+              TabBar(
+                controller: _tabController,
+                isScrollable: true,
+                tabAlignment: TabAlignment.start,
+                labelColor: const Color(0xFF00E676),
+                unselectedLabelColor:
+                    colorScheme.onSurface.withValues(alpha: 0.4),
+                indicator: const UnderlineTabIndicator(
+                  borderSide: BorderSide(
+                    color: Color(0xFF00E676),
+                    width: 3,
+                  ),
+                  insets: EdgeInsets.symmetric(horizontal: 16),
+                ),
+                indicatorSize: TabBarIndicatorSize.tab,
+                dividerColor: Colors.transparent,
+                labelPadding: const EdgeInsets.symmetric(horizontal: 4),
+                padding: const EdgeInsets.fromLTRB(16, 2, 16, 10),
+                labelStyle:
+                    const TextStyle(fontWeight: FontWeight.w900, fontSize: 13),
+                unselectedLabelStyle:
+                    const TextStyle(fontWeight: FontWeight.w700, fontSize: 13),
+                tabs: _sessions
+                    .map((s) => Tab(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                            child: Text(s.day.name),
+                          ),
+                        ))
+                    .toList(),
+              ),
+            ],
+          ),
         ),
       ),
       body: TabBarView(
         controller: _tabController,
+        physics: const NeverScrollableScrollPhysics(),
         children: List.generate(
             _sessions.length, (index) => _buildSessionPage(index, l10n)),
       ),
@@ -435,164 +505,126 @@ class _WorkoutEditorScreenState extends ConsumerState<WorkoutEditorScreen>
 
     return Column(
       children: [
+        // ── Session header ───────────────────────────────────────────────
         Container(
-          margin: const EdgeInsets.fromLTRB(20, 20, 20, 10),
-          padding: const EdgeInsets.all(16),
+          margin: const EdgeInsets.fromLTRB(16, 12, 16, 6),
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 11),
           decoration: BoxDecoration(
             color: colorScheme.surface,
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(16),
             border: Border.all(
-                color:
-                    Theme.of(context).dividerColor.withValues(alpha: 0.1)),
+                color: colorScheme.onSurface.withValues(alpha: 0.07)),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withValues(alpha: 0.03),
-                blurRadius: 10,
-                offset: const Offset(0, 4),
+                color: Colors.black.withValues(alpha: 0.025),
+                blurRadius: 6,
+                offset: const Offset(0, 2),
               )
             ],
           ),
           child: Row(
             children: [
-              Container(
-                padding: const EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  color:
-                      const Color(0xFF00E676).withValues(alpha: 0.15),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: const Icon(Icons.calendar_view_week_rounded,
-                    color: Color(0xFF00E676)),
-              ),
-              const SizedBox(width: 15),
               Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(l10n.session,
+                child: GestureDetector(
+                  onTap: () => _renameSession(index, l10n),
+                  behavior: HitTestBehavior.opaque,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        l10n.session.toUpperCase(),
                         style: const TextStyle(
-                            fontSize: 10,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.grey)),
-                    GestureDetector(
-                      onTap: () => _renameSession(index, l10n),
-                      child: Row(
+                          fontSize: 9,
+                          fontWeight: FontWeight.w800,
+                          color: Color(0xFF00E676),
+                          letterSpacing: 1.2,
+                        ),
+                      ),
+                      const SizedBox(height: 3),
+                      Row(
                         children: [
                           Flexible(
                             child: Text(
                               session.day.name,
-                              style: const TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.bold),
+                              style: TextStyle(
+                                fontSize: 17,
+                                fontWeight: FontWeight.w800,
+                                color: colorScheme.onSurface,
+                                letterSpacing: -0.3,
+                              ),
                               overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
                             ),
                           ),
-                          const SizedBox(width: 8),
-                          Icon(Icons.edit,
-                              size: 14,
-                              color: colorScheme.onSurface
-                                  .withValues(alpha: 0.5)),
                         ],
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
-              IconButton(
-                icon: const Icon(Icons.add_circle_outline,
-                    color: Color(0xFF00E676)),
-                tooltip: l10n.workoutNewSession,
-                onPressed: () => _addSession(l10n),
+              const SizedBox(width: 10),
+              _buildSessionActionBtn(
+                icon: Icons.add_rounded,
+                color: const Color(0xFF00E676),
+                onTap: () => _addSession(l10n),
               ),
-              IconButton(
-                icon: const Icon(Icons.delete_outline,
-                    color: Colors.redAccent),
-                tooltip: l10n.workoutDeleteSession,
-                onPressed: () => _removeCurrentSession(l10n),
+              const SizedBox(width: 7),
+              _buildSessionActionBtn(
+                icon: Icons.remove_rounded,
+                color: Colors.redAccent,
+                onTap: () => _removeCurrentSession(l10n),
               ),
             ],
           ),
         ),
+
+        // ── Exercise list ────────────────────────────────────────────────
         Expanded(
           child: session.exercises.isEmpty
-              ? Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(Icons.fitness_center,
-                          size: 60,
-                          color: Colors.grey.withValues(alpha: 0.2)),
-                      const SizedBox(height: 10),
-                      Text(l10n.noExercises,
-                          style: const TextStyle(color: Colors.grey)),
-                      const SizedBox(height: 20),
-                      ElevatedButton.icon(
-                        onPressed: () => _addExercise(index),
-                        icon: const Icon(Icons.search_rounded),
-                        label: Text(l10n.workoutAddFirst),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: colorScheme.surface,
-                          foregroundColor: const Color(0xFF00E676),
-                          elevation: 0,
-                          side: const BorderSide(
-                              color: Color(0xFF00E676)),
-                        ),
-                      )
-                    ],
-                  ),
-                )
+              ? _buildEmptyState(index, l10n)
               : ReorderableListView(
-                  padding:
-                      const EdgeInsets.fromLTRB(20, 0, 20, 100),
-                  proxyDecorator: (child, index, animation) {
-                    return Material(
-                      elevation: 5,
-                      borderRadius: BorderRadius.circular(15),
-                      color: Colors.transparent,
-                      child: child,
-                    );
-                  },
+                  padding: const EdgeInsets.fromLTRB(16, 4, 16, 100),
+                  proxyDecorator: (child, index, animation) => Material(
+                    elevation: 10,
+                    borderRadius: BorderRadius.circular(18),
+                    shadowColor: Colors.black38,
+                    color: Colors.transparent,
+                    child: child,
+                  ),
                   onReorder: (oldIndex, newIndex) {
                     setState(() {
                       if (newIndex > oldIndex) newIndex -= 1;
-                      final item =
-                          session.exercises.removeAt(oldIndex);
+                      final item = session.exercises.removeAt(oldIndex);
                       session.exercises.insert(newIndex, item);
                     });
                   },
                   children: [
-                    for (int i = 0;
-                        i < session.exercises.length;
-                        i++)
-                      _buildExerciseCard(
-                          session.exercises[i], index, i, l10n)
+                    for (int i = 0; i < session.exercises.length; i++)
+                      _buildExerciseCard(session.exercises[i], index, i, l10n),
                   ],
                 ),
         ),
+
+        // ── Add exercise button ──────────────────────────────────────────
         if (session.exercises.isNotEmpty)
-          Container(
-            padding: const EdgeInsets.all(20),
-            decoration: BoxDecoration(
-              color: colorScheme.surface,
-              boxShadow: [
-                BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.05),
-                    offset: const Offset(0, -5),
-                    blurRadius: 10)
-              ],
-            ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 8, 16, 20),
             child: SizedBox(
               width: double.infinity,
-              height: 55,
-              child: OutlinedButton.icon(
+              height: 52,
+              child: ElevatedButton.icon(
                 onPressed: () => _addExercise(index),
-                icon: const Icon(Icons.search_rounded),
-                label: Text(l10n.addExerciseAction),
-                style: OutlinedButton.styleFrom(
-                  foregroundColor: const Color(0xFF00E676),
-                  side: const BorderSide(
-                      color: Color(0xFF00E676), width: 1.5),
+                icon: const Icon(Icons.add_rounded, size: 20),
+                label: Text(l10n.addExerciseAction,
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 15)),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFF00E676),
+                  foregroundColor: Colors.black87,
+                  elevation: 0,
                   shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15)),
+                      borderRadius: BorderRadius.circular(16)),
                 ),
               ),
             ),
@@ -601,97 +633,260 @@ class _WorkoutEditorScreenState extends ConsumerState<WorkoutEditorScreen>
     );
   }
 
+  Widget _buildEmptyState(int sessionIndex, AppLocalizations l10n) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            padding: const EdgeInsets.all(26),
+            decoration: BoxDecoration(
+              color: const Color(0xFF00E676).withValues(alpha: 0.08),
+              shape: BoxShape.circle,
+            ),
+            child: const Icon(Icons.fitness_center_rounded,
+                size: 48, color: Color(0xFF00E676)),
+          ),
+          const SizedBox(height: 20),
+          Text(l10n.noExercises,
+              style: const TextStyle(
+                  fontWeight: FontWeight.w700,
+                  color: Colors.grey,
+                  fontSize: 16)),
+          const SizedBox(height: 6),
+          Text(l10n.workoutAddFirst,
+              style: TextStyle(
+                  color: Colors.grey.withValues(alpha: 0.6), fontSize: 13)),
+          const SizedBox(height: 28),
+          ElevatedButton.icon(
+            onPressed: () => _addExercise(sessionIndex),
+            icon: const Icon(Icons.add_rounded, size: 20),
+            label: Text(l10n.addExerciseAction,
+                style: const TextStyle(fontWeight: FontWeight.bold)),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color(0xFF00E676),
+              foregroundColor: Colors.black87,
+              elevation: 0,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(14)),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 22, vertical: 14),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSessionActionBtn({
+    required IconData icon,
+    required Color color,
+    required VoidCallback onTap,
+  }) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.all(7),
+        decoration: BoxDecoration(
+          color: color.withValues(alpha: 0.1),
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Icon(icon, color: color, size: 18),
+      ),
+    );
+  }
+
   Widget _buildExerciseCard(WorkoutExercise exercise, int sessionIndex,
       int exIndex, AppLocalizations l10n) {
     final colorScheme = Theme.of(context).colorScheme;
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    return Container(
+    return Dismissible(
       key: ObjectKey(exercise),
-      margin: const EdgeInsets.only(bottom: 12),
-      decoration: BoxDecoration(
-        color: colorScheme.surface,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(
-            color: Theme.of(context).dividerColor.withValues(alpha: 0.1)),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.02),
-            blurRadius: 5,
-            offset: const Offset(0, 2),
-          )
-        ],
-      ),
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(16, 12, 8, 8),
-            child: Row(
-              children: [
-                Icon(Icons.drag_handle_rounded,
-                    color: Colors.grey.withValues(alpha: 0.5)),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Text(
-                    exercise.name,
+      direction: DismissDirection.endToStart,
+      confirmDismiss: (_) async {
+        return await showDialog<bool>(
+          context: context,
+          builder: (ctx) => AlertDialog(
+            title: const Text('Remover exercício'),
+            content: Text('Remover "${exercise.name}" desta sessão?'),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(ctx, false),
+                child: Text(l10n.cancel),
+              ),
+              TextButton(
+                onPressed: () => Navigator.pop(ctx, true),
+                child: Text(l10n.delete,
                     style: const TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: 15),
+                        color: Colors.redAccent,
+                        fontWeight: FontWeight.bold)),
+              ),
+            ],
+          ),
+        );
+      },
+      onDismissed: (_) {
+        setState(() {
+          _sessions[sessionIndex].exercises.remove(exercise);
+        });
+      },
+      background: Container(
+        margin: const EdgeInsets.only(bottom: 10),
+        decoration: BoxDecoration(
+          color: Colors.redAccent,
+          borderRadius: BorderRadius.circular(18),
+        ),
+        alignment: Alignment.centerRight,
+        padding: const EdgeInsets.only(right: 22),
+        child: const Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.delete_rounded, color: Colors.white, size: 24),
+            SizedBox(height: 4),
+            Text('Remover',
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 11,
+                    fontWeight: FontWeight.bold)),
+          ],
+        ),
+      ),
+      child: Container(
+        margin: const EdgeInsets.only(bottom: 10),
+        decoration: BoxDecoration(
+          color: colorScheme.surface,
+          borderRadius: BorderRadius.circular(18),
+          border: Border.all(
+              color: colorScheme.onSurface.withValues(alpha: 0.06)),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.03),
+              blurRadius: 8,
+              offset: const Offset(0, 3),
+            ),
+          ],
+        ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(18),
+          child: IntrinsicHeight(
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                // ── Number + drag handle ───────────────────────────────
+                Container(
+                  width: 46,
+                  color: const Color(0xFF00E676).withValues(alpha: 0.08),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        '${exIndex + 1}',
+                        style: const TextStyle(
+                          color: Color(0xFF00E676),
+                          fontWeight: FontWeight.w900,
+                          fontSize: 18,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Icon(
+                        Icons.drag_handle_rounded,
+                        size: 14,
+                        color: colorScheme.onSurface.withValues(alpha: 0.2),
+                      ),
+                    ],
                   ),
                 ),
-                IconButton(
-                  icon: const Icon(Icons.close_rounded,
-                      color: Colors.grey, size: 20),
-                  onPressed: () {
-                    setState(() {
-                      _sessions[sessionIndex].exercises.remove(exercise);
-                    });
-                  },
-                )
+
+                // ── Exercise content ───────────────────────────────────
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(12, 12, 12, 12),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          exercise.name,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15,
+                            color: colorScheme.onSurface,
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        Row(
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(l10n.sets,
+                                    style: const TextStyle(
+                                        fontSize: 10,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.grey)),
+                                const SizedBox(height: 4),
+                                _buildSetsStepper(exercise, isDark),
+                              ],
+                            ),
+                            const SizedBox(width: 14),
+                            Expanded(
+                              child: _buildMiniInput(
+                                label: l10n.reps,
+                                value: exercise.reps,
+                                onChanged: (v) => exercise.reps = v,
+                                isDark: isDark,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
-          Divider(height: 1, color: Colors.grey.withValues(alpha: 0.1)),
-          Padding(
-            padding: const EdgeInsets.all(12),
-            child: Row(
-              children: [
-                Expanded(
-                  child: _buildMiniInput(
-                    label: l10n.sets,
-                    value: exercise.sets.toString(),
-                    onChanged: (v) =>
-                        exercise.sets = int.tryParse(v) ?? 3,
-                    keyboardType: TextInputType.number,
-                    isDark: isDark,
-                  ),
-                ),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: _buildMiniInput(
-                    label: l10n.reps,
-                    value: exercise.reps,
-                    onChanged: (v) => exercise.reps = v,
-                    isDark: isDark,
-                  ),
-                ),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: _buildMiniInput(
-                    label: l10n.weightKg,
-                    value: exercise.weight > 0
-                        ? exercise.weight.toString()
-                        : '',
-                    onChanged: (v) =>
-                        exercise.weight = double.tryParse(v) ?? 0,
-                    keyboardType: const TextInputType.numberWithOptions(
-                        decimal: true),
-                    isDark: isDark,
-                    hint: '0',
-                  ),
-                ),
-              ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSetsStepper(WorkoutExercise exercise, bool isDark) {
+    return Container(
+      decoration: BoxDecoration(
+        color: isDark
+            ? Colors.white.withValues(alpha: 0.08)
+            : Colors.black.withValues(alpha: 0.05),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          GestureDetector(
+            onTap: () => setState(() {
+              if (exercise.sets > 1) exercise.sets--;
+            }),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 9),
+              child: Icon(Icons.remove_rounded,
+                  size: 15,
+                  color: exercise.sets > 1
+                      ? Colors.grey
+                      : Colors.grey.withValues(alpha: 0.25)),
             ),
-          )
+          ),
+          Text(
+            '${exercise.sets}',
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+          ),
+          GestureDetector(
+            onTap: () => setState(() => exercise.sets++),
+            child: const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 9),
+              child: Icon(Icons.add_rounded,
+                  size: 15, color: Color(0xFF00E676)),
+            ),
+          ),
         ],
       ),
     );
@@ -712,7 +907,7 @@ class _WorkoutEditorScreenState extends ConsumerState<WorkoutEditorScreen>
           padding: const EdgeInsets.only(left: 4, bottom: 4),
           child: Text(label,
               style: const TextStyle(
-                  fontSize: 11,
+                  fontSize: 10,
                   fontWeight: FontWeight.bold,
                   color: Colors.grey)),
         ),
@@ -723,15 +918,14 @@ class _WorkoutEditorScreenState extends ConsumerState<WorkoutEditorScreen>
           onChanged: onChanged,
           decoration: InputDecoration(
             hintText: hint,
-            hintStyle:
-                TextStyle(color: Colors.grey.withValues(alpha: 0.4)),
+            hintStyle: TextStyle(color: Colors.grey.withValues(alpha: 0.4)),
             isDense: true,
             filled: true,
             fillColor: isDark
-                ? Colors.grey.withValues(alpha: 0.1)
-                : Colors.grey.withValues(alpha: 0.05),
+                ? Colors.white.withValues(alpha: 0.07)
+                : Colors.black.withValues(alpha: 0.04),
             contentPadding:
-                const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                const EdgeInsets.symmetric(horizontal: 10, vertical: 9),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
               borderSide: BorderSide.none,

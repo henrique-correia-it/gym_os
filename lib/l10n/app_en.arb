@@ -1048,7 +1048,7 @@
   "@workoutSessionDefault": {
     "description": "Default session name prefix"
   },
-  "workoutRename": "Rename Session",
+  "workoutRename": "Rename Plan",
   "@workoutRename": {
     "description": "Rename dialog title"
   },

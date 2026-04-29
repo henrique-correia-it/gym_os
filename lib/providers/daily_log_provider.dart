@@ -134,7 +134,7 @@ class DailyLogNotifier extends AsyncNotifier<DayLog?> {
     CloudSyncService(db).syncDayLog(targetLog);
 
     // Força um refresh completo do provider para garantir que o header atualiza
-    ref.refresh(dailyLogProvider);
+    final _ = ref.refresh(dailyLogProvider);
   }
 
   Future<void> deleteMeal(MealEntry meal) async {
@@ -158,7 +158,7 @@ class DailyLogNotifier extends AsyncNotifier<DayLog?> {
     });
     CloudSyncService(db).syncDayLog(currentLog);
     // Força um refresh completo do provider para garantir que o header atualiza
-    ref.refresh(dailyLogProvider);
+    final _ = ref.refresh(dailyLogProvider);
   }
 
   Future<void> updateMeal(
@@ -191,6 +191,6 @@ class DailyLogNotifier extends AsyncNotifier<DayLog?> {
     });
     CloudSyncService(db).syncDayLog(currentLog);
     // Força um refresh completo do provider para garantir que o header atualiza
-    ref.refresh(dailyLogProvider);
+    final _ = ref.refresh(dailyLogProvider);
   }
 }

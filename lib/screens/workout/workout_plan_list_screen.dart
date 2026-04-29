@@ -10,6 +10,8 @@ import 'workout_editor_screen.dart';
 import 'active_workout_screen.dart';
 import 'workout_templates.dart';
 import '../tools/workout_history_screen.dart';
+import '../../data/database.dart';
+
 
 class WorkoutPlanListScreen extends ConsumerWidget {
   const WorkoutPlanListScreen({super.key});
@@ -94,8 +96,16 @@ class WorkoutPlanListScreen extends ConsumerWidget {
               final plan = plans[index];
               return Dismissible(
                 key: Key(plan.id.toString()),
-                direction: DismissDirection.endToStart,
+                direction: DismissDirection.horizontal,
                 background: Container(
+                  alignment: Alignment.centerLeft,
+                  padding: const EdgeInsets.only(left: 20),
+                  decoration: BoxDecoration(
+                      color: Colors.blueAccent,
+                      borderRadius: BorderRadius.circular(16)),
+                  child: const Icon(Icons.edit_rounded, color: Colors.white),
+                ),
+                secondaryBackground: Container(
                   alignment: Alignment.centerRight,
                   padding: const EdgeInsets.only(right: 20),
                   decoration: BoxDecoration(
@@ -104,12 +114,22 @@ class WorkoutPlanListScreen extends ConsumerWidget {
                   child: const Icon(Icons.delete_sweep_rounded,
                       color: Colors.white),
                 ),
-                confirmDismiss: (dir) => _confirmDelete(context, plan.name),
-                onDismissed: (_) async {
-                  await db.isar
-                      .writeTxn(() => db.isar.workoutPlans.delete(plan.id));
-                  CloudSyncService(db).deleteWorkoutPlan(plan.id);
-                  if (context.mounted) AppToast.show(context, l10n.workoutDeleted);
+                confirmDismiss: (dir) {
+                  if (dir == DismissDirection.startToEnd) {
+                    _renamePlan(context, db, plan, l10n);
+                    return Future.value(false); // Don't dismiss
+                  }
+                  return _confirmDelete(context, plan.name);
+                },
+                onDismissed: (dir) async {
+                  if (dir == DismissDirection.endToStart) {
+                    await db.isar
+                        .writeTxn(() => db.isar.workoutPlans.delete(plan.id));
+                    CloudSyncService(db).deleteWorkoutPlan(plan.id);
+                    if (context.mounted) {
+                      AppToast.show(context, l10n.workoutDeleted);
+                    }
+                  }
                 },
                 child: Container(
                   decoration: BoxDecoration(
@@ -206,6 +226,50 @@ class WorkoutPlanListScreen extends ConsumerWidget {
             ],
           );
         },
+      ),
+    );
+  }
+
+  void _renamePlan(BuildContext context, DatabaseService db, WorkoutPlan plan,
+      AppLocalizations l10n) async {
+    final controller = TextEditingController(text: plan.name);
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(l10n.workoutRename),
+        content: TextField(
+          controller: controller,
+          autofocus: true,
+          decoration: InputDecoration(
+            labelText: l10n.workoutPlanNameHint,
+            border: const OutlineInputBorder(),
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx),
+            child:
+                Text(l10n.cancel, style: const TextStyle(color: Colors.grey)),
+          ),
+          TextButton(
+            onPressed: () async {
+              final newName = controller.text.trim();
+              if (newName.isNotEmpty) {
+                await db.isar.writeTxn(() async {
+                  plan.name = newName;
+                  await db.isar.workoutPlans.put(plan);
+                });
+                CloudSyncService(db).syncWorkoutPlan(plan);
+              }
+              if (context.mounted) {
+                Navigator.pop(ctx);
+              }
+            },
+            child: Text(l10n.save,
+                style: const TextStyle(
+                    color: Color(0xFF00E676), fontWeight: FontWeight.bold)),
+          ),
+        ],
       ),
     );
   }

@@ -1615,7 +1615,7 @@ abstract class AppLocalizations {
   /// Rename dialog title
   ///
   /// In pt, this message translates to:
-  /// **'Renomear Sessão'**
+  /// **'Renomear Treino'**
   String get workoutRename;
 
   /// Rename dialog hint
