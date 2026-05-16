@@ -32,133 +32,204 @@ class NutritionDetailScreen extends StatelessWidget {
     for (final meal in data.meals) {
       mealGroups.putIfAbsent(meal.type, () => []).add(meal);
     }
-    final sortedKeys = AppConstants.mealOrder
-        .where((k) => mealGroups.containsKey(k))
-        .toList();
+    final sortedKeys =
+        AppConstants.mealOrder.where((k) => mealGroups.containsKey(k)).toList();
     for (final k in mealGroups.keys) {
       if (!sortedKeys.contains(k)) sortedKeys.add(k);
     }
 
     final localeCode = Localizations.localeOf(context).toString();
-    final dateStr =
-        DateFormat('EEEE, d MMMM', localeCode).format(selectedDate);
+    final dateStr = DateFormat('EEEE, d MMMM', localeCode).format(selectedDate);
 
     return Scaffold(
       backgroundColor: colorScheme.surface,
-      body: CustomScrollView(
-        physics: const BouncingScrollPhysics(),
-        slivers: [
-          SliverAppBar(
-            floating: true,
-            pinned: true,
-            backgroundColor: colorScheme.surface,
-            surfaceTintColor: Colors.transparent,
-            elevation: 0,
-            toolbarHeight: 64,
-            leading: Padding(
-              padding: const EdgeInsets.all(10),
-              child: InkWell(
+      appBar: AppBar(
+        toolbarHeight: 80,
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        scrolledUnderElevation: 0,
+        surfaceTintColor: Colors.transparent,
+        centerTitle: false,
+        automaticallyImplyLeading: false,
+        titleSpacing: 0,
+        title: Padding(
+          padding: const EdgeInsets.only(top: 10, left: 8, right: 16),
+          child: Row(
+            children: [
+              InkWell(
                 onTap: () => Navigator.pop(context),
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(14),
                 child: Container(
+                  width: 44,
+                  height: 44,
                   decoration: BoxDecoration(
-                    color: colorScheme.onSurface.withValues(alpha: 0.06),
-                    borderRadius: BorderRadius.circular(12),
+                    color: colorScheme.onSurface.withOpacity(0.06),
+                    borderRadius: BorderRadius.circular(14),
                   ),
                   child: Icon(Icons.arrow_back_ios_new_rounded,
-                      size: 16, color: colorScheme.onSurface),
+                      size: 18, color: colorScheme.onSurface),
                 ),
               ),
-            ),
-            title: Row(
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                    color: primaryColor.withValues(alpha: 0.12),
-                    borderRadius: BorderRadius.circular(12),
+              const SizedBox(width: 12),
+              Container(
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  gradient: const LinearGradient(
+                    colors: [Color(0xFF00E676), Color(0xFF00C853)],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
                   ),
-                  child: const Icon(Icons.bar_chart_rounded,
-                      size: 18, color: primaryColor),
+                  borderRadius: BorderRadius.circular(14),
+                  boxShadow: [
+                    BoxShadow(
+                      color: const Color(0xFF00E676).withOpacity(0.3),
+                      blurRadius: 8,
+                      offset: const Offset(0, 3),
+                    )
+                  ],
                 ),
-                const SizedBox(width: 10),
-                Column(
+                child: const Icon(Icons.bar_chart_rounded,
+                    color: Colors.white, size: 26),
+              ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text(l10n.nutritionSummary,
-                        style: const TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 16)),
-                    Text(dateStr,
-                        style: TextStyle(
-                            fontSize: 11,
-                            color: colorScheme.onSurfaceVariant,
-                            fontWeight: FontWeight.normal)),
-                  ],
-                ),
-              ],
-            ),
-          ),
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(20, 8, 20, 100),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _CalorieHero(
-                      data: data,
-                      activeColor: activeColor,
-                      isExceeded: isExceeded,
-                      l10n: l10n),
-                  const SizedBox(height: 20),
-                  _MacroCards(data: data, l10n: l10n),
-                  const SizedBox(height: 30),
-                  if (data.meals.isNotEmpty) ...[
-                    Row(
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.all(7),
-                          decoration: BoxDecoration(
-                            color: const Color(0xFF00E676).withValues(alpha: 0.12),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: const Icon(Icons.restaurant_rounded,
-                              size: 15, color: Color(0xFF00E676)),
-                        ),
-                        const SizedBox(width: 10),
-                        Text(l10n.byMeal,
-                            style: const TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.bold)),
-                      ],
-                    ),
-                    const SizedBox(height: 16),
-                    ...sortedKeys.map((key) => _MealGroupCard(
-                          mealKey: key,
-                          meals: mealGroups[key]!,
-                          totalDayKcal: data.eatenKcal,
-                          l10n: l10n,
-                        )),
-                  ] else
-                    Center(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 48),
-                        child: Column(
-                          children: [
-                            Icon(Icons.no_meals_rounded,
-                                size: 56,
-                                color: colorScheme.onSurface
-                                    .withValues(alpha: 0.15)),
-                            const SizedBox(height: 12),
-                            Text(l10n.noMealsRegistered,
-                                style: TextStyle(
-                                    color: colorScheme.onSurface
-                                        .withValues(alpha: 0.4))),
-                          ],
-                        ),
+                    Text(
+                      dateStr.toUpperCase(),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontSize: 11,
+                        letterSpacing: 1.2,
+                        color: colorScheme.onSurface.withOpacity(0.5),
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
-                ],
+                    const SizedBox(height: 2),
+                    Text(
+                      l10n.nutritionSummary,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                        color: colorScheme.onSurface,
+                      ),
+                    ),
+                  ],
+                ),
               ),
+            ],
+          ),
+        ),
+      ),
+      body: ListView(
+        padding: const EdgeInsets.fromLTRB(20, 10, 20, 110),
+        physics: const BouncingScrollPhysics(),
+        children: [
+          _CalorieHero(
+              data: data,
+              activeColor: activeColor,
+              isExceeded: isExceeded,
+              l10n: l10n),
+          const SizedBox(height: 24),
+          _SectionTitle(
+            icon: Icons.pie_chart_rounded,
+            title: l10n.macroDistribution,
+            color: const Color(0xFF29B6F6),
+          ),
+          const SizedBox(height: 14),
+          _MacroCards(data: data, l10n: l10n),
+          const SizedBox(height: 28),
+          if (data.meals.isNotEmpty) ...[
+            _SectionTitle(
+              icon: Icons.restaurant_rounded,
+              title: l10n.byMeal,
+              color: const Color(0xFF00E676),
+            ),
+            const SizedBox(height: 14),
+            ...sortedKeys.map((key) => _MealGroupCard(
+                  mealKey: key,
+                  meals: mealGroups[key]!,
+                  totalDayKcal: data.eatenKcal,
+                  l10n: l10n,
+                )),
+          ] else
+            _EmptyMeals(l10n: l10n),
+        ],
+      ),
+    );
+  }
+}
+
+class _SectionTitle extends StatelessWidget {
+  final IconData icon;
+  final String title;
+  final Color color;
+
+  const _SectionTitle({
+    required this.icon,
+    required this.title,
+    required this.color,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    return Row(
+      children: [
+        Container(
+          padding: const EdgeInsets.all(8),
+          decoration: BoxDecoration(
+            color: color.withValues(alpha: 0.12),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Icon(icon, size: 16, color: color),
+        ),
+        const SizedBox(width: 10),
+        Text(
+          title,
+          style: TextStyle(
+            fontSize: 17,
+            fontWeight: FontWeight.w800,
+            color: colorScheme.onSurface,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _EmptyMeals extends StatelessWidget {
+  final AppLocalizations l10n;
+
+  const _EmptyMeals({required this.l10n});
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 44),
+      decoration: BoxDecoration(
+        color: colorScheme.surfaceContainerHighest.withValues(alpha: 0.35),
+        borderRadius: BorderRadius.circular(24),
+        border:
+            Border.all(color: colorScheme.onSurface.withValues(alpha: 0.06)),
+      ),
+      child: Column(
+        children: [
+          Icon(Icons.no_meals_rounded,
+              size: 56, color: colorScheme.onSurface.withValues(alpha: 0.16)),
+          const SizedBox(height: 12),
+          Text(
+            l10n.noMealsRegistered,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: colorScheme.onSurface.withValues(alpha: 0.48),
+              fontWeight: FontWeight.w600,
             ),
           ),
         ],
@@ -187,102 +258,129 @@ class _CalorieHero extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
     final remaining = (data.targetKcal - data.eatenKcal).abs();
 
-    return Container(
-      padding: const EdgeInsets.all(24),
-      decoration: BoxDecoration(
-        color: activeColor.withValues(alpha: 0.06),
-        borderRadius: BorderRadius.circular(28),
-        border: Border.all(color: activeColor.withValues(alpha: 0.14)),
-      ),
-      child: Row(
-        children: [
-          CircularPercentIndicator(
-            radius: 64,
-            lineWidth: 8,
-            percent: data.progress.clamp(0.0, 1.0),
-            animation: true,
-            animationDuration: 1400,
-            circularStrokeCap: CircularStrokeCap.round,
-            backgroundColor:
-                colorScheme.onSurface.withValues(alpha: 0.07),
-            progressColor: activeColor,
-            center: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  '${remaining.toInt()}',
-                  style: TextStyle(
-                    fontWeight: FontWeight.w900,
-                    fontSize: 22,
-                    height: 1.0,
-                    letterSpacing: -1.0,
-                    color: activeColor,
-                  ),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final isCompact = constraints.maxWidth < 360;
+        final gauge = CircularPercentIndicator(
+          radius: isCompact ? 56 : 64,
+          lineWidth: 9,
+          percent: data.progress.clamp(0.0, 1.0),
+          animation: true,
+          animationDuration: 1400,
+          circularStrokeCap: CircularStrokeCap.round,
+          backgroundColor: colorScheme.onSurface.withValues(alpha: 0.07),
+          progressColor: activeColor,
+          center: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                '${remaining.toInt()}',
+                style: TextStyle(
+                  fontWeight: FontWeight.w900,
+                  fontSize: isCompact ? 20 : 22,
+                  height: 1.0,
+                  color: activeColor,
                 ),
-                const SizedBox(height: 2),
-                Text(
-                  isExceeded
-                      ? l10n.exceeded.toUpperCase()
-                      : l10n.remaining.toUpperCase(),
-                  style: TextStyle(
-                    fontSize: 8,
-                    fontWeight: FontWeight.w700,
-                    letterSpacing: 0.8,
-                    color: colorScheme.onSurface.withValues(alpha: 0.5),
-                  ),
+              ),
+              const SizedBox(height: 3),
+              Text(
+                isExceeded
+                    ? l10n.exceeded.toUpperCase()
+                    : l10n.remaining.toUpperCase(),
+                style: TextStyle(
+                  fontSize: 8,
+                  fontWeight: FontWeight.w800,
+                  letterSpacing: 0.8,
+                  color: colorScheme.onSurface.withValues(alpha: 0.5),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
-          const SizedBox(width: 24),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+        );
+
+        final stats = Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
               children: [
-                _StatRow(
-                    label: l10n.goal,
-                    value: '${data.targetKcal.toInt()} ${l10n.unitKcal}',
-                    valueColor:
-                        colorScheme.onSurface.withValues(alpha: 0.6)),
-                const SizedBox(height: 10),
-                _StatRow(
-                    label: l10n.consumed,
-                    value: '${data.eatenKcal.toInt()} ${l10n.unitKcal}',
-                    valueColor: activeColor),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 12),
-                  child: Divider(
-                      height: 1,
-                      color:
-                          colorScheme.onSurface.withValues(alpha: 0.1)),
+                Icon(
+                  isExceeded ? Icons.warning_rounded : Icons.bolt_rounded,
+                  size: 18,
+                  color: activeColor,
                 ),
-                Row(
-                  children: [
-                    Icon(
-                      isExceeded
-                          ? Icons.warning_rounded
-                          : Icons.check_circle_rounded,
-                      size: 15,
+                const SizedBox(width: 7),
+                Expanded(
+                  child: Text(
+                    '${remaining.toInt()} ${l10n.unitKcal} ${isExceeded ? l10n.exceeded : l10n.remaining}',
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontWeight: FontWeight.w900,
+                      fontSize: 16,
                       color: activeColor,
                     ),
-                    const SizedBox(width: 6),
-                    Flexible(
-                      child: Text(
-                        '${remaining.toInt()} ${l10n.unitKcal} ${isExceeded ? l10n.exceeded : l10n.remaining}',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 13,
-                          color: activeColor,
-                        ),
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
               ],
             ),
+            const SizedBox(height: 16),
+            Container(
+              padding: const EdgeInsets.all(14),
+              decoration: BoxDecoration(
+                color: colorScheme.surface,
+                borderRadius: BorderRadius.circular(18),
+                border: Border.all(
+                    color: colorScheme.onSurface.withValues(alpha: 0.06)),
+              ),
+              child: Column(
+                children: [
+                  _StatRow(
+                      label: l10n.goal,
+                      value: '${data.targetKcal.toInt()} ${l10n.unitKcal}',
+                      valueColor:
+                          colorScheme.onSurface.withValues(alpha: 0.62)),
+                  const SizedBox(height: 10),
+                  _StatRow(
+                      label: l10n.consumed,
+                      value: '${data.eatenKcal.toInt()} ${l10n.unitKcal}',
+                      valueColor: activeColor),
+                ],
+              ),
+            ),
+          ],
+        );
+
+        return Container(
+          padding: const EdgeInsets.all(22),
+          decoration: BoxDecoration(
+            color: activeColor.withValues(alpha: 0.07),
+            borderRadius: BorderRadius.circular(26),
+            border: Border.all(color: activeColor.withValues(alpha: 0.16)),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.04),
+                blurRadius: 18,
+                offset: const Offset(0, 6),
+              )
+            ],
           ),
-        ],
-      ),
+          child: isCompact
+              ? Column(
+                  children: [
+                    gauge,
+                    const SizedBox(height: 20),
+                    stats,
+                  ],
+                )
+              : Row(
+                  children: [
+                    gauge,
+                    const SizedBox(width: 24),
+                    Expanded(child: stats),
+                  ],
+                ),
+        );
+      },
     );
   }
 }
@@ -293,9 +391,7 @@ class _StatRow extends StatelessWidget {
   final Color valueColor;
 
   const _StatRow(
-      {required this.label,
-      required this.value,
-      required this.valueColor});
+      {required this.label, required this.value, required this.valueColor});
 
   @override
   Widget build(BuildContext context) {
@@ -304,13 +400,11 @@ class _StatRow extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(label,
-            style: TextStyle(
-                fontSize: 12, color: colorScheme.onSurfaceVariant)),
+            style:
+                TextStyle(fontSize: 12, color: colorScheme.onSurfaceVariant)),
         Text(value,
             style: TextStyle(
-                fontSize: 13,
-                fontWeight: FontWeight.bold,
-                color: valueColor)),
+                fontSize: 13, fontWeight: FontWeight.bold, color: valueColor)),
       ],
     );
   }
@@ -422,9 +516,7 @@ class _MacroCard extends StatelessWidget {
           Text(
             '${(percent * 100).toInt()}%',
             style: TextStyle(
-                fontSize: 10,
-                fontWeight: FontWeight.bold,
-                color: displayColor),
+                fontSize: 10, fontWeight: FontWeight.bold, color: displayColor),
           ),
         ],
       ),
@@ -464,8 +556,8 @@ class _MealGroupCard extends StatelessWidget {
         decoration: BoxDecoration(
           color: colorScheme.surfaceContainerHighest.withValues(alpha: 0.4),
           borderRadius: BorderRadius.circular(20),
-          border: Border.all(
-              color: colorScheme.onSurface.withValues(alpha: 0.06)),
+          border:
+              Border.all(color: colorScheme.onSurface.withValues(alpha: 0.06)),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -500,8 +592,8 @@ class _MealGroupCard extends StatelessWidget {
                           padding: EdgeInsets.zero,
                           barRadius: const Radius.circular(4),
                           progressColor: const Color(0xFF00E676),
-                          backgroundColor: colorScheme.onSurface
-                              .withValues(alpha: 0.07),
+                          backgroundColor:
+                              colorScheme.onSurface.withValues(alpha: 0.07),
                           animation: true,
                           animationDuration: 1000,
                         ),
@@ -519,16 +611,13 @@ class _MealGroupCard extends StatelessWidget {
                   const SizedBox(height: 10),
                   Row(
                     children: [
-                      _MacroChip(
-                          'P ${totalProt.toInt()}${l10n.unitG}',
+                      _MacroChip('P ${totalProt.toInt()}${l10n.unitG}',
                           const Color(0xFF29B6F6)),
                       const SizedBox(width: 6),
-                      _MacroChip(
-                          'H ${totalCarbs.toInt()}${l10n.unitG}',
+                      _MacroChip('H ${totalCarbs.toInt()}${l10n.unitG}',
                           const Color(0xFFFFB74D)),
                       const SizedBox(width: 6),
-                      _MacroChip(
-                          'G ${totalFat.toInt()}${l10n.unitG}',
+                      _MacroChip('G ${totalFat.toInt()}${l10n.unitG}',
                           const Color(0xFFE57373)),
                     ],
                   ),
@@ -604,12 +693,12 @@ class _FoodItem extends StatelessWidget {
           ),
           const SizedBox(width: 8),
           Text(amountStr,
-              style: TextStyle(
-                  fontSize: 12, color: colorScheme.onSurfaceVariant)),
+              style:
+                  TextStyle(fontSize: 12, color: colorScheme.onSurfaceVariant)),
           const SizedBox(width: 10),
           Text('${meal.kcal.toInt()} kcal',
-              style: const TextStyle(
-                  fontSize: 12, fontWeight: FontWeight.bold)),
+              style:
+                  const TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
         ],
       ),
     );

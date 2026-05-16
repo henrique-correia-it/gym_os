@@ -592,6 +592,33 @@ class _PlannerScreenState extends ConsumerState<PlannerScreen> {
   }
 
   // --- HELPERS ---
+  Future<bool?> _confirmDeleteFood(
+      BuildContext context, FoodItem food, AppLocalizations l10n) {
+    return showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text('Apagar alimento?'),
+        content: Text(
+          'Queres mesmo apagar "${food.name}"?\n\nEsta ação remove o alimento da tua lista, mas não altera registos antigos do diário.',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx, false),
+            child: Text(l10n.cancelAction),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(ctx, true),
+            child: Text(
+              l10n.deleteTooltip,
+              style: const TextStyle(
+                  color: Colors.redAccent, fontWeight: FontWeight.bold),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   bool _isSelectedDateEditable() {
     final selectedDate = ref.read(selectedDateProvider);
     final now = DateTime.now();
@@ -1095,6 +1122,12 @@ class _PlannerScreenState extends ConsumerState<PlannerScreen> {
                             }
                             return false;
                           } else {
+                            final confirmed =
+                                await _confirmDeleteFood(context, food, l10n);
+                            if (confirmed != true) {
+                              return false;
+                            }
+
                             // --- LÓGICA DE APAGAR CORRIGIDA AQUI ---
                             final db = ref.read(databaseProvider);
                             final cloudSync = CloudSyncService(db);

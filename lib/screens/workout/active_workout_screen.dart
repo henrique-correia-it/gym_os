@@ -45,8 +45,7 @@ class _ActiveWorkoutScreenState extends ConsumerState<ActiveWorkoutScreen> {
 
   // ── Sets logged this session: exerciseId → list ──────────────────────────
   final Map<int, List<_SessionSet>> _sessionSets = {};
-  final String _sessionId =
-      DateTime.now().millisecondsSinceEpoch.toString();
+  final String _sessionId = DateTime.now().millisecondsSinceEpoch.toString();
 
   // ── Previous history: exerciseId → recent ExerciseSets ──────────────────
   final Map<int, List<ExerciseSet>> _history = {};
@@ -102,9 +101,11 @@ class _ActiveWorkoutScreenState extends ConsumerState<ActiveWorkoutScreen> {
         .filter()
         .exerciseNameEqualTo(ex.name)
         .sortByDateDesc()
-        .limit(15)
+        .limit(40)
         .findAll();
-    if (mounted) setState(() => _history[ex.id] = sets);
+    final previousSets =
+        sets.where((set) => set.sessionId != _sessionId).take(15).toList();
+    if (mounted) setState(() => _history[ex.id] = previousSets);
   }
 
   void _prefillInputs(WorkoutExercise ex) {
@@ -146,7 +147,10 @@ class _ActiveWorkoutScreenState extends ConsumerState<ActiveWorkoutScreen> {
       _restActive = true;
     });
     _restTimer = Timer.periodic(const Duration(seconds: 1), (t) {
-      if (!mounted) { t.cancel(); return; }
+      if (!mounted) {
+        t.cancel();
+        return;
+      }
       setState(() {
         _restRemaining--;
         if (_restRemaining <= 0) {
@@ -160,7 +164,10 @@ class _ActiveWorkoutScreenState extends ConsumerState<ActiveWorkoutScreen> {
 
   void _skipRest() {
     _restTimer?.cancel();
-    setState(() { _restActive = false; _restRemaining = 0; });
+    setState(() {
+      _restActive = false;
+      _restRemaining = 0;
+    });
   }
 
   String get _restTime {
@@ -197,7 +204,8 @@ class _ActiveWorkoutScreenState extends ConsumerState<ActiveWorkoutScreen> {
     });
     CloudSyncService(db).syncExerciseSet(set);
 
-    _sessionSets.putIfAbsent(ex.id, () => [])
+    _sessionSets
+        .putIfAbsent(ex.id, () => [])
         .add(_SessionSet(id: set.id, weight: weight, reps: reps));
 
     // Check PR
@@ -239,26 +247,33 @@ class _ActiveWorkoutScreenState extends ConsumerState<ActiveWorkoutScreen> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Container(
-                width: 36, height: 4,
+                width: 36,
+                height: 4,
                 margin: const EdgeInsets.only(bottom: 20),
                 decoration: BoxDecoration(
-                  color: Theme.of(ctx).colorScheme.onSurface.withValues(alpha: 0.15),
+                  color: Theme.of(ctx)
+                      .colorScheme
+                      .onSurface
+                      .withValues(alpha: 0.15),
                   borderRadius: BorderRadius.circular(2),
                 ),
               ),
               Text(l10n.editSet,
-                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                  style: const TextStyle(
+                      fontSize: 18, fontWeight: FontWeight.bold)),
               const SizedBox(height: 20),
               Row(
                 children: [
                   Expanded(
                     child: TextField(
                       controller: weightCtrl,
-                      keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                      keyboardType:
+                          const TextInputType.numberWithOptions(decimal: true),
                       decoration: InputDecoration(
                         labelText: l10n.weight,
                         suffixText: 'kg',
-                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12)),
                       ),
                     ),
                   ),
@@ -269,7 +284,8 @@ class _ActiveWorkoutScreenState extends ConsumerState<ActiveWorkoutScreen> {
                       keyboardType: TextInputType.number,
                       decoration: InputDecoration(
                         labelText: l10n.reps,
-                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12)),
                       ),
                     ),
                   ),
@@ -283,11 +299,13 @@ class _ActiveWorkoutScreenState extends ConsumerState<ActiveWorkoutScreen> {
                   style: FilledButton.styleFrom(
                     backgroundColor: const Color(0xFF00E676),
                     foregroundColor: Colors.black,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(14)),
                   ),
                   onPressed: () => Navigator.pop(ctx, true),
                   child: Text(l10n.save,
-                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 16)),
                 ),
               ),
             ],
@@ -300,11 +318,18 @@ class _ActiveWorkoutScreenState extends ConsumerState<ActiveWorkoutScreen> {
 
     final newWeight = double.tryParse(weightCtrl.text.replaceAll(',', '.'));
     final newReps = int.tryParse(repsCtrl.text);
-    if (newWeight == null || newReps == null || newWeight <= 0 || newReps <= 0) return;
+    if (newWeight == null ||
+        newReps == null ||
+        newWeight <= 0 ||
+        newReps <= 0) {
+      return;
+    }
 
     final db = ref.read(databaseProvider);
     final stored = await db.isar.exerciseSets.get(s.id);
-    if (stored == null) return;
+    if (stored == null) {
+      return;
+    }
     stored.weight = newWeight;
     stored.reps = newReps;
     await db.isar.writeTxn(() async => db.isar.exerciseSets.put(stored));
@@ -338,10 +363,10 @@ class _ActiveWorkoutScreenState extends ConsumerState<ActiveWorkoutScreen> {
         .exerciseNameEqualTo(name)
         .sortByDateDesc()
         .findAll();
-    // Skip the set we just logged (most recent); need at least one prior set
-    if (all.length <= 1) return false;
-    final previous = all.skip(1);
-    final maxPrev = previous.map((s) => s.weight).reduce((a, b) => a > b ? a : b);
+    final previous = all.where((set) => set.sessionId != _sessionId).toList();
+    if (previous.isEmpty) return false;
+    final maxPrev =
+        previous.map((s) => s.weight).reduce((a, b) => a > b ? a : b);
     return weight > maxPrev;
   }
 
@@ -399,7 +424,9 @@ class _ActiveWorkoutScreenState extends ConsumerState<ActiveWorkoutScreen> {
     double totalVolume = 0;
     for (final sets in _sessionSets.values) {
       totalSets += sets.length;
-      for (final s in sets) { totalVolume += s.weight * s.reps; }
+      for (final s in sets) {
+        totalVolume += s.weight * s.reps;
+      }
     }
     final min = _sessionSeconds ~/ 60;
     final sec = _sessionSeconds % 60;
@@ -417,16 +444,20 @@ class _ActiveWorkoutScreenState extends ConsumerState<ActiveWorkoutScreen> {
         ),
         padding: EdgeInsets.only(
           bottom: MediaQuery.of(ctx).viewInsets.bottom + 32,
-          top: 12, left: 24, right: 24,
+          top: 12,
+          left: 24,
+          right: 24,
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             Container(
-              width: 40, height: 4,
+              width: 40,
+              height: 4,
               margin: const EdgeInsets.only(bottom: 24),
               decoration: BoxDecoration(
-                color: Theme.of(ctx).colorScheme.onSurface.withValues(alpha: 0.15),
+                color:
+                    Theme.of(ctx).colorScheme.onSurface.withValues(alpha: 0.15),
                 borderRadius: BorderRadius.circular(2),
               ),
             ),
@@ -442,7 +473,8 @@ class _ActiveWorkoutScreenState extends ConsumerState<ActiveWorkoutScreen> {
                 boxShadow: [
                   BoxShadow(
                     color: const Color(0xFF00E676).withValues(alpha: 0.3),
-                    blurRadius: 20, offset: const Offset(0, 8),
+                    blurRadius: 20,
+                    offset: const Offset(0, 8),
                   ),
                 ],
               ),
@@ -451,8 +483,8 @@ class _ActiveWorkoutScreenState extends ConsumerState<ActiveWorkoutScreen> {
             ),
             const SizedBox(height: 20),
             Text(l10n.sessionDoneTitle,
-                style: const TextStyle(
-                    fontSize: 22, fontWeight: FontWeight.bold)),
+                style:
+                    const TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
             const SizedBox(height: 24),
             Row(
               children: [
@@ -473,7 +505,8 @@ class _ActiveWorkoutScreenState extends ConsumerState<ActiveWorkoutScreen> {
                 _SummaryChip(
                   icon: Icons.timer_outlined,
                   label: l10n.sessionDuration,
-                  value: '${min.toString().padLeft(2, '0')}:${sec.toString().padLeft(2, '0')}',
+                  value:
+                      '${min.toString().padLeft(2, '0')}:${sec.toString().padLeft(2, '0')}',
                   color: const Color(0xFF00E676),
                 ),
               ],
@@ -575,8 +608,7 @@ class _ActiveWorkoutScreenState extends ConsumerState<ActiveWorkoutScreen> {
                   ),
                   child: KeyedSubtree(
                     key: ValueKey(_currentIndex),
-                    child: _buildExerciseCard(
-                        context, l10n, colorScheme, ex,
+                    child: _buildExerciseCard(context, l10n, colorScheme, ex,
                         sessionSets, lastSessionSets),
                   ),
                 ),
@@ -610,7 +642,8 @@ class _ActiveWorkoutScreenState extends ConsumerState<ActiveWorkoutScreen> {
                   if (should && context.mounted) nav.pop();
                 },
                 style: IconButton.styleFrom(
-                  backgroundColor: cs.surfaceContainerHighest.withValues(alpha: 0.5),
+                  backgroundColor:
+                      cs.surfaceContainerHighest.withValues(alpha: 0.5),
                 ),
               ),
               const SizedBox(width: 12),
@@ -646,8 +679,7 @@ class _ActiveWorkoutScreenState extends ConsumerState<ActiveWorkoutScreen> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Icon(Icons.timer_outlined,
-                        size: 14,
-                        color: cs.onSurface.withValues(alpha: 0.6)),
+                        size: 14, color: cs.onSurface.withValues(alpha: 0.6)),
                     const SizedBox(width: 4),
                     Text(_sessionTime,
                         style: TextStyle(
@@ -669,8 +701,7 @@ class _ActiveWorkoutScreenState extends ConsumerState<ActiveWorkoutScreen> {
           builder: (ctx, value, _) => LinearProgressIndicator(
             value: value,
             backgroundColor: cs.surfaceContainerHighest,
-            valueColor:
-                const AlwaysStoppedAnimation<Color>(Color(0xFF00E676)),
+            valueColor: const AlwaysStoppedAnimation<Color>(Color(0xFF00E676)),
             minHeight: 3,
           ),
         ),
@@ -680,8 +711,8 @@ class _ActiveWorkoutScreenState extends ConsumerState<ActiveWorkoutScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                l10n.activeWorkoutOf(
-                    (_currentIndex + 1).toString(), _exercises.length.toString()),
+                l10n.activeWorkoutOf((_currentIndex + 1).toString(),
+                    _exercises.length.toString()),
                 style: TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.w600,
@@ -693,8 +724,7 @@ class _ActiveWorkoutScreenState extends ConsumerState<ActiveWorkoutScreen> {
                 child: Row(
                   children: [
                     Icon(Icons.hourglass_empty_rounded,
-                        size: 12,
-                        color: cs.onSurface.withValues(alpha: 0.4)),
+                        size: 12, color: cs.onSurface.withValues(alpha: 0.4)),
                     const SizedBox(width: 3),
                     Text(
                       '${_restDuration}s',
@@ -737,9 +767,7 @@ class _ActiveWorkoutScreenState extends ConsumerState<ActiveWorkoutScreen> {
           const SizedBox(width: 10),
           Text(l10n.restLabel,
               style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  color: color,
-                  fontSize: 14)),
+                  fontWeight: FontWeight.w600, color: color, fontSize: 14)),
           const SizedBox(width: 8),
           Text(_restTime,
               style: TextStyle(
@@ -756,8 +784,8 @@ class _ActiveWorkoutScreenState extends ConsumerState<ActiveWorkoutScreen> {
               tapTargetSize: MaterialTapTargetSize.shrinkWrap,
             ),
             child: Text(l10n.skipRest,
-                style: const TextStyle(
-                    fontSize: 12, fontWeight: FontWeight.bold)),
+                style:
+                    const TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
           ),
         ],
       ),
@@ -782,8 +810,7 @@ class _ActiveWorkoutScreenState extends ConsumerState<ActiveWorkoutScreen> {
       ),
       child: Row(
         children: [
-          const Icon(Icons.emoji_events_rounded,
-              color: Colors.amber, size: 22),
+          const Icon(Icons.emoji_events_rounded, color: Colors.amber, size: 22),
           const SizedBox(width: 10),
           Text(l10n.newPR,
               style: const TextStyle(
@@ -913,8 +940,7 @@ class _ActiveWorkoutScreenState extends ConsumerState<ActiveWorkoutScreen> {
       decoration: BoxDecoration(
         color: cs.surfaceContainerHighest.withValues(alpha: 0.4),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(
-            color: cs.onSurface.withValues(alpha: 0.06)),
+        border: Border.all(color: cs.onSurface.withValues(alpha: 0.06)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -922,8 +948,7 @@ class _ActiveWorkoutScreenState extends ConsumerState<ActiveWorkoutScreen> {
           Row(
             children: [
               Icon(Icons.history_rounded,
-                  size: 13,
-                  color: cs.onSurface.withValues(alpha: 0.4)),
+                  size: 13, color: cs.onSurface.withValues(alpha: 0.4)),
               const SizedBox(width: 5),
               Text(l10n.lastSession,
                   style: TextStyle(
@@ -936,8 +961,7 @@ class _ActiveWorkoutScreenState extends ConsumerState<ActiveWorkoutScreen> {
                 Text(
                   _formatDate(sets.first.date, l10n),
                   style: TextStyle(
-                      fontSize: 10,
-                      color: cs.onSurface.withValues(alpha: 0.3)),
+                      fontSize: 10, color: cs.onSurface.withValues(alpha: 0.3)),
                 ),
               ],
             ],
@@ -955,13 +979,13 @@ class _ActiveWorkoutScreenState extends ConsumerState<ActiveWorkoutScreen> {
               runSpacing: 6,
               children: sets.map((s) {
                 return Container(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 10, vertical: 5),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                   decoration: BoxDecoration(
                     color: cs.surface,
                     borderRadius: BorderRadius.circular(10),
-                    border: Border.all(
-                        color: cs.onSurface.withValues(alpha: 0.08)),
+                    border:
+                        Border.all(color: cs.onSurface.withValues(alpha: 0.08)),
                   ),
                   child: Text(
                     '${_formatWeight(s.weight)}kg × ${s.reps}',
@@ -1008,8 +1032,10 @@ class _ActiveWorkoutScreenState extends ConsumerState<ActiveWorkoutScreen> {
                       hint: '0.0',
                       suffix: 'kg',
                       decimal: true,
-                      onMinus: () => _adjustValue(_weightCtrl, -2.5, decimal: true),
-                      onPlus: () => _adjustValue(_weightCtrl, 2.5, decimal: true),
+                      onMinus: () =>
+                          _adjustValue(_weightCtrl, -2.5, decimal: true),
+                      onPlus: () =>
+                          _adjustValue(_weightCtrl, 2.5, decimal: true),
                     ),
                   ],
                 ),
@@ -1032,7 +1058,8 @@ class _ActiveWorkoutScreenState extends ConsumerState<ActiveWorkoutScreen> {
                       hint: '0',
                       suffix: 'reps',
                       decimal: false,
-                      onMinus: () => _adjustValue(_repsCtrl, -1, decimal: false),
+                      onMinus: () =>
+                          _adjustValue(_repsCtrl, -1, decimal: false),
                       onPlus: () => _adjustValue(_repsCtrl, 1, decimal: false),
                     ),
                   ],
@@ -1056,7 +1083,8 @@ class _ActiveWorkoutScreenState extends ConsumerState<ActiveWorkoutScreen> {
                 boxShadow: [
                   BoxShadow(
                     color: const Color(0xFF00E676).withValues(alpha: 0.35),
-                    blurRadius: 12, offset: const Offset(0, 5),
+                    blurRadius: 12,
+                    offset: const Offset(0, 5),
                   ),
                 ],
               ),
@@ -1105,8 +1133,7 @@ class _ActiveWorkoutScreenState extends ConsumerState<ActiveWorkoutScreen> {
               controller: controller,
               keyboardType: TextInputType.numberWithOptions(decimal: decimal),
               textAlign: TextAlign.center,
-              style: const TextStyle(
-                  fontSize: 18, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               decoration: InputDecoration(
                 border: InputBorder.none,
                 hintText: hint,
@@ -1145,8 +1172,7 @@ class _ActiveWorkoutScreenState extends ConsumerState<ActiveWorkoutScreen> {
 
   // ── Nav bar ───────────────────────────────────────────────────────────────
 
-  Widget _buildNavBar(
-      AppLocalizations l10n, ColorScheme cs, bool isLast) {
+  Widget _buildNavBar(AppLocalizations l10n, ColorScheme cs, bool isLast) {
     return Container(
       padding: const EdgeInsets.fromLTRB(20, 8, 20, 12),
       child: Row(
@@ -1156,8 +1182,7 @@ class _ActiveWorkoutScreenState extends ConsumerState<ActiveWorkoutScreen> {
               child: OutlinedButton.icon(
                 style: OutlinedButton.styleFrom(
                   foregroundColor: cs.onSurface.withValues(alpha: 0.7),
-                  side: BorderSide(
-                      color: cs.onSurface.withValues(alpha: 0.15)),
+                  side: BorderSide(color: cs.onSurface.withValues(alpha: 0.15)),
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(14)),
                   padding: const EdgeInsets.symmetric(vertical: 14),
@@ -1174,29 +1199,23 @@ class _ActiveWorkoutScreenState extends ConsumerState<ActiveWorkoutScreen> {
             flex: 2,
             child: FilledButton.icon(
               style: FilledButton.styleFrom(
-                backgroundColor: isLast
-                    ? const Color(0xFF00E676)
-                    : cs.primaryContainer,
-                foregroundColor: isLast
-                    ? Colors.black
-                    : cs.onPrimaryContainer,
+                backgroundColor:
+                    isLast ? const Color(0xFF00E676) : cs.primaryContainer,
+                foregroundColor: isLast ? Colors.black : cs.onPrimaryContainer,
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(14)),
                 padding: const EdgeInsets.symmetric(vertical: 14),
               ),
-              onPressed: isLast
-                  ? _finishWorkout
-                  : () => _goTo(_currentIndex + 1),
+              onPressed:
+                  isLast ? _finishWorkout : () => _goTo(_currentIndex + 1),
               icon: Icon(
-                isLast
-                    ? Icons.flag_rounded
-                    : Icons.arrow_forward_ios_rounded,
+                isLast ? Icons.flag_rounded : Icons.arrow_forward_ios_rounded,
                 size: 16,
               ),
               label: Text(
                 isLast ? l10n.finishWorkout : l10n.nextExercise,
-                style: const TextStyle(
-                    fontWeight: FontWeight.bold, fontSize: 15),
+                style:
+                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
               ),
             ),
           ),
@@ -1217,8 +1236,7 @@ class _ActiveWorkoutScreenState extends ConsumerState<ActiveWorkoutScreen> {
         return Container(
           decoration: BoxDecoration(
             color: Theme.of(ctx).colorScheme.surface,
-            borderRadius:
-                const BorderRadius.vertical(top: Radius.circular(24)),
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
           ),
           padding: const EdgeInsets.all(24),
           child: Column(
@@ -1287,11 +1305,10 @@ class _ActiveWorkoutScreenState extends ConsumerState<ActiveWorkoutScreen> {
   List<ExerciseSet> _getLastSessionSets(List<ExerciseSet> history) {
     if (history.isEmpty) return [];
     final latest = history.first.date;
-    final latestDay =
-        DateTime(latest.year, latest.month, latest.day);
+    final latestDay = DateTime(latest.year, latest.month, latest.day);
     return history
-        .where((s) =>
-            DateTime(s.date.year, s.date.month, s.date.day) == latestDay)
+        .where(
+            (s) => DateTime(s.date.year, s.date.month, s.date.day) == latestDay)
         .toList();
   }
 
@@ -1323,8 +1340,7 @@ class _AdjustBtn extends StatelessWidget {
         width: 36,
         height: 52,
         alignment: Alignment.center,
-        child: Icon(icon,
-            size: 18, color: cs.onSurface.withValues(alpha: 0.6)),
+        child: Icon(icon, size: 18, color: cs.onSurface.withValues(alpha: 0.6)),
       ),
     );
   }
@@ -1359,9 +1375,7 @@ class _SummaryChip extends StatelessWidget {
             const SizedBox(height: 6),
             Text(value,
                 style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                    color: color)),
+                    fontWeight: FontWeight.bold, fontSize: 16, color: color)),
             const SizedBox(height: 3),
             Text(label,
                 style: TextStyle(
