@@ -36,7 +36,6 @@ class DashboardScreen extends ConsumerWidget {
 
     final selectedDate = ref.watch(selectedDateProvider);
 
-
     final dateString =
         DateFormat('EEEE, d MMM').format(selectedDate).toUpperCase();
 
@@ -112,9 +111,10 @@ class DashboardScreen extends ConsumerWidget {
                 else
                   const SizedBox(width: 36),
                 const SizedBox(width: 12),
-                Flexible(
+                Expanded(
                   child: Text(
                     dateString,
+                    textAlign: TextAlign.center,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                       fontSize: 13,
@@ -746,16 +746,20 @@ class DashboardScreen extends ConsumerWidget {
       child: InkWell(
         onTap: onTap,
         borderRadius: BorderRadius.circular(12),
-        child: Container(
-          padding: const EdgeInsets.all(8),
-          decoration: BoxDecoration(
-            color: colorScheme.primaryContainer.withValues(alpha: 0.3),
-            borderRadius: BorderRadius.circular(12),
-            border: Border.all(
-              color: colorScheme.primary.withValues(alpha: 0.2),
+        child: SizedBox(
+          width: 36,
+          height: 36,
+          child: Container(
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              color: colorScheme.primaryContainer.withValues(alpha: 0.3),
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(
+                color: colorScheme.primary.withValues(alpha: 0.2),
+              ),
             ),
+            child: Icon(icon, size: 18, color: colorScheme.primary),
           ),
-          child: Icon(icon, size: 18, color: colorScheme.primary),
         ),
       ),
     );

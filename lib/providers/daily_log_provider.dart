@@ -39,25 +39,25 @@ class DailyLogNotifier extends AsyncNotifier<DayLog?> {
         ..targetFat = (tKcal * user.macroFat) / 9.0;
     } else {
       await dayLog.meals.load();
-      
+
       // Recalcula consumedKcal com base nas refeições carregadas
       double totalKcal = 0;
       for (var m in dayLog.meals) {
         totalKcal += m.kcal;
       }
       dayLog.consumedKcal = totalKcal;
-      
+
       // Corrige targetKcal se estiver 0 (dados legados ou não inicializados)
       if (dayLog.targetKcal <= 0) {
         double finalTarget =
             NutritionUtils.calculateTargetKcal(user, user.weight);
         double tKcal = finalTarget > 0 ? finalTarget : 2000;
-        
+
         dayLog.targetKcal = tKcal;
         dayLog.targetProtein = (tKcal * user.macroProtein) / 4.0;
         dayLog.targetCarbs = (tKcal * user.macroCarbs) / 4.0;
         dayLog.targetFat = (tKcal * user.macroFat) / 9.0;
-        
+
         // Persiste a correção
         await ref.read(databaseProvider).isar.writeTxn(() async {
           await ref.read(databaseProvider).isar.dayLogs.put(dayLog!);
@@ -68,11 +68,20 @@ class DailyLogNotifier extends AsyncNotifier<DayLog?> {
     return dayLog;
   }
 
-  Future<void> addMeal(FoodItem food, double amount, String mealType) async {
+  Future<bool> addMeal(FoodItem food, double amount, String mealType) async {
     final db = ref.read(databaseProvider);
 
     // 1. Usa o provider global
     final selectedDate = ref.read(selectedDateProvider);
+    final now = DateTime.now();
+    final today = DateTime(now.year, now.month, now.day);
+    final yesterday = today.subtract(const Duration(days: 1));
+    final selectedDay =
+        DateTime(selectedDate.year, selectedDate.month, selectedDate.day);
+
+    if (selectedDay.isBefore(yesterday)) {
+      return false;
+    }
 
     // 2. Buscar o Log diretamente à BD para essa data
     var targetLog =
@@ -135,6 +144,7 @@ class DailyLogNotifier extends AsyncNotifier<DayLog?> {
 
     // Força um refresh completo do provider para garantir que o header atualiza
     final _ = ref.refresh(dailyLogProvider);
+    return true;
   }
 
   Future<void> deleteMeal(MealEntry meal) async {

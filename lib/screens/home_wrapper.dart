@@ -34,7 +34,14 @@ class _HomeWrapperState extends ConsumerState<HomeWrapper> {
 
   void _onNavTap(int index) {
     final current = ref.read(navIndexProvider);
-    if (current == index) return;
+    if (current == index) {
+      if (index == 0) {
+        final now = DateTime.now();
+        ref.read(selectedDateProvider.notifier).state =
+            DateTime(now.year, now.month, now.day);
+      }
+      return;
+    }
     ref.read(navIndexProvider.notifier).state = index;
     _isAnimating = true;
     _pageController
@@ -116,7 +123,11 @@ class _NavBar extends StatelessWidget {
     final items = [
       (Icons.home_outlined, Icons.home_rounded, l10n.navHome),
       (Icons.restaurant_outlined, Icons.restaurant_rounded, l10n.navDiet),
-      (Icons.fitness_center_outlined, Icons.fitness_center_rounded, l10n.navWorkout),
+      (
+        Icons.fitness_center_outlined,
+        Icons.fitness_center_rounded,
+        l10n.navWorkout
+      ),
       (Icons.handyman_outlined, Icons.handyman_rounded, l10n.navTools),
       (Icons.person_outline, Icons.person_rounded, l10n.navProfile),
     ];
@@ -212,11 +223,17 @@ class _NavItem extends StatelessWidget {
     if (!isSelected) return BorderRadius.circular(22);
     if (index == 0) {
       return const BorderRadius.only(
-          topLeft: outer, bottomLeft: outer, topRight: inner, bottomRight: inner);
+          topLeft: outer,
+          bottomLeft: outer,
+          topRight: inner,
+          bottomRight: inner);
     }
     if (index == itemCount - 1) {
       return const BorderRadius.only(
-          topRight: outer, bottomRight: outer, topLeft: inner, bottomLeft: inner);
+          topRight: outer,
+          bottomRight: outer,
+          topLeft: inner,
+          bottomLeft: inner);
     }
     return BorderRadius.circular(22);
   }
@@ -225,9 +242,13 @@ class _NavItem extends StatelessWidget {
     const v = 10.0;
     const inner = 14.0;
     const outerSel = 16.0;
-    if (!isSelected) return const EdgeInsets.symmetric(horizontal: 14, vertical: v);
+    if (!isSelected) {
+      return const EdgeInsets.symmetric(horizontal: 14, vertical: v);
+    }
     if (index == 0) return const EdgeInsets.fromLTRB(outerSel, v, inner, v);
-    if (index == itemCount - 1) return const EdgeInsets.fromLTRB(inner, v, outerSel, v);
+    if (index == itemCount - 1) {
+      return const EdgeInsets.fromLTRB(inner, v, outerSel, v);
+    }
     return const EdgeInsets.symmetric(horizontal: 18, vertical: v);
   }
 

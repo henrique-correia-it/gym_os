@@ -26,6 +26,7 @@ class _PlannerScreenState extends ConsumerState<PlannerScreen> {
   List<FoodItem> _apiResults = [];
 
   final _searchController = TextEditingController();
+  final _searchFocusNode = FocusNode();
   final _apiService = FoodApiService();
 
   bool _isLoadingApi = false;
@@ -36,6 +37,7 @@ class _PlannerScreenState extends ConsumerState<PlannerScreen> {
   @override
   void dispose() {
     _searchController.dispose();
+    _searchFocusNode.dispose();
     _debounce?.cancel();
     super.dispose();
   }
@@ -189,46 +191,61 @@ class _PlannerScreenState extends ConsumerState<PlannerScreen> {
 
   // --- UI MODAL E WIDGETS ---
   void _showAddMealModal(FoodItem food) {
-    final l10n = AppLocalizations.of(context)!;
+    if (!_isSelectedDateEditable()) {
+      final l10n = AppLocalizations.of(context)!;
+      AppToast.show(context, l10n.readOnly, isError: true);
+      return;
+    }
 
+    FocusManager.instance.primaryFocus?.unfocus();
     double amount = food.unit == 'un' ? 1.0 : 100.0;
+    final isUnit = food.unit == 'un';
+    final step = isUnit ? 0.5 : 1.0;
 
-    // ALTERAÇÃO 2: Variável nullable para não ter pré-seleção
     String? selectedMeal;
     bool showCheckError = false;
 
     final amountController =
-        TextEditingController(text: amount.toStringAsFixed(1));
+        TextEditingController(text: amount.toStringAsFixed(isUnit ? 1 : 0));
 
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
       useSafeArea: true,
+      useRootNavigator: true,
+      requestFocus: false,
       backgroundColor: Colors.transparent,
-      builder: (context) {
+      builder: (ctx) {
+        final l10n = AppLocalizations.of(ctx)!;
         return StatefulBuilder(
-          builder: (context, setModalState) {
-            double ratio = (food.unit == 'un') ? amount : (amount / 100.0);
+          builder: (ctx, setModalState) {
+            final ratio = isUnit ? amount : (amount / 100.0);
             final totalKcal = food.kcal * ratio;
             final totalProt = food.protein * ratio;
             final totalCarb = food.carbs * ratio;
             final totalFat = food.fat * ratio;
 
+            void adjustAmount(double delta) {
+              final newAmount = (amount + delta).clamp(0.0, 9999.0).toDouble();
+              setModalState(() => amount = newAmount);
+              amountController.text = newAmount.toStringAsFixed(isUnit ? 1 : 0);
+            }
+
             return Container(
               decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.surface,
+                color: Theme.of(ctx).colorScheme.surface,
                 borderRadius:
-                    const BorderRadius.vertical(top: Radius.circular(30.0)),
+                    const BorderRadius.vertical(top: Radius.circular(28)),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.1),
-                    blurRadius: 20,
-                    offset: const Offset(0, -5),
+                    color: Colors.black.withValues(alpha: 0.12),
+                    blurRadius: 24,
+                    offset: const Offset(0, -4),
                   )
                 ],
               ),
               padding: EdgeInsets.only(
-                bottom: MediaQuery.of(context).viewInsets.bottom + 28,
+                bottom: MediaQuery.of(ctx).viewInsets.bottom + 28,
                 top: 12,
                 left: 24,
                 right: 24,
@@ -253,27 +270,17 @@ class _PlannerScreenState extends ConsumerState<PlannerScreen> {
                       ),
                     ),
                     Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
                           padding: const EdgeInsets.all(12),
                           decoration: BoxDecoration(
-                            color: food.source == 'API'
-                                ? Colors.blueAccent.withOpacity(0.1)
-                                : const Color(0xFF00E676).withOpacity(0.1),
-                            borderRadius: BorderRadius.circular(15),
+                            color: Colors.orangeAccent.withValues(alpha: 0.12),
+                            borderRadius: BorderRadius.circular(16),
                           ),
-                          child: Icon(
-                            food.source == 'API'
-                                ? Icons.cloud_download_rounded
-                                : Icons.restaurant_menu_rounded,
-                            color: food.source == 'API'
-                                ? Colors.blueAccent
-                                : const Color(0xFF00E676),
-                            size: 28,
-                          ),
+                          child: const Icon(Icons.restaurant_rounded,
+                              color: Colors.orangeAccent, size: 22),
                         ),
-                        const SizedBox(width: 15),
+                        const SizedBox(width: 14),
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -281,65 +288,98 @@ class _PlannerScreenState extends ConsumerState<PlannerScreen> {
                               Text(
                                 food.name,
                                 style: const TextStyle(
-                                    fontSize: 22,
-                                    fontWeight: FontWeight.bold,
-                                    height: 1.1),
+                                    fontWeight: FontWeight.bold, fontSize: 17),
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
                               ),
-                              const SizedBox(height: 5),
-                              _buildSourceBadge(context, food.source == 'API'),
+                              const SizedBox(height: 3),
+                              Text(
+                                isUnit ? l10n.unitUn : l10n.unit100g,
+                                style: TextStyle(
+                                    fontSize: 12,
+                                    color: Theme.of(ctx)
+                                        .colorScheme
+                                        .onSurfaceVariant),
+                              ),
                             ],
                           ),
                         ),
                       ],
                     ),
-                    const SizedBox(height: 30),
+                    const SizedBox(height: 24),
                     Container(
-                      padding: const EdgeInsets.all(15),
+                      padding: const EdgeInsets.fromLTRB(16, 12, 8, 12),
                       decoration: BoxDecoration(
-                        color: Theme.of(context)
+                        color: Theme.of(ctx)
                             .colorScheme
                             .surfaceContainerHighest
-                            .withOpacity(0.3),
+                            .withValues(alpha: 0.5),
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: Row(
                         children: [
+                          _buildStepButton(ctx, Icons.remove_rounded, () {
+                            if (amount > step) adjustAmount(-step);
+                          }),
                           Expanded(
-                            child: TextField(
-                              controller: amountController,
-                              keyboardType:
-                                  const TextInputType.numberWithOptions(
-                                      decimal: true),
-                              // ALTERAÇÃO 1: autofocus false para o teclado não abrir sozinho
-                              autofocus: false,
-                              style: const TextStyle(
-                                  fontSize: 26, fontWeight: FontWeight.bold),
-                              decoration: InputDecoration(
-                                labelText: l10n.quantity(food.unit == 'un'
-                                    ? l10n.unitUn
-                                    : l10n.unitG),
-                                border: InputBorder.none,
-                                contentPadding: EdgeInsets.zero,
-                                labelStyle: TextStyle(
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .onSurfaceVariant),
+                            child: Center(
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                crossAxisAlignment: CrossAxisAlignment.baseline,
+                                textBaseline: TextBaseline.alphabetic,
+                                children: [
+                                  IntrinsicWidth(
+                                    child: TextField(
+                                      controller: amountController,
+                                      keyboardType:
+                                          const TextInputType.numberWithOptions(
+                                              decimal: true),
+                                      // ALTERAÇÃO 1: autofocus false para o teclado não abrir sozinho
+                                      autofocus: false,
+                                      textAlign: TextAlign.center,
+                                      style: const TextStyle(
+                                          fontSize: 28,
+                                          fontWeight: FontWeight.bold),
+                                      decoration: const InputDecoration(
+                                        border: InputBorder.none,
+                                        contentPadding: EdgeInsets.zero,
+                                        isDense: true,
+                                      ),
+                                      onChanged: (value) {
+                                        final val = double.tryParse(
+                                                value.replaceAll(',', '.')) ??
+                                            0;
+                                        setModalState(() => amount = val);
+                                      },
+                                    ),
+                                  ),
+                                  const SizedBox(width: 3),
+                                  Text(
+                                    isUnit ? 'un' : 'g',
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600,
+                                        color: Theme.of(ctx)
+                                            .colorScheme
+                                            .onSurfaceVariant),
+                                  ),
+                                ],
                               ),
-                              onChanged: (value) {
-                                final val = double.tryParse(
-                                        value.replaceAll(',', '.')) ??
-                                    0;
-                                setModalState(() => amount = val);
-                              },
                             ),
                           ),
+                          const SizedBox(width: 8),
+                          _buildStepButton(ctx, Icons.add_rounded, () {
+                            adjustAmount(step);
+                          }),
                           Container(
                               width: 1,
                               height: 40,
-                              color: Colors.grey.withAlpha(30)),
-                          const SizedBox(width: 20),
+                              margin:
+                                  const EdgeInsets.symmetric(horizontal: 12),
+                              color: Theme.of(ctx)
+                                  .colorScheme
+                                  .onSurface
+                                  .withValues(alpha: 0.1)),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
@@ -352,8 +392,8 @@ class _PlannerScreenState extends ConsumerState<PlannerScreen> {
                               ),
                               Text(l10n.unitKcal,
                                   style: TextStyle(
-                                      fontSize: 12,
-                                      color: Theme.of(context)
+                                      fontSize: 11,
+                                      color: Theme.of(ctx)
                                           .colorScheme
                                           .onSurfaceVariant)),
                             ],
@@ -361,17 +401,17 @@ class _PlannerScreenState extends ConsumerState<PlannerScreen> {
                         ],
                       ),
                     ),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 16),
                     Row(
                       children: [
-                        _buildMacroBadge(context, l10n.protein, totalProt,
-                            Colors.blueAccent),
+                        _buildMacroLiveChip(ctx, l10n.protein, totalProt,
+                            const Color(0xFF29B6F6), l10n),
                         const SizedBox(width: 10),
-                        _buildMacroBadge(context, l10n.carbs, totalCarb,
-                            Colors.orangeAccent),
+                        _buildMacroLiveChip(ctx, l10n.carbs, totalCarb,
+                            const Color(0xFFFFB74D), l10n),
                         const SizedBox(width: 10),
-                        _buildMacroBadge(
-                            context, l10n.fat, totalFat, Colors.redAccent),
+                        _buildMacroLiveChip(ctx, l10n.fat, totalFat,
+                            const Color(0xFFE57373), l10n),
                       ],
                     ),
                     const SizedBox(height: 24),
@@ -380,18 +420,14 @@ class _PlannerScreenState extends ConsumerState<PlannerScreen> {
                       children: [
                         Icon(Icons.restaurant_rounded,
                             size: 13,
-                            color: Theme.of(context)
-                                .colorScheme
-                                .onSurfaceVariant),
+                            color: Theme.of(ctx).colorScheme.onSurfaceVariant),
                         const SizedBox(width: 6),
                         Text(
                           l10n.chooseMealType,
                           style: TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.w700,
-                            color: Theme.of(context)
-                                .colorScheme
-                                .onSurfaceVariant,
+                            color: Theme.of(ctx).colorScheme.onSurfaceVariant,
                             letterSpacing: 0.3,
                           ),
                         ),
@@ -403,15 +439,14 @@ class _PlannerScreenState extends ConsumerState<PlannerScreen> {
                       child: Wrap(
                         spacing: 8,
                         runSpacing: 8,
-                        children:
-                            ref.read(mealOrderProvider).map((mealKey) {
+                        children: ref.read(mealOrderProvider).map((mealKey) {
                           final isSelected = selectedMeal == mealKey;
                           final displayLabel =
-                              _getTranslatedMealName(context, mealKey);
+                              _getTranslatedMealName(ctx, mealKey);
                           return GestureDetector(
                             onTap: () => setModalState(() {
-                              selectedMeal = isSelected ? null : mealKey;
-                              if (!isSelected) showCheckError = false;
+                              selectedMeal = mealKey;
+                              showCheckError = false;
                             }),
                             child: AnimatedContainer(
                               duration: const Duration(milliseconds: 200),
@@ -421,7 +456,7 @@ class _PlannerScreenState extends ConsumerState<PlannerScreen> {
                                 color: isSelected
                                     ? const Color(0xFF00E676)
                                         .withValues(alpha: 0.12)
-                                    : Theme.of(context)
+                                    : Theme.of(ctx)
                                         .colorScheme
                                         .surfaceContainerHighest
                                         .withValues(alpha: 0.5),
@@ -440,9 +475,7 @@ class _PlannerScreenState extends ConsumerState<PlannerScreen> {
                                   fontSize: 13,
                                   color: isSelected
                                       ? const Color(0xFF00E676)
-                                      : Theme.of(context)
-                                          .colorScheme
-                                          .onSurface,
+                                      : Theme.of(ctx).colorScheme.onSurface,
                                 ),
                               ),
                             ),
@@ -456,7 +489,7 @@ class _PlannerScreenState extends ConsumerState<PlannerScreen> {
                         child: Text(
                           l10n.selectMealError,
                           style: TextStyle(
-                              color: Theme.of(context).colorScheme.error,
+                              color: Theme.of(ctx).colorScheme.error,
                               fontWeight: FontWeight.bold),
                         ),
                       ),
@@ -491,19 +524,48 @@ class _PlannerScreenState extends ConsumerState<PlannerScreen> {
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(18)),
                           ),
-                          onPressed: () {
+                          onPressed: () async {
                             if (selectedMeal == null) {
                               setModalState(() => showCheckError = true);
                               return;
                             }
-                            ref
-                                .read(dailyLogProvider.notifier)
-                                .addMeal(food, amount, selectedMeal!);
-                            Navigator.pop(context);
-                            AppToast.show(
-                                context, l10n.foodAdded(food.name));
-                            _searchController.clear();
-                            _onSearchChanged("");
+
+                            final mealToAdd = selectedMeal!;
+                            final l10n = AppLocalizations.of(context)!;
+                            final message = l10n.foodAdded(food.name);
+
+                            _blockSearchFocusBriefly();
+                            FocusManager.instance.primaryFocus?.unfocus();
+
+                            if (!_isSelectedDateEditable()) {
+                              Navigator.pop(ctx);
+                              AppToast.show(context, l10n.readOnly,
+                                  isError: true);
+                              return;
+                            }
+
+                            Navigator.pop(ctx);
+
+                            try {
+                              final added = await ref
+                                  .read(dailyLogProvider.notifier)
+                                  .addMeal(food, amount, mealToAdd);
+
+                              if (!mounted) return;
+
+                              if (added) {
+                                AppToast.show(context, message);
+                              } else {
+                                AppToast.show(context, l10n.readOnly,
+                                    isError: true);
+                              }
+                            } catch (e) {
+                              debugPrint(
+                                  'Aviso: guardado offline, mas erro ao sincronizar: $e');
+                              if (mounted) {
+                                AppToast.show(context, message);
+                              }
+                            }
                           },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -529,7 +591,84 @@ class _PlannerScreenState extends ConsumerState<PlannerScreen> {
     );
   }
 
-  // --- HELPER DE TRADUÇÃO DE REFEIÇÕES ---
+  // --- HELPERS ---
+  bool _isSelectedDateEditable() {
+    final selectedDate = ref.read(selectedDateProvider);
+    final now = DateTime.now();
+    final today = DateTime(now.year, now.month, now.day);
+    final yesterday = today.subtract(const Duration(days: 1));
+    final selectedDay =
+        DateTime(selectedDate.year, selectedDate.month, selectedDate.day);
+
+    return !selectedDay.isBefore(yesterday);
+  }
+
+  void _blockSearchFocusBriefly() {
+    _searchFocusNode.canRequestFocus = false;
+    _searchFocusNode.unfocus();
+    Future<void>.delayed(const Duration(milliseconds: 700), () {
+      if (mounted) _searchFocusNode.canRequestFocus = true;
+    });
+  }
+
+  Widget _buildStepButton(
+      BuildContext context, IconData icon, VoidCallback onTap) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: 36,
+        height: 36,
+        decoration: BoxDecoration(
+          color:
+              Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.08),
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Icon(icon,
+            size: 18, color: Theme.of(context).colorScheme.onSurface),
+      ),
+    );
+  }
+
+  Widget _buildMacroLiveChip(BuildContext context, String shortLabel,
+      double value, Color color, AppLocalizations l10n) {
+    return Expanded(
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 10),
+        decoration: BoxDecoration(
+          color: color.withValues(alpha: 0.08),
+          borderRadius: BorderRadius.circular(14),
+          border: Border.all(color: color.withValues(alpha: 0.18)),
+        ),
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.baseline,
+              textBaseline: TextBaseline.alphabetic,
+              children: [
+                Text(
+                  value.toStringAsFixed(1),
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 16, color: color),
+                ),
+                const SizedBox(width: 2),
+                Text(l10n.unitG,
+                    style: TextStyle(
+                        fontSize: 10, color: color.withValues(alpha: 0.7))),
+              ],
+            ),
+            const SizedBox(height: 4),
+            Text(shortLabel,
+                style: TextStyle(
+                    fontSize: 10,
+                    fontWeight: FontWeight.w700,
+                    color: Theme.of(context).colorScheme.onSurfaceVariant)),
+          ],
+        ),
+      ),
+    );
+  }
+
   String _getTranslatedMealName(BuildContext context, String rawKey) {
     final l10n = AppLocalizations.of(context)!;
     final key = rawKey.trim().toLowerCase();
@@ -566,75 +705,6 @@ class _PlannerScreenState extends ConsumerState<PlannerScreen> {
     }
 
     return rawKey;
-  }
-
-  Widget _buildMacroBadge(
-      BuildContext context, String label, double value, Color color) {
-    final l10n = AppLocalizations.of(context)!;
-    return Expanded(
-      child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 12),
-        decoration: BoxDecoration(
-          color: color.withValues(alpha: 0.08),
-          borderRadius: BorderRadius.circular(14),
-          border: Border.all(color: color.withValues(alpha: 0.2), width: 1),
-        ),
-        child: Column(
-          children: [
-            Text(
-              value.toStringAsFixed(1),
-              style: TextStyle(
-                  fontWeight: FontWeight.bold, fontSize: 17, color: color),
-            ),
-            const SizedBox(height: 2),
-            Text(l10n.unitG,
-                style: TextStyle(
-                    fontSize: 10, color: color.withValues(alpha: 0.7))),
-            const SizedBox(height: 4),
-            Text(label,
-                style: TextStyle(
-                    fontSize: 11,
-                    fontWeight: FontWeight.w600,
-                    color:
-                        Theme.of(context).colorScheme.onSurfaceVariant)),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildSourceBadge(BuildContext context, bool isApi) {
-    final l10n = AppLocalizations.of(context)!;
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-      decoration: BoxDecoration(
-        color: isApi
-            ? Colors.blueAccent.withAlpha(10)
-            : const Color(0xFF00E676).withAlpha(10),
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(
-            color: isApi
-                ? Colors.blueAccent.withAlpha(30)
-                : const Color(0xFF00E676).withAlpha(30),
-            width: 0.5),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(isApi ? Icons.public : Icons.folder_special,
-              size: 10,
-              color: isApi ? Colors.blueAccent : const Color(0xFF00E676)),
-          const SizedBox(width: 4),
-          Text(
-            isApi ? l10n.onlineLabel : l10n.myFoodsLabel,
-            style: TextStyle(
-                fontSize: 10,
-                fontWeight: FontWeight.bold,
-                color: isApi ? Colors.blueAccent : const Color(0xFF00E676)),
-          ),
-        ],
-      ),
-    );
   }
 
   Widget _buildMicroMacro(String label, double val, Color color) {
@@ -736,6 +806,7 @@ class _PlannerScreenState extends ConsumerState<PlannerScreen> {
                     ),
                     child: TextField(
                       controller: _searchController,
+                      focusNode: _searchFocusNode,
                       onChanged: _onSearchChanged,
                       style: const TextStyle(fontWeight: FontWeight.w500),
                       decoration: InputDecoration(
