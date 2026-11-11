@@ -3,98 +3,88 @@
 
   # GymOS
 
-  **Offline-first workout, nutrition and progress tracking built with Flutter.**
+  **Offline-first fitness and nutrition app built with Flutter: workout logging, barcode scanning, on-device OCR of nutrition labels and optional Firebase sync.**
 
-  Plan workouts, log sets and meals, scan nutrition labels and keep an optional
-  private cloud backup through Firebase.
+  ![Flutter](https://img.shields.io/badge/Flutter-02569B?logo=flutter&logoColor=white)
+  ![Riverpod](https://img.shields.io/badge/Riverpod-0553B1)
+  ![Isar](https://img.shields.io/badge/Isar-local_DB-6E40C9)
+  ![Firebase](https://img.shields.io/badge/Firebase-FFCA28?logo=firebase&logoColor=black)
+  ![ML Kit](https://img.shields.io/badge/Google_ML_Kit-4285F4?logo=google&logoColor=white)
+  ![License: MIT](https://img.shields.io/badge/License-MIT-lightgrey)
 </div>
 
+> Personal project by **Henrique Correia** (2026). Designed and built end to end. About 30,000 lines of Dart.
+
 > [!IMPORTANT]
-> GymOS provides fitness and nutrition calculations for informational purposes
-> only. It is not a medical device and does not replace advice from a qualified
-> healthcare, nutrition or exercise professional.
+> GymOS gives fitness and nutrition estimates for information only. It is not a medical device and does not replace professional advice.
+
+## Highlights
+
+- **Offline-first:**
+  - all working data lives in a local **Isar** database, so the app is fully usable without a network;
+  - the cloud is optional.
+- **Cloud sync per entity:**
+  - foods, daily logs, weight entries, exercise sets and workout plans each sync to **Cloud Firestore** on their own;
+  - uses batched writes and merge updates;
+  - full restore from the cloud on a new device.
+- **Computer vision on the device:**
+  - barcode scanning with ML Kit and `mobile_scanner`, with lookups in the **OpenFoodFacts** database;
+  - **OCR of nutrition labels** with ML Kit Text Recognition, which reads calories and macros from a photo.
+- **Security by rules:** Firestore security rules (versioned in the repo) keep each user's data under `users/{uid}`.
+- **Reporting:** PDF nutrition reports, progress charts, and JSON backup and restore.
+- **Multilingual:** Portuguese, English and Spanish, with light, dark and AMOLED themes.
+
+## Architecture
+
+```text
+┌──────────────── Flutter UI (screens, widgets) ────────────────┐
+│ workouts · nutrition · progress · tools · settings            │
+└───────────────────────────────┬───────────────────────────────┘
+                                │ Riverpod providers
+┌───────────────────────────────▼───────────────────────────────┐
+│ Isar (local source of truth) ── JSON backup / restore          │
+└──────┬───────────────────────────────┬────────────────────────┘
+       │ CloudSyncService (optional)   │ device services
+┌──────▼────────────┐        ┌─────────▼───────────────────────┐
+│ Firebase Auth +   │        │ ML Kit barcode + text OCR        │
+│ Cloud Firestore   │        │ OpenFoodFacts API · PDF · charts │
+│ (rules per user)  │        └─────────────────────────────────┘
+└───────────────────┘
+```
 
 ## Features
 
-### Workouts
+**Workouts**
+- Multi-day workout plans and built-in templates.
+- Set-by-set logging of weight and repetitions.
+- Rest timer that keeps running while you move between exercises.
+- Workout history, load progression per exercise and one-rep-max estimates.
 
-- Create multi-day workout plans.
-- Start from built-in training templates.
-- Log weight and repetitions set by set.
-- Keep the rest timer running while navigating between exercises.
-- Review recent sets and workout history.
-- Track load progression for each exercise.
-- Estimate one-repetition maximum values.
-
-### Nutrition
-
-- Track calories, protein, carbohydrates and fat.
-- Organize food entries into configurable meals.
-- Search the OpenFoodFacts food database.
-- Scan product barcodes.
-- Read nutrition labels with on-device OCR.
-- Create and edit custom foods.
+**Nutrition**
+- Calories, protein, carbohydrates and fat across configurable meals.
+- Foods from OpenFoodFacts, barcode scanning, nutrition-label OCR and custom foods.
 - Copy and reorder meal entries.
-- Generate nutrition reports as PDF files.
+- PDF nutrition reports.
 
-### Progress and tools
+**Progress and tools**
+- Body-weight history and progress charts.
+- Calorie and macro targets.
+- Batch, cereal and real-weight calculators.
 
-- Record body-weight history.
-- Calculate calorie and macro targets.
-- Use batch, cereal and real-weight calculators.
-- View progress charts and historical data.
-- Use light, dark or AMOLED themes.
-- Available in Portuguese, English and Spanish.
-
-### Data
-
-- Local-first storage with Isar.
-- Manual backup and restore.
-- Optional Google Sign-In.
-- Optional Firestore backup and granular cloud synchronization.
-
-## Technology
+## Tech stack
 
 | Area | Technology |
 |---|---|
-| Application | Flutter and Dart |
-| State management | Riverpod |
+| App | Flutter, Dart, Riverpod |
 | Local database | Isar |
-| Authentication | Firebase Auth and Google Sign-In |
-| Cloud storage | Cloud Firestore |
-| Barcode scanning | Mobile Scanner and Google ML Kit |
-| Label recognition | Google ML Kit Text Recognition |
-| Food database | OpenFoodFacts API |
-| Charts | `fl_chart` |
-| Documents | `pdf` and `printing` |
-
-## Supported platforms
-
-| Platform | Status | Notes |
-|---|---:|---|
-| Android | Primary | Full camera, barcode, OCR and Firebase workflow |
-| iOS | Partial | Core Flutter target; requires separate Firebase configuration and device testing |
-| Web | Not supported | Current local database and scanning stack are mobile-focused |
-| Windows, macOS, Linux | Not supported | Scaffolding exists, but these targets are not production-hardened |
-
-## Requirements
-
-- Flutter SDK compatible with Dart `>=3.0.0 <4.0.0`
-- Android Studio and an Android SDK for Android development
-- Xcode and CocoaPods for iOS development
-- A Firebase project for authentication and cloud backup
-- FlutterFire CLI for generating local Firebase configuration
-- Firebase CLI for deploying Firestore security rules
-
-Check your toolchain with:
-
-```bash
-flutter doctor
-```
+| Auth and cloud | Firebase Auth, Google Sign-In, Cloud Firestore and security rules |
+| Vision | Google ML Kit (barcode scanning, text recognition), `mobile_scanner` |
+| Data | OpenFoodFacts API |
+| Output | `fl_chart`, `pdf`, `printing` |
 
 ## Getting started
 
-### 1. Clone and install dependencies
+Requires the Flutter SDK (Dart `>=3.0.0 <4.0.0`), the Android SDK and a Firebase project. Use the FlutterFire CLI and the Firebase CLI to set it up.
 
 ```bash
 git clone https://github.com/henrique-correia-it/gym_os.git
@@ -103,90 +93,52 @@ flutter pub get
 flutter gen-l10n
 ```
 
-### 2. Create your Firebase configuration
-
-Create a Firebase project and configure your own Android and/or iOS apps. Real
-Firebase configuration files are intentionally excluded from this repository.
-
-Recommended setup:
+**1. Firebase configuration.** Create your own Firebase project, then run:
 
 ```bash
 dart pub global activate flutterfire_cli
 flutterfire configure
 ```
 
-This generates local files such as:
+This generates `lib/firebase_options.dart` and `android/app/google-services.json`. Both are ignored by Git, and templates are provided as `*.example`.
 
-```text
-lib/firebase_options.dart
-android/app/google-services.json
-ios/Runner/GoogleService-Info.plist
-```
+**2. Enable services.** In the Firebase console:
+- turn on Google sign-in;
+- create a Firestore database;
+- add the Android SHA fingerprints.
 
-These files are ignored by Git. Never commit service-account JSON files,
-private keys or administrative credentials.
-
-Templates are provided at:
-
-```text
-lib/firebase_options.dart.example
-android/app/google-services.json.example
-```
-
-### 3. Enable Firebase services
-
-In the Firebase Console:
-
-1. Enable Google in **Authentication → Sign-in method**.
-2. Create a Firestore database in production mode.
-3. Configure the Android SHA fingerprints required by Google Sign-In.
-4. Review authentication quotas and abuse protection.
-
-### 4. Deploy Firestore security rules
-
-The versioned rules in [`firestore.rules`](firestore.rules) isolate every
-user's data below `users/{uid}` and deny access to the rest of the database.
-
-Select your Firebase project locally, then deploy only the rules:
+**3. Deploy the security rules**
 
 ```bash
 firebase use YOUR_PROJECT_ID
 firebase deploy --only firestore:rules
 ```
 
-Always test with two separate accounts and confirm that neither account can
-read or modify the other's documents.
-
-### 5. Run the application
+**4. Run**
 
 ```bash
 flutter run
 ```
 
-The application stores its working data locally. Firebase is used for login and
-optional cloud synchronization when configured.
+The app works fully offline. Firebase is only used for sign-in and optional sync.
 
-## Building Android
-
-Generate an APK for direct installation:
-
-```bash
-flutter build apk --release
-```
-
-Output:
+## Project structure
 
 ```text
-build/app/outputs/flutter-apk/app-release.apk
+lib/
+├── data/            Isar setup, collections, import and JSON backup
+├── l10n/            translations (ARB) and generated localizations
+├── providers/       Riverpod state
+├── screens/         workouts, nutrition, tools and settings
+├── services/        auth, Firestore sync, food API and label scanning
+├── utils/           theme, calculations and helpers
+└── widgets/         reusable dashboard components
+assets/data/         exercise and food seed data
+firestore.rules      per-user cloud access rules
+test/                unit tests
 ```
 
-The current project is intended for direct development/testing distribution.
-Before long-term distribution, configure a stable application ID and a private
-release-signing key. Never commit the keystore or `key.properties`.
-
-## Quality checks
-
-Run before committing changes:
+## Quality
 
 ```bash
 dart format --output=none --set-exit-if-changed .
@@ -194,95 +146,24 @@ flutter analyze
 flutter test
 ```
 
-The automated suite covers core calorie, BMI, one-repetition-maximum and rest
-timer calculations. Database migrations, backup/restore and cloud
-synchronization still require integration coverage before production use.
+The unit tests cover the calorie, BMI, one-rep-max, rest-timer and nutrition calculations. Sync and backup/restore still need integration tests.
 
-## Project structure
+## Privacy and security
 
-```text
-lib/
-├── data/
-│   ├── database.dart        Isar initialization, import and local backup
-│   └── models/              Nutrition, workout and user collections
-├── l10n/                    ARB translations and generated localization code
-├── providers/               Riverpod application state
-├── screens/
-│   ├── tools/               Fitness and nutrition calculators
-│   └── workout/             Plans, editor, active workout and history
-├── services/                Auth, Firestore sync, food API and label scanning
-├── utils/                   Theme, calculations and shared helpers
-└── widgets/                 Reusable dashboard components
+GymOS handles personal data: body measurements, weight history, food intake and training history.
 
-assets/data/                 Exercise and food seed data
-firestore.rules              Versioned per-user cloud access rules
-```
-
-## Data and security model
-
-GymOS is designed as an offline-first application:
-
-1. The application reads and writes its working data in Isar.
-2. A signed-in user may opt into Firestore backup/synchronization.
-3. Cloud documents are stored below `users/{firebase_uid}`.
-4. Firestore rules restrict access to the matching authenticated user.
-
-Firebase client configuration contains public application identifiers, not
-administrative secrets. Security depends on deployed Firestore rules and
-correct Firebase Authentication configuration.
-
-Never include any of the following in the application or repository:
-
-- Firebase service-account private keys
-- Google Cloud private keys
-- Keystores or certificate passwords
-- Real exported backups
-- Screenshots, fixtures or logs containing personal data
-
-## Privacy
-
-GymOS can process sensitive personal information, including:
-
-- Name and date of birth
-- Gender, height and body weight
-- Weight history
-- Food intake and nutrition targets
-- Exercise history, repetitions and training loads
-
-Exported JSON/PDF files may contain this information in readable form. Store
-and share them carefully.
-
-Anyone deploying GymOS for other users is responsible for providing an
-appropriate privacy policy, deletion process, retention policy and lawful data
-handling for their jurisdiction.
-
-Do not use public repository issues to share personal, account, nutrition or
-health information.
+- Cloud data is stored only under the signed-in user's document, and the Firestore rules deny access to anything else.
+- Firebase client configuration holds public app identifiers, not secrets.
+- Service-account keys, keystores and real backups are never committed.
+- Local Isar data and exported backups are not encrypted by the app, so store exports with care.
 
 ## Known limitations
 
-- Calorie, macro, BMI and strength calculations are estimates.
-- OpenFoodFacts entries are community-maintained and may be incomplete.
-- OCR results depend on image quality and must be reviewed before saving.
-- Firestore synchronization is not a substitute for a verified backup policy.
-- Local Isar data and exported backups are not additionally encrypted by GymOS.
-- Camera and scanning behavior varies by device.
-- Cloud synchronization and backup/restore do not yet have integration tests.
-
-## Contributing
-
-Contributions are welcome. Keep changes focused, explain user-facing behavior
-and include tests when the test infrastructure becomes available.
-
-Suggested workflow:
-
-1. Create a feature branch.
-2. Implement and manually verify the change.
-3. Run formatting and static analysis.
-4. Open a pull request with a clear description and verification steps.
+- Calorie, macro and strength figures are estimates.
+- OpenFoodFacts data is community-maintained.
+- OCR results should be reviewed before saving.
+- Android is the main target. iOS needs its own Firebase setup, and web and desktop are not supported.
 
 ## License
 
-GymOS is available under the [MIT License](LICENSE). You may use, copy, modify,
-distribute and sell the software, provided that the copyright and license
-notice are retained.
+[MIT](LICENSE) © Henrique Correia
